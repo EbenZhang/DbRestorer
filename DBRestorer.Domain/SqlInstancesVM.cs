@@ -4,11 +4,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CollectionEx;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer.Domain
 {
-    public class SqlInstancesVM
+    public class SqlInstancesVM : ViewModelBase
     {
         private readonly ISqlServerUtil _util;
 
@@ -17,16 +21,54 @@ namespace DBRestorer.Domain
             _util = util;
         }
 
-        ObservableCollection<string> _instances = new ObservableCollection<string>();
-        public ObservableCollection<string> Instances
+        public ObservableCollection<string> Instances { get; } = new ObservableCollection<string>();
+
+        private bool _isRetrievingSqlInsts = false;
+        public bool IsRetrievingSqlInsts {
+            get
+            {
+                return _isRetrievingSqlInsts;
+            }
+            set
+            {
+                _isRetrievingSqlInsts = value;
+                RaisePropertyChanged(nameof(IsRetrievingSqlInsts));
+            }
+        }
+
+        private string _SelectedInst;
+
+        public string SelectedInst
         {
             get
             {
-                if (_instances.Count == 0)
-                {
-                    _instances.Assign(_util.GetSqlInstances());
-                }
-                return _instances;
+                return _SelectedInst;
+            }
+            set
+            {
+                _SelectedInst = value;
+                RaisePropertyChanged(nameof(SelectedInst));
+            }
+        }
+
+        public async Task RetrieveInstanceAsync(bool clearCache = false)
+        {
+            if (!clearCache && this.Instances.Count > 0)
+            {
+                return;
+            }
+            IsRetrievingSqlInsts = true;
+            var insts = await Task.Run(() => _util.GetSqlInstances());
+            Instances.Assign(insts);
+            SelectedInst = Instances.FirstOrDefault();
+            IsRetrievingSqlInsts = false;
+        }
+
+        public ICommand RefreshCmd
+        {
+            get
+            {
+                return new RelayCommand(() => RetrieveInstanceAsync(clearCache:true));
             }
         }
     }

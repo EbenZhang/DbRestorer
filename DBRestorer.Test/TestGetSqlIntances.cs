@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using DBRestorer.Domain;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Api;
 
 namespace DBRestorer.Test
 {
@@ -28,20 +30,60 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public void CanGetSqlInstance()
+        public async void CanGetSqlInstance()
         {
             var vm = new SqlInstancesVM(_sqlServerUtil);
+            Assert.That(vm.Instances, Is.Empty);
+
+            int changeCount = 0;
+            vm.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(SqlInstancesVM.IsRetrievingSqlInsts))
+                {
+                    changeCount++;
+                }
+            };
+
+            await vm.RetrieveInstanceAsync();
+
+            Assert.That(changeCount, Is.EqualTo(2));
+            Assert.False(vm.IsRetrievingSqlInsts);
+           
             CollectionAssert.AreEqual(Instances, vm.Instances);
+            Assert.AreEqual(Instances.First(), vm.SelectedInst);
         }
 
         [Test]
-        public void InstancesAreCached()
+        public async void InstancesAreCached()
         {
             var vm = new SqlInstancesVM(_sqlServerUtil);
+            Assert.That(vm.Instances, Is.Empty);
+            await vm.RetrieveInstanceAsync();
+
             CollectionAssert.AreEqual(Instances, vm.Instances);
             _sqlServerUtil.Received(1).GetSqlInstances();
+
+            _sqlServerUtil.ClearReceivedCalls();
+            await vm.RetrieveInstanceAsync();
+
+            CollectionAssert.AreEqual(Instances, vm.Instances);
+            _sqlServerUtil.DidNotReceive().GetSqlInstances();
+        }
+
+        [Test]
+        public async void ForceToIgnoreCache()
+        {
+            var vm = new SqlInstancesVM(_sqlServerUtil);
+            Assert.That(vm.Instances, Is.Empty);
+            await vm.RetrieveInstanceAsync();
+
             CollectionAssert.AreEqual(Instances, vm.Instances);
             _sqlServerUtil.Received(1).GetSqlInstances();
+
+            await vm.RetrieveInstanceAsync(clearCache: true);
+
+            CollectionAssert.AreEqual(Instances, vm.Instances);
+            _sqlServerUtil.Received(2).GetSqlInstances();
         }
     }
 }
