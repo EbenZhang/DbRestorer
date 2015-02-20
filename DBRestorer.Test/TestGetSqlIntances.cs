@@ -12,18 +12,36 @@ namespace DBRestorer.Test
     [TestClass]
     public class TestGetSqlIntances
     {
+        private static readonly List<string> Instances = new List<string>
+        {
+            @"SQLExpress",
+            @"MSSQLServer",
+        };
+
+        private ISqlServerUtil _sqlServerUtil;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _sqlServerUtil = Substitute.For<ISqlServerUtil>();
+            _sqlServerUtil.GetSqlInstances().Returns(Instances);
+        }
+
         [TestMethod]
         public void CanGetSqlInstance()
         {
-            var util = NSubstitute.Substitute.For<ISqlServerUtil>();
-            var expectedInstances = new List<string>()
-            {
-                @"SQLExpress",
-                @"MSSQLServer",
-            };
-            util.GetSqlInstances().Returns(expectedInstances);
-            var vm = new SqlInstancesVM(util);
-            CollectionAssert.AreEqual(expectedInstances, vm.Instances);
+            var vm = new SqlInstancesVM(_sqlServerUtil);
+            CollectionAssert.AreEqual(Instances, vm.Instances);
+        }
+
+        [TestMethod]
+        public void InstancesAreCached()
+        {
+            var vm = new SqlInstancesVM(_sqlServerUtil);
+            CollectionAssert.AreEqual(Instances, vm.Instances);
+            _sqlServerUtil.Received(1).GetSqlInstances();
+            CollectionAssert.AreEqual(Instances, vm.Instances);
+            _sqlServerUtil.Received(1).GetSqlInstances();
         }
     }
 }
