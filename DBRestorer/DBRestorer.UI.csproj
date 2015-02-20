@@ -93,6 +93,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBRestorer.Domain\DBRestorer.Domain.csproj">
+      <Project>{f03e41e2-0440-4687-8ae5-601c4ac5d2c5}</Project>
+      <Name>DBRestorer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBRestorer.Model\DBRestorer.Model.csproj">
+      <Project>{8e560ba5-2bd6-4fdc-98d6-9fcf863b1a8a}</Project>
+      <Name>DBRestorer.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
