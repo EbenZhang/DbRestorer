@@ -1,0 +1,4 @@
+[submodule "CollectionEx"]
+	path = CollectionEx
+	url = D:/Projects/DBRestorer/CollectionEx
+	branch = master
