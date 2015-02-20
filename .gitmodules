@@ -2,3 +2,6 @@
 	path = CollectionEx
 	url = D:/Projects/DBRestorer/CollectionEx
 	branch = master
+[submodule "WpfCommon"]
+	path = WpfCommon
+	url = https://github.com/EbenZhang/WpfCommon.git
