@@ -20,9 +20,17 @@ namespace DBRestorer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowVm _viewModel;
         public MainWindow()
         {
             InitializeComponent();
+            _viewModel = this.DataContext as MainWindowVm;
+            this.Loaded += OnLoaded;
+        }
+
+        private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
         }
     }
 }

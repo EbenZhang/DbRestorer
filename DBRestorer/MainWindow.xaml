@@ -4,9 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBRestorer"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:vm = "clr-namespace:DBRestorer.Domain;assembly=DBRestorer.Domain"
+        xmlns:wpfcommon="clr-namespace:WpfCommon;assembly=WpfCommon"
         mc:Ignorable="d"
+        WindowState="Maximized"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+    <Window.DataContext>
+        <local:MainWindowVm/>
+    </Window.DataContext>
+    <Grid Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid DataContext="{Binding SqlInstancesVm}">
+            <DockPanel LastChildFill="True">
+                <TextBlock>SQL Instance:</TextBlock>
+                <Button DockPanel.Dock="Right" Command="{Binding RefreshCmd}">Refresh</Button>
+                <ComboBox 
+                    Margin="4,0,0,0"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding Instances}"
+                    SelectedItem="{Binding SelectedInst}"></ComboBox>
+            </DockPanel>
+        </Grid>
+
+        <Popup Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsRetrievingSqlInsts}">
+            <xctk:BusyIndicator IsBusy="{Binding IsRetrievingSqlInsts}" BusyContent="Retrieving SQL Instances">
+            </xctk:BusyIndicator>
+        </Popup>
     </Grid>
+    <Window.IsEnabled>
+        <Binding Path="SqlInstancesVm.IsRetrievingSqlInsts">
+            <Binding.Converter>
+                <wpfcommon:InverseBooleanConverter/>
+            </Binding.Converter>
+        </Binding>
+    </Window.IsEnabled>
 </Window>
