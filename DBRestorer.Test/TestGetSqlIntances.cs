@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using DBRestorer.Domain;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using NUnit.Framework;
 
 namespace DBRestorer.Test
 {
-    [TestClass]
+    [TestFixture]
     public class TestGetSqlIntances
     {
         private static readonly List<string> Instances = new List<string>
@@ -20,21 +20,21 @@ namespace DBRestorer.Test
 
         private ISqlServerUtil _sqlServerUtil;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             _sqlServerUtil = Substitute.For<ISqlServerUtil>();
             _sqlServerUtil.GetSqlInstances().Returns(Instances);
         }
 
-        [TestMethod]
+        [Test]
         public void CanGetSqlInstance()
         {
             var vm = new SqlInstancesVM(_sqlServerUtil);
             CollectionAssert.AreEqual(Instances, vm.Instances);
         }
 
-        [TestMethod]
+        [Test]
         public void InstancesAreCached()
         {
             var vm = new SqlInstancesVM(_sqlServerUtil);
