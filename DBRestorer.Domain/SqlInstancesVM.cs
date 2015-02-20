@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CollectionEx;
 
 namespace DBRestorer.Domain
 {
@@ -23,6 +24,7 @@ namespace DBRestorer.Domain
             {
                 if (_instances.Count == 0)
                 {
+                    _instances.Assign(_util.GetSqlInstances());
                 }
                 return _instances;
             }
