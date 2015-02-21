@@ -73,11 +73,16 @@
     <Compile Include="TestGetSqlIntances.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGetDatabases.cs" />
+    <Compile Include="TestRestorer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DBRestorer.Domain\DBRestorer.Domain.csproj">
       <Project>{f03e41e2-0440-4687-8ae5-601c4ac5d2c5}</Project>
       <Name>DBRestorer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBRestorer.Model\DBRestorer.Model.csproj">
+      <Project>{8e560ba5-2bd6-4fdc-98d6-9fcf863b1a8a}</Project>
+      <Name>DBRestorer.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>

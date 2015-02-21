@@ -6,9 +6,22 @@ using System.Threading.Tasks;
 
 namespace DBRestorer.Domain
 {
-    public interface ISqlServerUtil
+    public abstract class ISqlServerUtil
     {
-        List<string> GetSqlInstances();
-        List<string> GetDatabaseNames(string instanceName);
+        public struct DbRestorOptions
+        {
+            public string SqlServerInstName { get; set; }
+            public string SrcPath { get; set; }
+            public string TargetDbName { get; set; }
+            public string RelocateMdfTo { get; set; }
+            public string RelocateLdfTo { get; set; }
+        }
+
+        public delegate void ProgressReport(int percent);
+
+        public abstract List<string> GetSqlInstances();
+        public abstract List<string> GetDatabaseNames(string instanceName);
+
+        public abstract void Restore(DbRestorOptions dbRestorOptions, ProgressReport progressReport);
     }
 }
