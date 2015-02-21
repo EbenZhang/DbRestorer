@@ -39,7 +39,7 @@ namespace DBRestorer.Test
             int changeCount = 0;
             vm.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(SqlInstancesVM.IsProcessing))
+                if (args.PropertyName == PropertyName.Get((SqlInstancesVM x) => x.IsProcessing))
                 {
                     changeCount++;
                     if (vm.IsProcessing)

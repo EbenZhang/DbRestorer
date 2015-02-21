@@ -21,10 +21,12 @@ namespace DBRestorer.Domain
 
         public SqlInstancesVM(ISqlServerUtil util)
         {
+            Instances = new ObservableCollection<string>();
+            DbNames = new ObservableCollection<string>();
             _util = util;
         }
 
-        public ObservableCollection<string> Instances { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Instances { get; private set; }
 
         private bool _IsProcessing = false;
         public bool IsProcessing {
@@ -85,7 +87,7 @@ namespace DBRestorer.Domain
             }
         }
 
-        public ObservableCollection<string> DbNames { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> DbNames { get; private set; }
 
         public async Task RetrieveDbNamesAsync(string mssqlserver)
         {

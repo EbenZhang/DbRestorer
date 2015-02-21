@@ -9,7 +9,7 @@ using GalaSoft.MvvmLight;
 
 namespace DBRestorer
 {
-    public class MainWindowVm : ViewModelBase
+    public class MainWindowVm : ViewModelBaseEx
     {
         public MainWindowVm()
         {
@@ -23,8 +23,7 @@ namespace DBRestorer
             get { return _SqlInstancesVm; }
             private set
             {
-                _SqlInstancesVm = value;
-                RaisePropertyChanged(nameof(SqlInstancesVm));
+                RaiseAndSetIfChanged(ref _SqlInstancesVm, value);
             }
         }
     }
