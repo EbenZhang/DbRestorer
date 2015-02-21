@@ -13,7 +13,7 @@ using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer.Domain
 {
-    public class SqlInstancesVM : ViewModelBase
+    public class SqlInstancesVM : ViewModelBaseEx
     {
         public const string RetrivingInstances = "Retrieving SQL Instances...";
         public const string RetrivingDbNames = "Retrieving Database Names...";
@@ -34,8 +34,7 @@ namespace DBRestorer.Domain
             }
             set
             {
-                _IsProcessing = value;
-                RaisePropertyChanged(nameof(IsProcessing));
+                RaiseAndSetIfChanged(ref _IsProcessing, value);
             }
         }
 
@@ -50,8 +49,7 @@ namespace DBRestorer.Domain
             }
             set
             {
-                _SelectedInst = value;
-                RaisePropertyChanged(nameof(SelectedInst));
+                RaiseAndSetIfChanged(ref _SelectedInst, value);
             }
         }
 
@@ -83,8 +81,7 @@ namespace DBRestorer.Domain
             get { return _ProgressDesc; }
             set
             {
-                _ProgressDesc = value;
-                RaisePropertyChanged(nameof(ProgressDesc));
+                RaiseAndSetIfChanged(ref _ProgressDesc, value);
             }
         }
 

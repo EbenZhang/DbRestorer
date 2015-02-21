@@ -58,6 +58,7 @@
     <Compile Include="ISqlServerUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlInstancesVM.cs" />
+    <Compile Include="ViewModelBaseEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
