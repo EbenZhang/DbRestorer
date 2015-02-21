@@ -30,13 +30,13 @@
             </DockPanel>
         </Grid>
 
-        <Popup Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsRetrievingSqlInsts}">
-            <xctk:BusyIndicator IsBusy="{Binding IsRetrievingSqlInsts}" BusyContent="Retrieving SQL Instances">
+        <Popup Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsProcessing}">
+            <xctk:BusyIndicator IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
             </xctk:BusyIndicator>
         </Popup>
     </Grid>
     <Window.IsEnabled>
-        <Binding Path="SqlInstancesVm.IsRetrievingSqlInsts">
+        <Binding Path="SqlInstancesVm.IsProcessing">
             <Binding.Converter>
                 <wpfcommon:InverseBooleanConverter/>
             </Binding.Converter>

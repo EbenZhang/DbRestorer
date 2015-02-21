@@ -38,16 +38,20 @@ namespace DBRestorer.Test
             int changeCount = 0;
             vm.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(SqlInstancesVM.IsRetrievingSqlInsts))
+                if (args.PropertyName == nameof(SqlInstancesVM.IsProcessing))
                 {
                     changeCount++;
+                    if (vm.IsProcessing)
+                    {
+                        Assert.AreEqual(SqlInstancesVM.RetrivingInstances, vm.ProgressDesc);
+                    }
                 }
             };
 
             await vm.RetrieveInstanceAsync();
 
             Assert.That(changeCount, Is.EqualTo(2));
-            Assert.False(vm.IsRetrievingSqlInsts);
+            Assert.False(vm.IsProcessing);
            
             CollectionAssert.AreEqual(Instances, vm.Instances);
             Assert.AreEqual(Instances.First(), vm.SelectedInst);

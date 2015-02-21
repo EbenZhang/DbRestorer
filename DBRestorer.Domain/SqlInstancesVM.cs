@@ -14,6 +14,7 @@ namespace DBRestorer.Domain
 {
     public class SqlInstancesVM : ViewModelBase
     {
+        public const string RetrivingInstances = "Retrieving SQL Instances...";
         private readonly ISqlServerUtil _util;
 
         public SqlInstancesVM(ISqlServerUtil util)
@@ -23,20 +24,21 @@ namespace DBRestorer.Domain
 
         public ObservableCollection<string> Instances { get; } = new ObservableCollection<string>();
 
-        private bool _isRetrievingSqlInsts = false;
-        public bool IsRetrievingSqlInsts {
+        private bool _IsProcessing = false;
+        public bool IsProcessing {
             get
             {
-                return _isRetrievingSqlInsts;
+                return _IsProcessing;
             }
             set
             {
-                _isRetrievingSqlInsts = value;
-                RaisePropertyChanged(nameof(IsRetrievingSqlInsts));
+                _IsProcessing = value;
+                RaisePropertyChanged(nameof(IsProcessing));
             }
         }
 
         private string _SelectedInst;
+        private string _ProgressDesc = "";
 
         public string SelectedInst
         {
@@ -57,11 +59,12 @@ namespace DBRestorer.Domain
             {
                 return;
             }
-            IsRetrievingSqlInsts = true;
+            ProgressDesc = RetrivingInstances;
+            IsProcessing = true;
             var insts = await Task.Run(() => _util.GetSqlInstances());
             Instances.Assign(insts);
             SelectedInst = Instances.FirstOrDefault();
-            IsRetrievingSqlInsts = false;
+            IsProcessing = false;
         }
 
         public ICommand RefreshCmd
@@ -69,6 +72,17 @@ namespace DBRestorer.Domain
             get
             {
                 return new RelayCommand(() => RetrieveInstanceAsync(clearCache:true));
+            }
+        }
+
+
+        public string ProgressDesc
+        {
+            get { return _ProgressDesc; }
+            set
+            {
+                _ProgressDesc = value;
+                RaisePropertyChanged(nameof(ProgressDesc));
             }
         }
     }
