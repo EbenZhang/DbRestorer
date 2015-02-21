@@ -57,12 +57,12 @@ namespace DBRestorer.Model
             var fileList = res.ReadFileList(srv);
             var MDF = fileList.Rows[0][1].ToString();
             DataFile.LogicalFileName = res.ReadFileList(srv).Rows[0][0].ToString();
-            DataFile.PhysicalFileName = srv.Databases[opt.TargetDbName].FileGroups[0].Files[0].FileName;
+            DataFile.PhysicalFileName = opt.RelocateMdfTo;
 
             var LogFile = new RelocateFile();
             var LDF = fileList.Rows[1][1].ToString();
             LogFile.LogicalFileName = res.ReadFileList(srv).Rows[1][0].ToString();
-            LogFile.PhysicalFileName = srv.Databases[opt.TargetDbName].LogFiles[0].FileName;
+            LogFile.PhysicalFileName = opt.RelocateLdfTo;
 
             res.RelocateFiles.Add(DataFile);
             res.RelocateFiles.Add(LogFile);
