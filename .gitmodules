@@ -1,6 +1,6 @@
-[submodule "CollectionEx"]
-	path = CollectionEx
-	url = D:/Projects/DBRestorer/CollectionEx
+[submodule "ExtendedCL"]
+	path = ExtendedCL
+	url = D:/Projects/DBRestorer/ExtendedCL
 	branch = master
 [submodule "WpfCommon"]
 	path = WpfCommon

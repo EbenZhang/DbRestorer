@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DBRestorer.Domain;
 using NUnit.Framework;
 using NSubstitute;
+using ExtendedCL;
 
 namespace DBRestorer.Test
 {

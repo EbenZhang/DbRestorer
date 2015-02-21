@@ -8,6 +8,7 @@ using DBRestorer.Domain;
 using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Api;
+using ExtendedCL;
 
 namespace DBRestorer.Test
 {

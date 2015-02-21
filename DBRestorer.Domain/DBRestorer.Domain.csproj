@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ISqlServerUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Restorer.cs" />
     <Compile Include="SqlInstancesVM.cs" />
     <Compile Include="ViewModelBaseEx.cs" />
   </ItemGroup>
@@ -64,9 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CollectionEx\CollectionEx\CollectionEx.csproj">
+    <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
-      <Name>CollectionEx</Name>
+      <Name>ExtendedCL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

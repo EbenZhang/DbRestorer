@@ -79,6 +79,10 @@
       <Project>{f03e41e2-0440-4687-8ae5-601c4ac5d2c5}</Project>
       <Name>DBRestorer.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
+      <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
+      <Name>ExtendedCL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
