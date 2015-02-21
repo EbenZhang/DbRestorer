@@ -9,5 +9,6 @@ namespace DBRestorer.Domain
     public interface ISqlServerUtil
     {
         List<string> GetSqlInstances();
+        List<string> GetDatabaseNames(string instanceName);
     }
 }

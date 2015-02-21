@@ -20,7 +20,7 @@ namespace DBRestorer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowVm _viewModel;
+        private readonly MainWindowVm _viewModel;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,6 +31,7 @@ namespace DBRestorer
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
+            await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
         }
     }
 }

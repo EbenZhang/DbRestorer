@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace DBRestorer.Domain
     public class SqlInstancesVM : ViewModelBase
     {
         public const string RetrivingInstances = "Retrieving SQL Instances...";
+        public const string RetrivingDbNames = "Retrieving Database Names...";
         private readonly ISqlServerUtil _util;
 
         public SqlInstancesVM(ISqlServerUtil util)
@@ -84,6 +86,21 @@ namespace DBRestorer.Domain
                 _ProgressDesc = value;
                 RaisePropertyChanged(nameof(ProgressDesc));
             }
+        }
+
+        public ObservableCollection<string> DbNames { get; set; } = new ObservableCollection<string>();
+
+        public async Task RetrieveDbNamesAsync(string mssqlserver)
+        {
+            if (string.IsNullOrEmpty(mssqlserver))
+            {
+                return;
+            }
+            ProgressDesc = RetrivingDbNames;
+            IsProcessing = true;
+            var dbNames = await Task.Run(() => _util.GetDatabaseNames(mssqlserver));
+            DbNames.Assign(dbNames);
+            IsProcessing = false;
         }
     }
 }
