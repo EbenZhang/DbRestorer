@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DBRestorer.Domain;
 using Microsoft.SqlServer.Management.Smo;
+using Microsoft.SqlServer.Management.Smo.Wmi;
 
 namespace DBRestorer.Model
 {
@@ -15,16 +16,23 @@ namespace DBRestorer.Model
     {
         public override List<string> GetSqlInstances()
         {
-            var instances = SmoApplication.EnumAvailableSqlServers(localOnly: true);
-            return (from DataRow dataRow
-                    in instances.Rows
-                    select (string) dataRow["Name"])
-                .ToList();
+            var ret = GetInstancesFor(ProviderArchitecture.Use32bit);
+            ret.AddRange(GetInstancesFor(ProviderArchitecture.Use64bit));
+            return ret.Distinct().ToList();
+        }
+
+        private static List<string> GetInstancesFor(ProviderArchitecture architecture)
+        {
+            var m = new ManagedComputer("LOCALHOST");
+            m.ConnectionSettings.ProviderArchitecture = architecture;
+            var ret = (from ServerInstance inst in m.ServerInstances select inst.Parent.ConnectionSettings.MachineName + "\\" + inst.Name).ToList();
+            return ret;
         }
 
         public override List<string> GetDatabaseNames(string instanceName)
         {
             var server = new Server(instanceName);
+            server.Refresh();
             return (from Database db in server.Databases select db.Name).ToList();
         }
 
