@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,20 @@ namespace DBRestorer.Domain
         public string SrcPath
         {
             get { return _SrcPath; }
-            set { RaiseAndSetIfChanged(ref _SrcPath, value); }
+            set
+            {
+                RaiseAndSetIfChanged(ref _SrcPath, value);
+
+                if (string.IsNullOrEmpty(_SrcPath))
+                {
+                    return;
+                }
+                var dir = Path.GetDirectoryName(_SrcPath);
+                var fileName = Path.GetFileNameWithoutExtension(_SrcPath);
+                RelocateLdfTo = Path.Combine(dir, fileName + "_log.ldf");
+                RelocateMdfTo = Path.Combine(dir, fileName + ".mdf");
+                TargetDbName = fileName;
+            }
         }
 
         public string TargetDbName
