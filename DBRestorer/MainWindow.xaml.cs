@@ -18,6 +18,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Mantin.Controls.Wpf.Notification;
 using Microsoft.Win32;
 using WpfCommon;
+using WpfCommon.Utils;
 
 namespace DBRestorer
 {
@@ -92,6 +93,10 @@ namespace DBRestorer
 
         private void Restore()
         {
+            if (!this.ValidateTextBoxes())
+            {
+                return;
+            }
             if (_viewModel.SqlInstancesVm.DbNames.Contains(_viewModel.DbRestorOptVm.TargetDbName))
             {
                 var choice = MessageBoxHelper.ShowConfirmation(this,

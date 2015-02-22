@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DBRestorer"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:wpfcommon="clr-namespace:WpfCommon;assembly=WpfCommon"
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns:validations="clr-namespace:WpfCommon.Validations;assembly=WpfCommon"
         x:Name="ThisWnd"
         AllowDrop="True"
         mc:Ignorable="d"
@@ -61,7 +61,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Text="{Binding SrcPath}"></TextBox>
+                    <TextBox Grid.Column="0">
+                        <TextBox.Text>
+                            <Binding Path="SrcPath">
+                                <Binding.ValidationRules>
+                                    <validations:MinLengthValidator MinLength="1"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <Button 
                         Grid.Column="1"
                         Click="OnBtnBrowserClicked"
@@ -74,14 +82,37 @@
                     x:Name="txtDbName"
                     Grid.Row="1" Grid.Column="2"
                     FilterMode="Contains"
-                    ItemsSource="{Binding DataContext.SqlInstancesVm.DbNames, ElementName=ThisWnd}"
-                    Text="{Binding TargetDbName, Mode=TwoWay}"></controls:AutoCompleteBox>
+                    ItemsSource="{Binding DataContext.SqlInstancesVm.DbNames, ElementName=ThisWnd}">
+                    <controls:AutoCompleteBox.Text>
+                        <Binding Path="TargetDbName" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validations:MinLengthValidator MinLength="1"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </controls:AutoCompleteBox.Text>
+                </controls:AutoCompleteBox>
                 
                 <TextBlock Grid.Column="0" Grid.Row="2">Restore MDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding RelocateMdfTo}"></TextBox>
+                <TextBox Grid.Column="2" Grid.Row="2">
+                    <TextBox.Text>
+                        <Binding Path="RelocateMdfTo">
+                            <Binding.ValidationRules>
+                                <validations:MinLengthValidator MinLength="1"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <TextBlock Grid.Column="0" Grid.Row="3">Restore LDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding RelocateLdfTo}"></TextBox>
+                <TextBox Grid.Column="2" Grid.Row="3">
+                    <TextBox.Text>
+                        <Binding Path="RelocateLdfTo">
+                            <Binding.ValidationRules>
+                                <validations:MinLengthValidator MinLength="1"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
                 <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" MinWidth="80" HorizontalAlignment="Center" Grid.Column ="0" Grid.ColumnSpan="3" Grid.Row="4">OK</Button>
             </Grid>
