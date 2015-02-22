@@ -6,18 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DBRestorer.Domain;
-using DBRestorer.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Threading;
 
-namespace DBRestorer
+namespace DBRestorer.Domain
 {
     public class MainWindowVm : ViewModelBaseEx, IProgressBarProvider
     {
-        private readonly SqlServerUtil _sqlserverUtil = new SqlServerUtil();
-        public MainWindowVm()
+        private readonly ISqlServerUtil _sqlserverUtil;
+        public MainWindowVm(ISqlServerUtil sqlserverUtil)
         {
+            _sqlserverUtil = sqlserverUtil;
             SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this);
         }
 

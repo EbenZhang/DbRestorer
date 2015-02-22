@@ -59,6 +59,7 @@
     <Compile Include="ErrorMsg.cs" />
     <Compile Include="IProgressBarProvider.cs" />
     <Compile Include="ISqlServerUtil.cs" />
+    <Compile Include="MainWindowVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Restorer.cs" />
     <Compile Include="SqlInstancesVM.cs" />

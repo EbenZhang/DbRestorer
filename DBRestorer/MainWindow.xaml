@@ -7,13 +7,14 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:wpfcommon="clr-namespace:WpfCommon;assembly=WpfCommon"
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns:domain="clr-namespace:DBRestorer.Domain;assembly=DBRestorer.Domain"
         x:Name="ThisWnd"
         AllowDrop="True"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="350" Width="525">
     <Window.DataContext>
-        <local:MainWindowVm/>
+        <domain:MainWindowVm/>
     </Window.DataContext>
     <Grid Margin="2">
         <Grid.RowDefinitions>

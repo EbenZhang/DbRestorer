@@ -75,6 +75,7 @@
     <Compile Include="TestGetSqlIntances.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGetDatabases.cs" />
+    <Compile Include="TestMainWindowVm.cs" />
     <Compile Include="TestRestorer.cs" />
   </ItemGroup>
   <ItemGroup>
