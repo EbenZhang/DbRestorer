@@ -80,7 +80,7 @@
                 <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding RelocateMdfTo}"></TextBox>
 
                 <TextBlock Grid.Column="0" Grid.Row="3">Restore LDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding RelocateMdfTo}"></TextBox>
+                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding RelocateLdfTo}"></TextBox>
 
                 <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" MinWidth="80" HorizontalAlignment="Center" Grid.Column ="0" Grid.ColumnSpan="3" Grid.Row="4">OK</Button>
             </Grid>
