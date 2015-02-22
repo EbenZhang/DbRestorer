@@ -74,10 +74,9 @@ namespace DBRestorer.Domain
         {
             get
             {
-                return new RelayCommand(() => RetrieveInstanceAsync(clearCache:true));
+                return new RelayCommand(async () => await RetrieveInstanceAsync(clearCache:true));
             }
         }
-
 
         public string ProgressDesc
         {
@@ -96,7 +95,6 @@ namespace DBRestorer.Domain
                 RaiseAndSetIfChanged(ref _PercentageDisabled, value);
             }
         }
-        
 
         public ObservableCollection<string> DbNames { get; private set; }
 

@@ -7,6 +7,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:vm = "clr-namespace:DBRestorer.Domain;assembly=DBRestorer.Domain"
         xmlns:wpfcommon="clr-namespace:WpfCommon;assembly=WpfCommon"
+        x:Name="ThisWnd"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="350" Width="525">
@@ -30,15 +31,43 @@
             </DockPanel>
         </Grid>
 
-        <Grid Grid.Row="1" DataContext="{Binding SqlInstancesVm}">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <ListBox 
+                 DataContext="{Binding SqlInstancesVm}"
                 Grid.Column="0"
                 ItemsSource="{Binding DbNames}">
             </ListBox>
+            <Grid Grid.Column="1" DataContext="{Binding DbRestorOptVm}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0">BackupFile:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SrcPath}"></TextBox>
+                
+                <TextBlock Grid.Column="0" Grid.Row="1">DB Name: </TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding TargetDbName}"></TextBox>
+                
+                <TextBlock Grid.Column="0" Grid.Row="2">Restore MDF To:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding RelocateMdfTo}"></TextBox>
+
+                <TextBlock Grid.Column="0" Grid.Row="3">Restore LDF To:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding RelocateMdfTo}"></TextBox>
+
+                <Button Command="{Binding RestoreCmd, ElementName=ThisWnd}" MinWidth="80" HorizontalAlignment="Center" Grid.Column ="0" Grid.ColumnSpan="3" Grid.Row="4">OK</Button>
+            </Grid>
         </Grid>
 
         <Popup Grid.Row="1"

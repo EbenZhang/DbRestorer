@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight.Command;
 
 namespace DBRestorer
 {
@@ -32,6 +33,19 @@ namespace DBRestorer
         {
             await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
             await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
+        }
+
+        public ICommand RestoreCmd
+        {
+            get
+            {
+                return new RelayCommand(() => Restore());
+            }
+        }
+
+        private void Restore()
+        {
+
         }
     }
 }
