@@ -42,6 +42,7 @@ namespace DBRestorer.Domain
 
         private string _SelectedInst;
         private string _ProgressDesc = "";
+        private bool _PercentageDisabled = true;
 
         public string SelectedInst
         {
@@ -86,6 +87,16 @@ namespace DBRestorer.Domain
                 RaiseAndSetIfChanged(ref _ProgressDesc, value);
             }
         }
+
+        public bool PercentageDisabled
+        {
+            get { return _PercentageDisabled; }
+            set
+            {
+                RaiseAndSetIfChanged(ref _PercentageDisabled, value);
+            }
+        }
+        
 
         public ObservableCollection<string> DbNames { get; private set; }
 

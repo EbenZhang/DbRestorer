@@ -18,6 +18,7 @@ namespace DBRestorer.Model
         {
             var ret = GetInstancesFor(ProviderArchitecture.Use32bit);
             ret.AddRange(GetInstancesFor(ProviderArchitecture.Use64bit));
+            System.Threading.Thread.Sleep(10000);
             return ret.Distinct().ToList();
         }
 
@@ -32,6 +33,7 @@ namespace DBRestorer.Model
         public override List<string> GetDatabaseNames(string instanceName)
         {
             var server = new Server(instanceName);
+            System.Threading.Thread.Sleep(10000);
             server.Refresh();
             return (from Database db in server.Databases select db.Name).ToList();
         }

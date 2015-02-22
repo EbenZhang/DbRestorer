@@ -43,8 +43,18 @@
 
         <Popup Grid.Row="1"
             Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsProcessing}">
-            <xctk:BusyIndicator IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
-            </xctk:BusyIndicator>
+            <Grid>
+                <xctk:BusyIndicator IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
+                    <xctk:BusyIndicator.ProgressBarStyle>
+                        <Style TargetType="ProgressBar">
+                            <Setter Property="IsIndeterminate" Value="{Binding PercentageDisabled}"/>
+                            <Setter Property="Height" Value="15"/>
+                            <Setter Property="Margin" Value="8,0,8,8"/>
+                            <Setter Property="Value" Value="{Binding Percentage}"/>
+                        </Style>
+                    </xctk:BusyIndicator.ProgressBarStyle>
+                </xctk:BusyIndicator>
+            </Grid>
         </Popup>
     </Grid>
     <Window.IsEnabled>
