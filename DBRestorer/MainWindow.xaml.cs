@@ -26,7 +26,25 @@ namespace DBRestorer
         {
             InitializeComponent();
             _viewModel = this.DataContext as MainWindowVm;
+            Messenger.Default.Register<ErrorMsg>(this, true, OnError);
+            Messenger.Default.Register<SucceedMsg>(this, true, OnSucceed);
             this.Loaded += OnLoaded;
+        }
+
+
+        private static void OnSucceed(SucceedMsg msg)
+        {
+            var toast = new ToastPopUp(
+                "Info",
+                msg.ToString(),
+                NotificationType.Information);
+            toast.Show();
+        }
+
+        private void OnError(ErrorMsg err)
+        {
+            MessageBox.Show(this,
+                err.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
