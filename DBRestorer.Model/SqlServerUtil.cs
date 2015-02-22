@@ -58,19 +58,20 @@ namespace DBRestorer.Model
                 progressRpt(args.Percent);
             };
 
-            var DataFile = new RelocateFile();
             var fileList = res.ReadFileList(srv);
-            var MDF = fileList.Rows[0][1].ToString();
-            DataFile.LogicalFileName = res.ReadFileList(srv).Rows[0][0].ToString();
-            DataFile.PhysicalFileName = opt.RelocateMdfTo;
 
-            var LogFile = new RelocateFile();
-            var LDF = fileList.Rows[1][1].ToString();
-            LogFile.LogicalFileName = res.ReadFileList(srv).Rows[1][0].ToString();
-            LogFile.PhysicalFileName = opt.RelocateLdfTo;
+            var dataFile = new RelocateFile(
+                logicalFileName: fileList.Rows[0][0].ToString(),
+                physicalFileName: opt.RelocateMdfTo
+                );
 
-            res.RelocateFiles.Add(DataFile);
-            res.RelocateFiles.Add(LogFile);
+            var logFile = new RelocateFile(
+                logicalFileName: fileList.Rows[1][0].ToString(),
+                physicalFileName: opt.RelocateLdfTo
+                );
+
+            res.RelocateFiles.Add(dataFile);
+            res.RelocateFiles.Add(logFile);
 
             res.ContinueAfterError = false;
             res.SqlRestoreAsync(srv);

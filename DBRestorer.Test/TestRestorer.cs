@@ -23,7 +23,6 @@ namespace DBRestorer.Test
                 }
             );
 
-            //sqlUtil.When(x => x.Restore(opt)).Do(x => );
             var restorer = new Restorer(sqlUtil);
             restorer.OnProgress += (percent) =>
             {
