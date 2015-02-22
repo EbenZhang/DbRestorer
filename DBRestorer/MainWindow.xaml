@@ -30,29 +30,10 @@
             </DockPanel>
         </Grid>
 
-        <Popup Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsProcessing}">
-            <Grid HorizontalAlignment="Center">
-                <Grid.Visibility>
-                    <Binding Path="IsProcessing">
-                        <Binding.Converter>
-                            <BooleanToVisibilityConverter/>
-                        </Binding.Converter>
-                    </Binding>
-                </Grid.Visibility>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Viewbox Grid.Column="0"
-                         Width="40" Height="40"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center">
-					<wpfcommon:CircularProgressBar></wpfcommon:CircularProgressBar>
-                </Viewbox>
-                <TextBlock 
-                    Grid.Column="1"
-                    Text="{Binding ProgressDesc}"></TextBlock>
-            </Grid>
+        <Popup
+            Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsProcessing}">
+            <xctk:BusyIndicator IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
+            </xctk:BusyIndicator>
         </Popup>
     </Grid>
     <Window.IsEnabled>
