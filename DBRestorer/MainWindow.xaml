@@ -18,7 +18,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid DataContext="{Binding SqlInstancesVm}">
+        <Grid Grid.Row="0" DataContext="{Binding SqlInstancesVm}">
             <DockPanel LastChildFill="True">
                 <TextBlock>SQL Instance:</TextBlock>
                 <Button DockPanel.Dock="Right" Command="{Binding RefreshCmd}">Refresh</Button>
@@ -30,7 +30,18 @@
             </DockPanel>
         </Grid>
 
-        <Popup
+        <Grid Grid.Row="1" DataContext="{Binding SqlInstancesVm}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox 
+                Grid.Column="0"
+                ItemsSource="{Binding DbNames}">
+            </ListBox>
+        </Grid>
+
+        <Popup Grid.Row="1"
             Placement="Center" DataContext="{Binding SqlInstancesVm}" StaysOpen="True" IsOpen="{Binding IsProcessing}">
             <xctk:BusyIndicator IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
             </xctk:BusyIndicator>
