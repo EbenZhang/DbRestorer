@@ -50,5 +50,17 @@ namespace DBRestorer.Domain
             get { return _RelocateLdfTo; }
             set { RaiseAndSetIfChanged(ref _RelocateLdfTo, value); }
         }
+
+        public ISqlServerUtil.DbRestorOptions GetDbRestoreOption(string serverInstName)
+        {
+            return new ISqlServerUtil.DbRestorOptions()
+            {
+                SqlServerInstName = serverInstName,
+                RelocateMdfTo = this.RelocateMdfTo,
+                RelocateLdfTo = this.RelocateLdfTo,
+                SrcPath = this.SrcPath,
+                TargetDbName = this.TargetDbName
+            };
+        }
     }
 }
