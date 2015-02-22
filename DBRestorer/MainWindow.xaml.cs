@@ -68,7 +68,21 @@ namespace DBRestorer
 
         private void Restore()
         {
+             
 
+        private void OnBtnBrowserClicked(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog
+            {
+                CheckFileExists = true,
+                Filter = "Database Backup Files (*.bak)|*.bak",
+                Multiselect = false
+            };
+            var ok = dlg.ShowDialog();
+            if (ok != null && ok.Value)
+            {
+                _viewModel.DbRestorOptVm.SrcPath = dlg.FileName;
+            }
         }
     }
 }
