@@ -98,7 +98,7 @@ namespace DBRestorer.Domain
             ProgressDesc = RetrivingDbNames;
             IsProcessing = true;
             var dbNames = await Task.Run(() => _util.GetDatabaseNames(mssqlserver));
-            DbNames.Assign(dbNames);
+            DbNames.Assign(dbNames.Except(ISqlServerUtil.SystemDatabases, StringComparer.InvariantCultureIgnoreCase));
             IsProcessing = false;
         }
     }

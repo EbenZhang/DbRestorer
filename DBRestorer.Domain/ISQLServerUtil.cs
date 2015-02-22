@@ -17,6 +17,14 @@ namespace DBRestorer.Domain
             public string RelocateLdfTo { get; set; }
         }
 
+        public static readonly List<string> SystemDatabases = new List<string>()
+        {
+            "master",
+            "tempdb",
+            "model",
+            "msdb",
+        };
+
         public delegate void ProgressReport(int percent);
 
         public abstract List<string> GetSqlInstances();
