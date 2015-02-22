@@ -70,10 +70,11 @@
                 
                 <TextBlock Grid.Column="0" Grid.Row="1">DB Name: </TextBlock>
                 <controls:AutoCompleteBox
+                    x:Name="txtDbName"
                     Grid.Row="1" Grid.Column="2"
                     FilterMode="Contains"
                     ItemsSource="{Binding DataContext.SqlInstancesVm.DbNames, ElementName=ThisWnd}"
-                    Text="{Binding TargetDbName}"></controls:AutoCompleteBox>
+                    Text="{Binding TargetDbName, Mode=TwoWay}"></controls:AutoCompleteBox>
                 
                 <TextBlock Grid.Column="0" Grid.Row="2">Restore MDF To:</TextBlock>
                 <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding RelocateMdfTo}"></TextBox>
