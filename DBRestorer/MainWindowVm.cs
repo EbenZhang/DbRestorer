@@ -32,7 +32,7 @@ namespace DBRestorer
             }
         }
 
-        private DbRestorOptVm _DbRestoreOption;
+        private DbRestorOptVm _DbRestoreOption = new DbRestorOptVm();
         public DbRestorOptVm DbRestorOptVm
         {
             get { return _DbRestoreOption; }
