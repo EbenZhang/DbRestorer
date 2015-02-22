@@ -52,9 +52,10 @@ namespace DBRestorer.Model
             res.ReplaceDatabase = true;
             res.PercentComplete += (sender, args) =>
             {
-                if (args.Error != null)
+                if (res.AsyncStatus.ExecutionStatus == ExecutionStatus.Failed)
                 {
-                    errReport(args.Error);
+                    progressBarProvider.OnError(res.AsyncStatus.LastException.ToString());
+                }
                 progressBarProvider.ReportProgress(args.Percent);
                 if (args.Percent == 100)
                 {
