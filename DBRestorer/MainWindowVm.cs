@@ -38,6 +38,13 @@ namespace DBRestorer
             get { return _DbRestoreOption; }
             set { RaiseAndSetIfChanged(ref _DbRestoreOption, value); }
         }
+
+        public void Restore()
+        {
+            _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst), 
+                this, OnRestored);
+        }
+
         public void OnCompleted(string msg)
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() =>
@@ -110,6 +117,11 @@ namespace DBRestorer
         public void ReportProgress(int percent)
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() => Percent = percent);
+        }
+
+        private void OnRestored()
+        {
+            DispatcherHelper.CheckBeginInvokeOnUI(() => SqlInstancesVm.RetrieveDbNamesAsync(SqlInstancesVm.SelectedInst));
         }
     }
 }
