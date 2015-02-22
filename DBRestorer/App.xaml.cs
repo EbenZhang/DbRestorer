@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer
@@ -14,6 +8,10 @@ namespace DBRestorer
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            ViewModelLocator.BootStrap();
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
             DispatcherHelper.Initialize();
