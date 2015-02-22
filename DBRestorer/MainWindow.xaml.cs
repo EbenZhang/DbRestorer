@@ -86,13 +86,24 @@ namespace DBRestorer
         {
             get
             {
-                return new RelayCommand(() => Restore());
+                return new RelayCommand(Restore);
             }
         }
 
         private void Restore()
         {
+            if (_viewModel.SqlInstancesVm.DbNames.Contains(_viewModel.DbRestorOptVm.TargetDbName))
+            {
+                var choice = MessageBoxHelper.ShowConfirmation(this,
+                    "The database already exists, are you sure to overwrite it?");
+                if (choice != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
              
+            _viewModel.Restore();
+        }
 
         private void OnBtnBrowserClicked(object sender, RoutedEventArgs e)
         {
