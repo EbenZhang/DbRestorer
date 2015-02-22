@@ -20,7 +20,7 @@ namespace DBRestorer.Test
             @"SQLExpress",
             @"MSSQLServer",
         };
-
+        private IProgressBarProvider _progressBarProvider;
         private ISqlServerUtil _sqlServerUtil;
 
         [SetUp]
@@ -28,32 +28,20 @@ namespace DBRestorer.Test
         {
             _sqlServerUtil = Substitute.For<ISqlServerUtil>();
             _sqlServerUtil.GetSqlInstances().Returns(Instances);
+            _progressBarProvider = Substitute.For<IProgressBarProvider>();
         }
 
         [Test]
         public async void CanGetSqlInstance()
         {
-            var vm = new SqlInstancesVM(_sqlServerUtil);
+            var vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider);
             Assert.That(vm.Instances, Is.Empty);
-
-            int changeCount = 0;
-            vm.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == PropertyName.Get((SqlInstancesVM x) => x.IsProcessing))
-                {
-                    changeCount++;
-                    if (vm.IsProcessing)
-                    {
-                        Assert.AreEqual(SqlInstancesVM.RetrivingInstances, vm.ProgressDesc);
-                    }
-                }
-            };
 
             await vm.RetrieveInstanceAsync();
 
-            Assert.That(changeCount, Is.EqualTo(2));
-            Assert.False(vm.IsProcessing);
-           
+            _progressBarProvider.Received(1).Start(false, SqlInstancesVM.RetrivingInstances);
+            _progressBarProvider.Received(1).OnCompleted(Arg.Any<string>());
+
             CollectionAssert.AreEqual(Instances, vm.Instances);
             Assert.AreEqual(Instances.First(), vm.SelectedInst);
         }
@@ -61,7 +49,7 @@ namespace DBRestorer.Test
         [Test]
         public async void InstancesAreCached()
         {
-            var vm = new SqlInstancesVM(_sqlServerUtil);
+            var vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider);
             Assert.That(vm.Instances, Is.Empty);
             await vm.RetrieveInstanceAsync();
 
@@ -78,7 +66,7 @@ namespace DBRestorer.Test
         [Test]
         public async void ForceToIgnoreCache()
         {
-            var vm = new SqlInstancesVM(_sqlServerUtil);
+            var vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider);
             Assert.That(vm.Instances, Is.Empty);
             await vm.RetrieveInstanceAsync();
 

@@ -13,23 +13,19 @@ namespace DBRestorer.Test
         [Test]
         public void GivenACorruptDb_ShouldStopRestoring()
         {
+            var progressBarProvider = Substitute.For<IProgressBarProvider>();
             var sqlUtil = Substitute.For<ISqlServerUtil>();
             var opt = new ISqlServerUtil.DbRestorOptions();
-            sqlUtil.When(x => x.Restore(opt, 
-                Arg.Any<ISqlServerUtil.ProgressReport>(),
-                Arg.Any<ISqlServerUtil.ErrorReport>()))
+            sqlUtil.When(x => x.Restore(opt, progressBarProvider, null))
                 .Do(x =>{
                     throw new InvalidDataException("");
                 }
             );
 
             var restorer = new Restorer(sqlUtil);
-            restorer.OnProgress += (percent) =>
-            {
-                Assert.Fail("Shouldn't have any progress for corrupted database.");
-            };
 
-            Assert.Throws<InvalidDataException>(() => restorer.Restore(opt));
+            Assert.Throws<InvalidDataException>(() => restorer.Restore(opt, progressBarProvider, null));
+            progressBarProvider.DidNotReceive().Received(Arg.Any<int>());
         }
     }
 }

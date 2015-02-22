@@ -26,15 +26,10 @@ namespace DBRestorer.Domain
             "msdb",
         };
 
-        public delegate void ProgressReport(int percent);
-
-        public delegate void ErrorReport(SqlError error);
-
         public abstract List<string> GetSqlInstances();
         public abstract List<string> GetDatabaseNames(string instanceName);
 
         public abstract void Restore(DbRestorOptions dbRestorOptions,
-            ProgressReport progressReport,
-            ErrorReport errReport);
+            IProgressBarProvider progressBarProvider, Action additionalCallbackOnCompleted);
     }
 }

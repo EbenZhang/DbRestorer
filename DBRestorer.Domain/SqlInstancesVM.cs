@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ExtendedCL;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer.Domain
 {
@@ -18,31 +13,19 @@ namespace DBRestorer.Domain
         public const string RetrivingInstances = "Retrieving SQL Instances...";
         public const string RetrivingDbNames = "Retrieving Database Names...";
         private readonly ISqlServerUtil _util;
+        private readonly IProgressBarProvider _ProgressBarProvider;
 
-        public SqlInstancesVM(ISqlServerUtil util)
+        public SqlInstancesVM(ISqlServerUtil util, IProgressBarProvider progressBarProvider)
         {
             Instances = new ObservableCollection<string>();
             DbNames = new ObservableCollection<string>();
             _util = util;
+            _ProgressBarProvider = progressBarProvider;
         }
 
         public ObservableCollection<string> Instances { get; private set; }
 
-        private bool _IsProcessing = false;
-        public bool IsProcessing {
-            get
-            {
-                return _IsProcessing;
-            }
-            set
-            {
-                RaiseAndSetIfChanged(ref _IsProcessing, value);
-            }
-        }
-
         private string _SelectedInst;
-        private string _ProgressDesc = "";
-        private bool _PercentageDisabled = true;
 
         public string SelectedInst
         {
@@ -62,12 +45,11 @@ namespace DBRestorer.Domain
             {
                 return;
             }
-            ProgressDesc = RetrivingInstances;
-            IsProcessing = true;
+            _ProgressBarProvider.Start(false, RetrivingInstances);
             var insts = await Task.Run(() => _util.GetSqlInstances());
             Instances.Assign(insts);
             SelectedInst = Instances.FirstOrDefault();
-            IsProcessing = false;
+            _ProgressBarProvider.OnCompleted(null);
         }
 
         public ICommand RefreshCmd
@@ -75,24 +57,6 @@ namespace DBRestorer.Domain
             get
             {
                 return new RelayCommand(async () => await RetrieveInstanceAsync(clearCache:true));
-            }
-        }
-
-        public string ProgressDesc
-        {
-            get { return _ProgressDesc; }
-            set
-            {
-                RaiseAndSetIfChanged(ref _ProgressDesc, value);
-            }
-        }
-
-        public bool PercentageDisabled
-        {
-            get { return _PercentageDisabled; }
-            set
-            {
-                RaiseAndSetIfChanged(ref _PercentageDisabled, value);
             }
         }
 
@@ -104,11 +68,10 @@ namespace DBRestorer.Domain
             {
                 return;
             }
-            ProgressDesc = RetrivingDbNames;
-            IsProcessing = true;
+            _ProgressBarProvider.Start(false, RetrivingDbNames);
             var dbNames = await Task.Run(() => _util.GetDatabaseNames(mssqlserver));
             DbNames.Assign(dbNames.Except(ISqlServerUtil.SystemDatabases, StringComparer.InvariantCultureIgnoreCase));
-            IsProcessing = false;
+            _ProgressBarProvider.OnCompleted(null);
         }
     }
 }

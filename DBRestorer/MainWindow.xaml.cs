@@ -12,7 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DBRestorer.Domain;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Mantin.Controls.Wpf.Notification;
+using Microsoft.Win32;
+using WpfCommon;
 
 namespace DBRestorer
 {

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using DBRestorer.Domain;
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Wmi;
@@ -36,14 +32,19 @@ namespace DBRestorer.Model
             return (from Database db in server.Databases select db.Name).ToList();
         }
 
-        public override void Restore(DbRestorOptions opt,
-            ProgressReport progressRpt, ErrorReport errReport)
+        public override void Restore(DbRestorOptions opt, IProgressBarProvider progressBarProvider,
+            Action additionalCallbackOnCompleted)
         {
             var srv = new Server(opt.SqlServerInstName);
             var res = new Restore();
             res.Devices.AddDevice(opt.SrcPath, DeviceType.File);
-            bool verifySuccessful = res.SqlVerify(srv);
-            if(!verifySuccessful) throw new InvalidDataException("The file cannot be restored.");
+            string errorMsg;
+            var verifySuccessful = res.SqlVerify(srv, out errorMsg);
+            if (!verifySuccessful)
+            {
+                progressBarProvider.OnError("The file cannot be restored.\r\n" + errorMsg);
+                return;
+            }
 
             res.Database = opt.TargetDbName;
             res.Action = RestoreActionType.Database;
@@ -54,8 +55,15 @@ namespace DBRestorer.Model
                 if (args.Error != null)
                 {
                     errReport(args.Error);
+                progressBarProvider.ReportProgress(args.Percent);
+                if (args.Percent == 100)
+                {
+                    progressBarProvider.OnCompleted("Finished Restoring.");
+                    if (additionalCallbackOnCompleted != null)
+                    {
+                        additionalCallbackOnCompleted();
+                    }
                 }
-                progressRpt(args.Percent);
             };
 
             var fileList = res.ReadFileList(srv);
@@ -74,6 +82,8 @@ namespace DBRestorer.Model
             res.RelocateFiles.Add(logFile);
 
             res.ContinueAfterError = false;
+
+            progressBarProvider.Start(willReportProgress:true, taskDesc: "Restoring...");
             res.SqlRestoreAsync(srv);
         }
     }

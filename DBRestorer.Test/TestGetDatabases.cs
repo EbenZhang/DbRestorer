@@ -11,17 +11,24 @@ namespace DBRestorer.Test
     [TestFixture]
     public class TestGetDatabases
     {
+        private IProgressBarProvider _progressBarProvider;
         private static readonly List<string> DbNames = new List<string>
         {
             "dbA",
             "dbB",
         };
+
+        [SetUp]
+        public void Setup()
+        {
+            _progressBarProvider = Substitute.For<IProgressBarProvider>();
+        }
         [Test]
         public async void CanGetDatabaseNames()
         {
             var util = Substitute.For<ISqlServerUtil>();
             util.GetDatabaseNames(Arg.Any<string>()).Returns(DbNames);
-            var vm = new SqlInstancesVM(util);
+            var vm = new SqlInstancesVM(util, _progressBarProvider);
             await vm.RetrieveDbNamesAsync("MSSQLServer");
             CollectionAssert.AreEqual(DbNames, vm.DbNames);
         }
@@ -31,30 +38,20 @@ namespace DBRestorer.Test
         {
             var util = Substitute.For<ISqlServerUtil>();
             util.GetDatabaseNames(Arg.Any<string>()).Returns(DbNames);
-            var count = 0;
-            var vm = new SqlInstancesVM(util);
-            vm.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == PropertyName.Get((SqlInstancesVM x) => x.IsProcessing))
-                {
-                    ++count;
-                    if (vm.IsProcessing)
-                    {
-                        Assert.That(vm.ProgressDesc, Is.EqualTo(SqlInstancesVM.RetrivingDbNames));
-                    }
-                }
-            };
+
+            var vm = new SqlInstancesVM(util, _progressBarProvider);
 
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 
-            Assert.That(count, Is.EqualTo(2));
+            _progressBarProvider.Received(1).Start(false, SqlInstancesVM.RetrivingDbNames);
+            _progressBarProvider.Received(1).OnCompleted(Arg.Any<string>());
         }
 
         [Test]
         public async void GiveAnEmptyInstance_NothingWillHappen()
         {
             var util = Substitute.For<ISqlServerUtil>();
-            var vm = new SqlInstancesVM(util);
+            var vm = new SqlInstancesVM(util, _progressBarProvider);
             vm.PropertyChanged += (sender, args) =>
             {
                 Assert.Fail("Should not raise any property change event");
@@ -72,8 +69,8 @@ namespace DBRestorer.Test
             var dbsWithSystemTables = new List<string>(DbNames);
             dbsWithSystemTables.AddRange(ISqlServerUtil.SystemDatabases);
             util.GetDatabaseNames(Arg.Any<string>()).Returns(dbsWithSystemTables);
-            
-            var vm = new SqlInstancesVM(util);
+
+            var vm = new SqlInstancesVM(util, _progressBarProvider);
            
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 
@@ -87,8 +84,8 @@ namespace DBRestorer.Test
             var dbsWithSystemTables = new List<string>(DbNames);
             dbsWithSystemTables.AddRange(ISqlServerUtil.SystemDatabases.Select(r => r.ToUpperInvariant()));
             util.GetDatabaseNames(Arg.Any<string>()).Returns(dbsWithSystemTables);
-            
-            var vm = new SqlInstancesVM(util);
+
+            var vm = new SqlInstancesVM(util, _progressBarProvider);
 
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 
