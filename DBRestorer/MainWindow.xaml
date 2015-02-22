@@ -8,6 +8,7 @@
         xmlns:wpfcommon="clr-namespace:WpfCommon;assembly=WpfCommon"
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         x:Name="ThisWnd"
+        AllowDrop="True"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="350" Width="525">

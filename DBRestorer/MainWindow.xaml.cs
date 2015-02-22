@@ -30,12 +30,36 @@ namespace DBRestorer
         public MainWindow()
         {
             InitializeComponent();
+            this.DragOver += MainWindow_DragOver;
+            this.Drop += MainWindow_Drop;
             _viewModel = this.DataContext as MainWindowVm;
             Messenger.Default.Register<ErrorMsg>(this, true, OnError);
             Messenger.Default.Register<SucceedMsg>(this, true, OnSucceed);
             this.Loaded += OnLoaded;
         }
 
+        private void MainWindow_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+
+            var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+            _viewModel.DbRestorOptVm.SrcPath = files.First();
+            txtDbName.Focus();
+        }
+
+        static void MainWindow_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                e.Effects = files.Count() == 1 && files.First().ToUpperInvariant().EndsWith(".BAK") ? DragDropEffects.Copy : DragDropEffects.None;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+        }
 
         private static void OnSucceed(SucceedMsg msg)
         {
