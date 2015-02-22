@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 
 namespace DBRestorer.Domain
@@ -16,13 +12,28 @@ namespace DBRestorer.Domain
             TRet newValue,
             [CallerMemberName] string propertyName = null) 
         {
-            Contract.Requires(propertyName != null);
             if (EqualityComparer<TRet>.Default.Equals(backingField, newValue))
             {
                 return newValue;
             }
             backingField = newValue;
             RaisePropertyChanged(propertyName);
+            return newValue;
+        }
+
+        public TRet RaiseAndSetIfChanged<TRet>(
+            ref TRet backingField,
+            TRet newValue,
+            Action callbackIfChanged,
+            [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<TRet>.Default.Equals(backingField, newValue))
+            {
+                return newValue;
+            }
+            backingField = newValue;
+            RaisePropertyChanged(propertyName);
+            callbackIfChanged();
             return newValue;
         }
     }
