@@ -15,7 +15,9 @@ namespace DBRestorer.Test
         {
             var sqlUtil = Substitute.For<ISqlServerUtil>();
             var opt = new ISqlServerUtil.DbRestorOptions();
-            sqlUtil.When(x => x.Restore(opt, Arg.Any<ISqlServerUtil.ProgressReport>()))
+            sqlUtil.When(x => x.Restore(opt, 
+                Arg.Any<ISqlServerUtil.ProgressReport>(),
+                Arg.Any<ISqlServerUtil.ErrorReport>()))
                 .Do(x =>{
                     throw new InvalidDataException("");
                 }

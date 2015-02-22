@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,13 @@ namespace DBRestorer.Domain
 
         public delegate void ProgressReport(int percent);
 
+        public delegate void ErrorReport(SqlError error);
+
         public abstract List<string> GetSqlInstances();
         public abstract List<string> GetDatabaseNames(string instanceName);
 
-        public abstract void Restore(DbRestorOptions dbRestorOptions, ProgressReport progressReport);
+        public abstract void Restore(DbRestorOptions dbRestorOptions,
+            ProgressReport progressReport,
+            ErrorReport errReport);
     }
 }

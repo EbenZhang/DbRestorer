@@ -36,7 +36,8 @@ namespace DBRestorer.Model
             return (from Database db in server.Databases select db.Name).ToList();
         }
 
-        public override void Restore(DbRestorOptions opt, ProgressReport progressRpt)
+        public override void Restore(DbRestorOptions opt,
+            ProgressReport progressRpt, ErrorReport errReport)
         {
             var srv = new Server(opt.SqlServerInstName);
             var res = new Restore();
@@ -50,6 +51,10 @@ namespace DBRestorer.Model
             res.ReplaceDatabase = true;
             res.PercentComplete += (sender, args) =>
             {
+                if (args.Error != null)
+                {
+                    errReport(args.Error);
+                }
                 progressRpt(args.Percent);
             };
 
