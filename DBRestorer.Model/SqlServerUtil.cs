@@ -21,7 +21,10 @@ namespace DBRestorer.Model
         {
             var m = new ManagedComputer("LOCALHOST");
             m.ConnectionSettings.ProviderArchitecture = architecture;
-            var ret = (from ServerInstance inst in m.ServerInstances select inst.Parent.ConnectionSettings.MachineName + "\\" + inst.Name).ToList();
+            var ret = (from ServerInstance inst 
+                           in m.ServerInstances 
+                       select inst.Parent.ConnectionSettings.MachineName.Replace("LOCALHOST", ".") + "\\" + inst.Name)
+                       .ToList();
             return ret;
         }
 
