@@ -1,6 +1,6 @@
 [submodule "ExtendedCL"]
 	path = ExtendedCL
-	url = D:/Projects/DBRestorer/ExtendedCL
+	url = https://github.com/EbenZhang/ExtendedCL.git
 	branch = master
 [submodule "WpfCommon"]
 	path = WpfCommon
