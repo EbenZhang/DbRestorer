@@ -22,8 +22,8 @@ namespace DBRestorer.Model
             var m = new ManagedComputer("LOCALHOST");
             m.ConnectionSettings.ProviderArchitecture = architecture;
             var ret = (from ServerInstance inst 
-                           in m.ServerInstances 
-                       select inst.Parent.ConnectionSettings.MachineName.Replace("LOCALHOST", ".") + "\\" + inst.Name)
+                           in m.ServerInstances
+                       select InstancePathConversion.GetInstsPath(inst.Parent.ConnectionSettings.MachineName, inst.Name))
                        .ToList();
             return ret;
         }
@@ -31,7 +31,6 @@ namespace DBRestorer.Model
         public override List<string> GetDatabaseNames(string instanceName)
         {
             var server = new Server(instanceName);
-            server.Refresh();
             return (from Database db in server.Databases select db.Name).ToList();
         }
 
