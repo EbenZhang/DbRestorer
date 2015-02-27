@@ -17,6 +17,8 @@
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,13 +82,9 @@
     <Compile Include="TestRestorer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBRestorer.Domain\DBRestorer.Domain.csproj">
-      <Project>{f03e41e2-0440-4687-8ae5-601c4ac5d2c5}</Project>
-      <Name>DBRestorer.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DBRestorer.Model\DBRestorer.Model.csproj">
-      <Project>{8e560ba5-2bd6-4fdc-98d6-9fcf863b1a8a}</Project>
-      <Name>DBRestorer.Model</Name>
+    <ProjectReference Include="..\DBRestorer\DBRestorer.csproj">
+      <Project>{40cbf670-1f79-4b8f-a794-e74fd2f52b8f}</Project>
+      <Name>DBRestorer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
@@ -116,6 +114,13 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
