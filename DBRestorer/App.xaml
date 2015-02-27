@@ -10,7 +10,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Themes/Theme.xaml" />-->
                 <ResourceDictionary Source="/WpfCommon;Component/Xaml/Fixes.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <local:ViewModelLocator x:Key="ViewModelLocator"/>
