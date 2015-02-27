@@ -36,7 +36,7 @@
             </DockPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,2,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="3*"/>
@@ -54,13 +54,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="4"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="4"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="4"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="4"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0">BackupFile:</TextBlock>
-                <Grid Grid.Column="2">
+                <Grid Grid.Column="2" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
@@ -80,11 +84,10 @@
                         MinWidth="30">...</Button>
                 </Grid>
                 
-                
-                <TextBlock Grid.Column="0" Grid.Row="1">DB Name: </TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="2">DB Name: </TextBlock>
                 <controls:AutoCompleteBox
                     x:Name="txtDbName"
-                    Grid.Row="1" Grid.Column="2"
+                    Grid.Row="2" Grid.Column="2"
                     FilterMode="Contains"
                     ItemsSource="{Binding DataContext.SqlInstancesVm.DbNames, ElementName=ThisWnd}">
                     <controls:AutoCompleteBox.Text>
@@ -96,8 +99,8 @@
                     </controls:AutoCompleteBox.Text>
                 </controls:AutoCompleteBox>
                 
-                <TextBlock Grid.Column="0" Grid.Row="2">Restore MDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="2">
+                <TextBlock Grid.Column="0" Grid.Row="4">Restore MDF To:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="4">
                     <TextBox.Text>
                         <Binding Path="RelocateMdfTo">
                             <Binding.ValidationRules>
@@ -107,8 +110,8 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBlock Grid.Column="0" Grid.Row="3">Restore LDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="3">
+                <TextBlock Grid.Column="0" Grid.Row="6">Restore LDF To:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="6">
                     <TextBox.Text>
                         <Binding Path="RelocateLdfTo">
                             <Binding.ValidationRules>
@@ -118,7 +121,10 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" MinWidth="80" HorizontalAlignment="Center" Grid.Column ="0" Grid.ColumnSpan="3" Grid.Row="4">OK</Button>
+                <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" 
+                        MinWidth="80" HorizontalAlignment="Center" 
+                        Grid.Column ="0" 
+                        Grid.ColumnSpan="3" Grid.Row="8">OK</Button>
             </Grid>
         </Grid>
 
