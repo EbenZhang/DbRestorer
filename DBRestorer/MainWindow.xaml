@@ -11,6 +11,7 @@
         Topmost="True"
         AllowDrop="True"
         mc:Ignorable="d"
+        ResizeMode="CanResizeWithGrip"
         Width="580"
         SizeToContent="Height"
         WindowStartupLocation="Manual"
