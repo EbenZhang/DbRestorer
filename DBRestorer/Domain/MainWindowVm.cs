@@ -1,48 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using DBRestorer.Domain;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Threading;
+﻿using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer.Domain
 {
     public class MainWindowVm : ViewModelBaseEx, IProgressBarProvider
     {
         private readonly ISqlServerUtil _sqlserverUtil;
+        private DbRestorOptVm _DbRestoreOption = new DbRestorOptVm();
+        private bool _IsProcessing;
+        private int _Percent;
+        private bool _PercentageDisabled = true;
+        private string _ProgressDesc = "";
+        private SqlInstancesVM _SqlInstancesVm;
+
         public MainWindowVm(ISqlServerUtil sqlserverUtil)
         {
             _sqlserverUtil = sqlserverUtil;
             SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this);
         }
 
-        private SqlInstancesVM _SqlInstancesVm;
-
         public SqlInstancesVM SqlInstancesVm
         {
             get { return _SqlInstancesVm; }
-            private set
-            {
-                RaiseAndSetIfChanged(ref _SqlInstancesVm, value);
-            }
+            private set { RaiseAndSetIfChanged(ref _SqlInstancesVm, value); }
         }
 
-        private DbRestorOptVm _DbRestoreOption = new DbRestorOptVm();
         public DbRestorOptVm DbRestorOptVm
         {
             get { return _DbRestoreOption; }
             set { RaiseAndSetIfChanged(ref _DbRestoreOption, value); }
         }
 
-        public void Restore()
+        public int Percent
         {
-            _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst), 
-                this, OnRestored);
+            get { return _Percent; }
+            set { RaiseAndSetIfChanged(ref _Percent, value); }
+        }
+
+        public string ProgressDesc
+        {
+            get { return _ProgressDesc; }
+            set { RaiseAndSetIfChanged(ref _ProgressDesc, value); }
+        }
+
+        public bool PercentageDisabled
+        {
+            get { return _PercentageDisabled; }
+            set { RaiseAndSetIfChanged(ref _PercentageDisabled, value); }
+        }
+
+        public bool IsProcessing
+        {
+            get { return _IsProcessing; }
+            set { RaiseAndSetIfChanged(ref _IsProcessing, value); }
         }
 
         public void OnCompleted(string msg)
@@ -73,55 +82,21 @@ namespace DBRestorer.Domain
             });
         }
 
-        private int _Percent = 0;
-        public int Percent
-        {
-            get { return _Percent; }
-            set { RaiseAndSetIfChanged(ref _Percent, value); }
-        }
-
-        private string _ProgressDesc = "";
-        private bool _PercentageDisabled = true;
-
-        public string ProgressDesc
-        {
-            get { return _ProgressDesc; }
-            set
-            {
-                RaiseAndSetIfChanged(ref _ProgressDesc, value);
-            }
-        }
-
-        public bool PercentageDisabled
-        {
-            get { return _PercentageDisabled; }
-            set
-            {
-                RaiseAndSetIfChanged(ref _PercentageDisabled, value);
-            }
-        }
-
-        private bool _IsProcessing = false;
-        public bool IsProcessing
-        {
-            get
-            {
-                return _IsProcessing;
-            }
-            set
-            {
-                RaiseAndSetIfChanged(ref _IsProcessing, value);
-            }
-        }
-
         public void ReportProgress(int percent)
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() => Percent = percent);
         }
 
+        public void Restore()
+        {
+            _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst),
+                this, OnRestored);
+        }
+
         private void OnRestored()
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(async () => await SqlInstancesVm.RetrieveDbNamesAsync(SqlInstancesVm.SelectedInst));
+            DispatcherHelper.CheckBeginInvokeOnUI(
+                async () => await SqlInstancesVm.RetrieveDbNamesAsync(SqlInstancesVm.SelectedInst));
         }
     }
 }

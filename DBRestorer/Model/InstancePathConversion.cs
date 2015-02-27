@@ -1,5 +1,3 @@
-using Microsoft.SqlServer.Management.Smo.Wmi;
-
 namespace DBRestorer.Model
 {
     public static class InstancePathConversion

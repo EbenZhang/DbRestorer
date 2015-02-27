@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace DBRestorer.Domain
 {
     public class DbRestorOptVm : ViewModelBaseEx
     {
+        private string _RelocateLdfTo;
+        private string _RelocateMdfTo;
         private string _SrcPath;
         private string _TargetDbName;
-        private string _RelocateMdfTo;
-        private string _RelocateLdfTo;
 
         public string SrcPath
         {
@@ -60,13 +55,13 @@ namespace DBRestorer.Domain
 
         public ISqlServerUtil.DbRestorOptions GetDbRestoreOption(string serverInstName)
         {
-            return new ISqlServerUtil.DbRestorOptions()
+            return new ISqlServerUtil.DbRestorOptions
             {
                 SqlServerInstName = serverInstName,
-                RelocateMdfTo = this.RelocateMdfTo,
-                RelocateLdfTo = this.RelocateLdfTo,
-                SrcPath = this.SrcPath,
-                TargetDbName = this.TargetDbName
+                RelocateMdfTo = RelocateMdfTo,
+                RelocateLdfTo = RelocateLdfTo,
+                SrcPath = SrcPath,
+                TargetDbName = TargetDbName
             };
         }
     }

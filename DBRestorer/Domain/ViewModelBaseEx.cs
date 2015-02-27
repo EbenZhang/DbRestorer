@@ -10,7 +10,7 @@ namespace DBRestorer.Domain
         public TRet RaiseAndSetIfChanged<TRet>(
             ref TRet backingField,
             TRet newValue,
-            [CallerMemberName] string propertyName = null) 
+            [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<TRet>.Default.Equals(backingField, newValue))
             {

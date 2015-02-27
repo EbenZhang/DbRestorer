@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DBRestorer.Domain
+﻿namespace DBRestorer.Domain
 {
     public class Message
     {
@@ -20,9 +14,10 @@ namespace DBRestorer.Domain
             return _Msg;
         }
     }
+
     public class ErrorMsg : Message
     {
-        public ErrorMsg(string msg) :base(msg)
+        public ErrorMsg(string msg) : base(msg)
         {
         }
     }

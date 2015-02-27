@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DBRestorer.Domain;
-using NUnit.Framework;
 using NSubstitute;
-using ExtendedCL;
+using NUnit.Framework;
 
 namespace DBRestorer.Test
 {
     [TestFixture]
     public class TestGetDatabases
     {
-        private IProgressBarProvider _progressBarProvider;
         private static readonly List<string> DbNames = new List<string>
         {
             "dbA",
-            "dbB",
+            "dbB"
         };
+
+        private IProgressBarProvider _progressBarProvider;
 
         [SetUp]
         public void Setup()
         {
             _progressBarProvider = Substitute.For<IProgressBarProvider>();
         }
+
         [Test]
         public async void CanGetDatabaseNames()
         {
@@ -52,10 +52,7 @@ namespace DBRestorer.Test
         {
             var util = Substitute.For<ISqlServerUtil>();
             var vm = new SqlInstancesVM(util, _progressBarProvider);
-            vm.PropertyChanged += (sender, args) =>
-            {
-                Assert.Fail("Should not raise any property change event");
-            };
+            vm.PropertyChanged += (sender, args) => { Assert.Fail("Should not raise any property change event"); };
 
             await vm.RetrieveDbNamesAsync(null);
             await vm.RetrieveDbNamesAsync("");
@@ -71,7 +68,7 @@ namespace DBRestorer.Test
             util.GetDatabaseNames(Arg.Any<string>()).Returns(dbsWithSystemTables);
 
             var vm = new SqlInstancesVM(util, _progressBarProvider);
-           
+
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 
             CollectionAssert.AreEqual(DbNames, vm.DbNames);

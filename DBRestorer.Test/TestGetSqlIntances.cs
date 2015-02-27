@@ -1,14 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using DBRestorer.Domain;
 using NSubstitute;
 using NUnit.Framework;
-using NUnit.Framework.Api;
-using ExtendedCL;
 
 namespace DBRestorer.Test
 {
@@ -18,8 +12,9 @@ namespace DBRestorer.Test
         private static readonly List<string> Instances = new List<string>
         {
             @"SQLExpress",
-            @"MSSQLServer",
+            @"MSSQLServer"
         };
+
         private IProgressBarProvider _progressBarProvider;
         private ISqlServerUtil _sqlServerUtil;
 
@@ -73,7 +68,7 @@ namespace DBRestorer.Test
             CollectionAssert.AreEqual(Instances, vm.Instances);
             _sqlServerUtil.Received(1).GetSqlInstances();
 
-            await vm.RetrieveInstanceAsync(clearCache: true);
+            await vm.RetrieveInstanceAsync(true);
 
             CollectionAssert.AreEqual(Instances, vm.Instances);
             _sqlServerUtil.Received(2).GetSqlInstances();

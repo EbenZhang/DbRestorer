@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DBRestorer.Domain;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -23,20 +12,26 @@ using WpfCommon.Utils;
 namespace DBRestorer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly MainWindowVm _viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
-            this.DragOver += MainWindow_DragOver;
-            this.Drop += MainWindow_Drop;
-            _viewModel = this.DataContext as MainWindowVm;
+            DragOver += MainWindow_DragOver;
+            Drop += MainWindow_Drop;
+            _viewModel = DataContext as MainWindowVm;
             Messenger.Default.Register<ErrorMsg>(this, true, OnError);
             Messenger.Default.Register<SucceedMsg>(this, true, OnSucceed);
-            this.Loaded += OnLoaded;
+            Loaded += OnLoaded;
+        }
+
+        public ICommand RestoreCmd
+        {
+            get { return new RelayCommand(Restore); }
         }
 
         private void MainWindow_Drop(object sender, DragEventArgs e)
@@ -48,12 +43,14 @@ namespace DBRestorer
             txtDbName.Focus();
         }
 
-        static void MainWindow_DragOver(object sender, DragEventArgs e)
+        private static void MainWindow_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                e.Effects = files.Count() == 1 && files.First().ToUpperInvariant().EndsWith(".BAK") ? DragDropEffects.Copy : DragDropEffects.None;
+                var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+                e.Effects = files.Count() == 1 && files.First().ToUpperInvariant().EndsWith(".BAK")
+                    ? DragDropEffects.Copy
+                    : DragDropEffects.None;
             }
             else
             {
@@ -80,19 +77,11 @@ namespace DBRestorer
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             var desktopWorkingArea = SystemParameters.WorkArea;
-            this.Left = desktopWorkingArea.Right - this.Width - 20;
-            this.Top = desktopWorkingArea.Bottom - this.Height - 20;
+            Left = desktopWorkingArea.Right - Width - 20;
+            Top = desktopWorkingArea.Bottom - Height - 20;
 
             await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
             await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
-        }
-
-        public ICommand RestoreCmd
-        {
-            get
-            {
-                return new RelayCommand(Restore);
-            }
         }
 
         private void Restore()
@@ -110,7 +99,7 @@ namespace DBRestorer
                     return;
                 }
             }
-             
+
             _viewModel.Restore();
         }
 

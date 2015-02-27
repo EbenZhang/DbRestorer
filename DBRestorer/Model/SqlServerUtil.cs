@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DBRestorer.Domain;
@@ -22,10 +21,10 @@ namespace DBRestorer.Model
         {
             var m = new ManagedComputer("LOCALHOST");
             m.ConnectionSettings.ProviderArchitecture = architecture;
-            var ret = (from ServerInstance inst 
-                           in m.ServerInstances
-                       select InstancePathConversion.GetInstsPath(inst.Parent.ConnectionSettings.MachineName, inst.Name))
-                       .ToList();
+            var ret = (from ServerInstance inst
+                in m.ServerInstances
+                select InstancePathConversion.GetInstsPath(inst.Parent.ConnectionSettings.MachineName, inst.Name))
+                .ToList();
             return ret;
         }
 
@@ -89,7 +88,7 @@ namespace DBRestorer.Model
 
                 res.ContinueAfterError = false;
 
-                progressBarProvider.Start(willReportProgress: true, taskDesc: "Restoring...");
+                progressBarProvider.Start(true, "Restoring...");
                 res.SqlRestoreAsync(srv);
             });
         }

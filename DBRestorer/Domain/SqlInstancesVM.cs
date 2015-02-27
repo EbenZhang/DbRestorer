@@ -12,8 +12,9 @@ namespace DBRestorer.Domain
     {
         public const string RetrivingInstances = "Retrieving SQL Instances...";
         public const string RetrivingDbNames = "Retrieving Database Names...";
-        private readonly ISqlServerUtil _util;
         private readonly IProgressBarProvider _ProgressBarProvider;
+        private readonly ISqlServerUtil _util;
+        private string _SelectedInst;
 
         public SqlInstancesVM(ISqlServerUtil util, IProgressBarProvider progressBarProvider)
         {
@@ -25,23 +26,22 @@ namespace DBRestorer.Domain
 
         public ObservableCollection<string> Instances { get; private set; }
 
-        private string _SelectedInst;
-
         public string SelectedInst
         {
-            get
-            {
-                return _SelectedInst;
-            }
-            set
-            {
-                RaiseAndSetIfChanged(ref _SelectedInst, value);
-            }
+            get { return _SelectedInst; }
+            set { RaiseAndSetIfChanged(ref _SelectedInst, value); }
         }
+
+        public ICommand RefreshCmd
+        {
+            get { return new RelayCommand(async () => await RetrieveInstanceAsync(true)); }
+        }
+
+        public ObservableCollection<string> DbNames { get; private set; }
 
         public async Task RetrieveInstanceAsync(bool clearCache = false)
         {
-            if (!clearCache && this.Instances.Count > 0)
+            if (!clearCache && Instances.Count > 0)
             {
                 return;
             }
@@ -51,16 +51,6 @@ namespace DBRestorer.Domain
             SelectedInst = Instances.FirstOrDefault();
             _ProgressBarProvider.OnCompleted(null);
         }
-
-        public ICommand RefreshCmd
-        {
-            get
-            {
-                return new RelayCommand(async () => await RetrieveInstanceAsync(clearCache:true));
-            }
-        }
-
-        public ObservableCollection<string> DbNames { get; private set; }
 
         public async Task RetrieveDbNamesAsync(string mssqlserver)
         {
