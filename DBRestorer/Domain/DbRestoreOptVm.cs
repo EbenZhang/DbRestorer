@@ -25,10 +25,7 @@ namespace DBRestorer.Domain
                 {
                     return;
                 }
-                var dir = Path.GetDirectoryName(_SrcPath);
                 var fileName = Path.GetFileNameWithoutExtension(_SrcPath);
-                RelocateLdfTo = Path.Combine(dir, fileName + "_log.ldf");
-                RelocateMdfTo = Path.Combine(dir, fileName + ".mdf");
                 TargetDbName = fileName;
             }
         }
@@ -36,7 +33,17 @@ namespace DBRestorer.Domain
         public string TargetDbName
         {
             get { return _TargetDbName; }
-            set { RaiseAndSetIfChanged(ref _TargetDbName, value); }
+            set
+            {
+                RaiseAndSetIfChanged(ref _TargetDbName, value);
+                if (!string.IsNullOrWhiteSpace(value)
+                    && !string.IsNullOrWhiteSpace(_SrcPath))
+                {
+                    var dir = Path.GetDirectoryName(_SrcPath);
+                    RelocateLdfTo = Path.Combine(dir, TargetDbName + "_log.ldf");
+                    RelocateMdfTo = Path.Combine(dir, TargetDbName + ".mdf");
+                }
+            }
         }
 
         public string RelocateMdfTo
