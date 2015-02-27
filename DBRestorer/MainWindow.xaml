@@ -10,8 +10,10 @@
         x:Name="ThisWnd"
         AllowDrop="True"
         mc:Ignorable="d"
-        WindowState="Maximized"
-        Title="MainWindow">
+        MinWidth="480"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="Manual"
+        Title="DbRestorer">
     <Window.DataContext>
         <Binding Path="MainWindowVm" Source="{StaticResource ViewModelLocator}"/>
     </Window.DataContext>

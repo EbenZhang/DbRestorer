@@ -79,6 +79,10 @@ namespace DBRestorer
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            var desktopWorkingArea = SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width - 20;
+            this.Top = desktopWorkingArea.Bottom - this.Height - 20;
+
             await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
             await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
         }
