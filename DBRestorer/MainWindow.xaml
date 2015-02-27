@@ -8,16 +8,17 @@
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         xmlns:validations="clr-namespace:WpfCommon.Validations;assembly=WpfCommon"
         x:Name="ThisWnd"
+        Topmost="True"
         AllowDrop="True"
         mc:Ignorable="d"
-        MinWidth="480"
-        SizeToContent="WidthAndHeight"
+        Width="580"
+        SizeToContent="Height"
         WindowStartupLocation="Manual"
         Title="DbRestorer">
     <Window.DataContext>
         <Binding Path="MainWindowVm" Source="{StaticResource ViewModelLocator}"/>
     </Window.DataContext>
-    <Grid Margin="2">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
