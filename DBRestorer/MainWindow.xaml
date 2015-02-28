@@ -7,6 +7,7 @@
         xmlns:wpfcommon="clr-namespace:WpfCommon;assembly=WpfCommon"
         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
         xmlns:validations="clr-namespace:WpfCommon.Validations;assembly=WpfCommon"
+        xmlns:converter="clr-namespace:WpfCommon.Converter;assembly=WpfCommon"
         x:Name="ThisWnd"
         Topmost="True"
         AllowDrop="True"
@@ -147,7 +148,7 @@
     <Window.IsEnabled>
         <Binding Path="IsProcessing">
             <Binding.Converter>
-                <wpfcommon:InverseBooleanConverter/>
+                <converter:InverseBooleanConverter/>
             </Binding.Converter>
         </Binding>
     </Window.IsEnabled>

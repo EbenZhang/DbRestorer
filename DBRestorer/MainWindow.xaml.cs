@@ -1,12 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using DBRestorer.Domain;
+using ExtendedCL;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mantin.Controls.Wpf.Notification;
 using Microsoft.Win32;
 using WpfCommon;
+using WpfCommon.Controls;
 using WpfCommon.Utils;
 
 namespace DBRestorer
@@ -17,6 +24,8 @@ namespace DBRestorer
     public partial class MainWindow : Window
     {
         private readonly MainWindowVm _viewModel;
+
+        private const int _aboutMenuID = int.MaxValue;
 
         public MainWindow()
         {
@@ -82,6 +91,28 @@ namespace DBRestorer
 
             await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
             await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
+
+            var menu = SystemMenu.FromWnd(this, OnMenuClicked);
+            menu.AppendSeparator();
+            menu.AppendMenu(_aboutMenuID, "About");
+        }
+
+        private bool OnMenuClicked(int menuId)
+        {
+            if (menuId == _aboutMenuID)
+            {
+                var licMarkdown = File.ReadAllText(Path.Combine(PathHelper.ProcessDir, "LICENSE"));
+                var markdown = new MarkdownSharp.Markdown();
+                var html = "<html><body>" + markdown.Transform(licMarkdown) + "</body></html>";
+                var dlg = new AboutDialog
+                {
+                    Owner = this,
+                    HtmlDescription = html,
+                };
+                dlg.ShowDialog();
+                return true;
+            }
+            return false;
         }
 
         private void Restore()
