@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Threading;
+﻿using ExtendedCL;
+using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer.Domain
 {

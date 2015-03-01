@@ -206,7 +206,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Domain\ErrorMsg.cs" />
-    <Compile Include="Domain\IProgressBarProvider.cs" />
     <Compile Include="Domain\ISQLServerUtil.cs" />
     <Compile Include="Domain\MainWindowVm.cs" />
     <Compile Include="Domain\Restorer.cs" />
