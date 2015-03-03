@@ -22,5 +22,12 @@ namespace DBRestorer.Test
             var path = InstancePathConversion.GetInstsPath("LOCALHOST", "SQLEXPRESS");
             Assert.That(path, Is.EqualTo(@".\SQLEXPRESS"));
         }
+
+        [Test]
+        public void GiveAnInstNameContainsMSSQLSERVER_ShouldntBeReplaced()
+        {
+            var path = InstancePathConversion.GetInstsPath("LOCALHOST", "MSSQLSERVER2012");
+            Assert.That(path, Is.EqualTo(@".\MSSQLSERVER2012"));
+        }
     }
 }
