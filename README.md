@@ -9,4 +9,4 @@ However it also provides the ability to customise the database name and the path
 
 ## How to install
 
-Click [here](https://raw.github.com/EbenZhang/DbRestorer/dist/setup.exe) to download the setup.exe file and follow the instrcutions to install.
+Click [here](https://raw.github.com/EbenZhang/DbRestorer/master/dist/setup.exe) to download the setup.exe file and follow the instrcutions to install.
