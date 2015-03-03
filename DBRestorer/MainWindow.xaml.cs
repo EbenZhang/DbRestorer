@@ -88,13 +88,19 @@ namespace DBRestorer
             var desktopWorkingArea = SystemParameters.WorkArea;
             Left = desktopWorkingArea.Right - Width - 20;
             Top = desktopWorkingArea.Bottom - Height - 20;
+            try
+            {
+                await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
+                await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
 
-            await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
-            await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
-
-            var menu = SystemMenu.FromWnd(this, OnMenuClicked);
-            menu.AppendSeparator();
-            menu.AppendMenu(_aboutMenuID, "About");
+                var menu = SystemMenu.FromWnd(this, OnMenuClicked);
+                menu.AppendSeparator();
+                menu.AppendMenu(_aboutMenuID, "About");
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.ShowError(this, ex.ToString());
+            }
         }
 
         private bool OnMenuClicked(int menuId)
@@ -130,8 +136,14 @@ namespace DBRestorer
                     return;
                 }
             }
-
-            await _viewModel.Restore();
+            try
+            {
+                await _viewModel.Restore();
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.ShowError(this, ex.ToString());
+            }
         }
 
         private void OnBtnBrowserClicked(object sender, RoutedEventArgs e)
