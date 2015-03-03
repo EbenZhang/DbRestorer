@@ -1,4 +1,5 @@
-﻿using ExtendedCL;
+﻿using System.Threading.Tasks;
+using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 
 namespace DBRestorer.Domain
@@ -88,9 +89,10 @@ namespace DBRestorer.Domain
             DispatcherHelper.CheckBeginInvokeOnUI(() => Percent = percent);
         }
 
-        public void Restore()
+        public async Task Restore()
         {
-            _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst),
+            Start(false, "Initializing...");
+            await _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst),
                 this, OnRestored);
         }
 

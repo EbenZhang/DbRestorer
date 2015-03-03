@@ -35,15 +35,17 @@ namespace DBRestorer.Model
             return (from Database db in server.Databases select db.Name).ToList();
         }
 
-        public override void Restore(DbRestorOptions opt, IProgressBarProvider progressBarProvider,
+        public override async Task Restore(DbRestorOptions opt, IProgressBarProvider progressBarProvider,
             Action additionalCallbackOnCompleted)
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 var srv = new Server(opt.SqlServerInstName);
                 var res = new Restore();
                 res.Devices.AddDevice(opt.SrcPath, DeviceType.File);
                 string errorMsg;
+
+                progressBarProvider.Start(false, "Verifying backup file...");
                 var verifySuccessful = res.SqlVerify(srv, out errorMsg);
                 if (!verifySuccessful)
                 {

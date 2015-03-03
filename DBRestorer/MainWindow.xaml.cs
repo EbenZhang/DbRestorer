@@ -115,7 +115,7 @@ namespace DBRestorer
             return false;
         }
 
-        private void Restore()
+        private async void Restore()
         {
             if (!this.ValidateTextBoxes())
             {
@@ -131,7 +131,7 @@ namespace DBRestorer
                 }
             }
 
-            _viewModel.Restore();
+            await _viewModel.Restore();
         }
 
         private void OnBtnBrowserClicked(object sender, RoutedEventArgs e)

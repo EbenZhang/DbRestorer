@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExtendedCL;
 
 namespace DBRestorer.Domain
@@ -17,7 +18,7 @@ namespace DBRestorer.Domain
         public abstract List<string> GetSqlInstances();
         public abstract List<string> GetDatabaseNames(string instanceName);
 
-        public abstract void Restore(DbRestorOptions dbRestorOptions,
+        public abstract Task Restore(DbRestorOptions dbRestorOptions,
             IProgressBarProvider progressBarProvider, Action additionalCallbackOnCompleted);
 
         public struct DbRestorOptions
