@@ -12,8 +12,8 @@
         AllowDrop="True"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
-        Width="580"
-        SizeToContent="Height"
+        Width="640"
+        Height="220"
         WindowStartupLocation="Manual"
         Title="DbRestorer">
     <Window.DataContext>
@@ -129,10 +129,7 @@
             </Grid>
         </Grid>
 
-        <Popup Grid.Row="1"
-            Placement="Center" StaysOpen="True" IsOpen="{Binding IsProcessing}">
-            <Grid>
-                <xctk:BusyIndicator IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
+        <xctk:BusyIndicator Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
                     <xctk:BusyIndicator.ProgressBarStyle>
                         <Style TargetType="ProgressBar">
                             <Setter Property="IsIndeterminate" Value="{Binding PercentageDisabled}"/>
@@ -142,8 +139,6 @@
                         </Style>
                     </xctk:BusyIndicator.ProgressBarStyle>
                 </xctk:BusyIndicator>
-            </Grid>
-        </Popup>
     </Grid>
     <Window.IsEnabled>
         <Binding Path="IsProcessing">
