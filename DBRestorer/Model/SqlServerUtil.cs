@@ -13,9 +13,21 @@ namespace DBRestorer.Model
     {
         public override List<string> GetSqlInstances()
         {
-            var ret = GetInstancesFor(ProviderArchitecture.Use32bit);
-            ret.AddRange(GetInstancesFor(ProviderArchitecture.Use64bit));
-            return ret.Distinct().ToList();
+            try
+            {
+                var ret = GetInstancesFor(ProviderArchitecture.Use32bit);
+                ret.AddRange(GetInstancesFor(ProviderArchitecture.Use64bit));
+                return ret.Distinct().ToList();
+            }
+            catch
+            {
+                var services = System.ServiceProcess.ServiceController.GetServices();
+                return services.Where(r => r.ServiceName.ToUpperInvariant().StartsWith("MSSQL$"))
+                    .Select(r => InstancePathConversion.GetInstsPath(
+                        "LOCALHOST", r.ServiceName.ToUpperInvariant().Replace("MSSQL$", "")))
+                    .Distinct()
+                    .ToList();
+            }
         }
 
         private static List<string> GetInstancesFor(ProviderArchitecture architecture)
