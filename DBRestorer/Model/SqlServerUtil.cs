@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceProcess;
 using System.Threading.Tasks;
 using DBRestorer.Domain;
 using ExtendedCL;
@@ -21,13 +22,29 @@ namespace DBRestorer.Model
             }
             catch
             {
-                var services = System.ServiceProcess.ServiceController.GetServices();
-                return services.Where(r => r.ServiceName.ToUpperInvariant().StartsWith("MSSQL$"))
-                    .Select(r => InstancePathConversion.GetInstsPath(
-                        "LOCALHOST", r.ServiceName.ToUpperInvariant().Replace("MSSQL$", "")))
+                var services = ServiceController.GetServices();
+                return services.Where(r => IsMsSqlService(r)
+                    || IsDefaultInstServiceName(r))
+                    .Select(NormalizeInstName)
                     .Distinct()
                     .ToList();
             }
+        }
+
+        private static string NormalizeInstName(ServiceController r)
+        {
+            return InstancePathConversion.GetInstsPath(
+                "LOCALHOST", r.ServiceName.ToUpperInvariant().Replace("MSSQL$", ""));
+        }
+
+        private static bool IsMsSqlService(ServiceController r)
+        {
+            return r.ServiceName.ToUpperInvariant().StartsWith("MSSQL$");
+        }
+
+        private static bool IsDefaultInstServiceName(ServiceController r)
+        {
+            return r.ServiceName.ToUpperInvariant() == "MSSQLSERVER";
         }
 
         private static List<string> GetInstancesFor(ProviderArchitecture architecture)
