@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DBRestorer.exe" version="1.0.0.25" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="DBRestorer.exe" version="1.0.0.26" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="dbrestorer.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DBRestorer" version="1.0.5546.34714" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DBRestorer" version="1.0.5557.37259" language="neutral" processorArchitecture="msil" />
     <commandLine file="DBRestorer.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.exe" size="718848">
-      <assemblyIdentity name="DBRestorer" version="1.0.5546.34714" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.exe" size="717824">
+      <assemblyIdentity name="DBRestorer" version="1.0.5557.37259" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>71o0of5QjsMSMExUmTR+XJv1iSDYFhKEmcMWzcFbPdg=</dsig:DigestValue>
+        <dsig:DigestValue>15DRZoU4tf+o07RryAfaVoGtcFiIgvkxwVG1CCY73aU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>xYMBSSWDaf+nuLyGw5aA3S6CX0Th3y6+Pnv6N0IcREE=</dsig:DigestValue>
+        <dsig:DigestValue>oSVrCbBPVr30vaIxBOlcv5K+XiI8dst3epz79//UVLg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -355,14 +355,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WpfCommon.dll" size="34304">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WpfCommon.dll" size="36352">
       <assemblyIdentity name="WpfCommon" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>a7j8BHNad+jH7pY0xe/MhaBtDj1MVGn+O3jQf9gMd4M=</dsig:DigestValue>
+        <dsig:DigestValue>nBMUU6wfZG318vQutq5uot90rWFDuAIn2dQRmNtMfCw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -588,13 +588,13 @@
       <dsig:DigestValue>dmy7t1Ye20xyuNV0Ex1PGryASRbsZmh40Yy3p7eb7cQ=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="LICENSE" size="2239">
+  <file name="LICENSE.md" size="2240">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ucTxEqs3g+QJjatAdqj/jG6XHPUqW744MKmMrlaq32Q=</dsig:DigestValue>
+      <dsig:DigestValue>zuvcaYc3obRRxba/4pz6KmQJ1dYA6pbIGm4BtrD6abw=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
