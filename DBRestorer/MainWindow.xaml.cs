@@ -107,7 +107,7 @@ namespace DBRestorer
         {
             if (menuId == _aboutMenuID)
             {
-                var licMarkdown = File.ReadAllText(Path.Combine(PathHelper.ProcessDir, "LICENSE"));
+                var licMarkdown = File.ReadAllText(Path.Combine(PathHelper.ProcessDir, "LICENSE.md"));
                 var markdown = new MarkdownSharp.Markdown();
                 var html = "<html><body>" + markdown.Transform(licMarkdown) + "</body></html>";
                 var dlg = new AboutDialog

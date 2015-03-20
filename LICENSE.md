@@ -13,7 +13,7 @@ If you prefer, you can rather get me a bottle of coke next time I am in a locati
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_donations">
 <input type="hidden" name="business" value="nicoleflopy@gmail.com">
-<input type="hidden" name="lc" value="US">
+<input type="hidden" name="lc" value="AUS">
 <input type="hidden" name="item_name" value="Nicologies">
 <input type="hidden" name="no_note" value="0">
 <input type="hidden" name="currency_code" value="AUD">

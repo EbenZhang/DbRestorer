@@ -247,8 +247,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="..\LICENSE">
-      <Link>LICENSE</Link>
+    <Content Include="..\LICENSE.md">
+      <Link>LICENSE.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="DBRestorer_TemporaryKey.pfx" />
