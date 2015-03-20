@@ -72,16 +72,7 @@ namespace DBRestorer.Model
                 var srv = new Server(opt.SqlServerInstName);
                 var res = new Restore();
                 res.Devices.AddDevice(opt.SrcPath, DeviceType.File);
-                string errorMsg;
-
-                progressBarProvider.Start(false, "Verifying backup file...");
-                var verifySuccessful = res.SqlVerify(srv, out errorMsg);
-                if (!verifySuccessful)
-                {
-                    progressBarProvider.OnError("The file cannot be restored.\r\n" + errorMsg);
-                    return;
-                }
-
+                
                 res.Database = opt.TargetDbName;
                 res.Action = RestoreActionType.Database;
                 res.PercentCompleteNotification = 1;
