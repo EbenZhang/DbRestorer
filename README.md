@@ -19,8 +19,6 @@ All rights reserved [Nicologies](http://www.nicologies.tk) @2015
 
 # Donate
 
-# Donate
-
 If you feel that the work I provide is worth it, you can donate by using the Donate button below. This is greatly appreciated.
 You can use Paypal to [donate](http://www.nicologies.tk/donation.html) even if you do not have a Paypal account.There is, of course, no obligation whatsoever. 
 If you prefer, you can rather buy me a bottle of coke next time I am in a location near you ;) 
