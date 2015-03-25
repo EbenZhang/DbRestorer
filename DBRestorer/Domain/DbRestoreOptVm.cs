@@ -30,7 +30,8 @@ namespace DBRestorer.Domain
             get { return _TargetDbName; }
             set
             {
-                RaiseAndSetIfChanged(ref _TargetDbName, value);
+                _TargetDbName = value;
+                RaisePropertyChanged();
                 if (!string.IsNullOrWhiteSpace(value)
                     && !string.IsNullOrWhiteSpace(_SrcPath))
                 {
@@ -44,13 +45,21 @@ namespace DBRestorer.Domain
         public string RelocateMdfTo
         {
             get { return _RelocateMdfTo; }
-            set { RaiseAndSetIfChanged(ref _RelocateMdfTo, value); }
+            set
+            {
+                _RelocateMdfTo = value;
+                RaisePropertyChanged();
+            }
         }
 
         public string RelocateLdfTo
         {
             get { return _RelocateLdfTo; }
-            set { RaiseAndSetIfChanged(ref _RelocateLdfTo, value); }
+            set
+            {
+                _RelocateLdfTo = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ISqlServerUtil.DbRestorOptions GetDbRestoreOption(string serverInstName)
