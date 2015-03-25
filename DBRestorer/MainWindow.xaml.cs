@@ -30,8 +30,8 @@ namespace DBRestorer
         public MainWindow()
         {
             InitializeComponent();
-            DragOver += MainWindow_DragOver;
-            Drop += MainWindow_Drop;
+            PreviewDragOver += MainWindow_DragOver;
+            PreviewDrop += MainWindow_Drop;
             _viewModel = DataContext as MainWindowVm;
             Messenger.Default.Register<ErrorMsg>(this, true, OnError);
             Messenger.Default.Register<SucceedMsg>(this, true, OnSucceed);
