@@ -92,8 +92,16 @@ namespace DBRestorer.Domain
         public async Task Restore()
         {
             Start(false, "Initializing...");
-            await _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst),
-                this, OnRestored);
+            try
+            {
+                await _sqlserverUtil.Restore(DbRestorOptVm.GetDbRestoreOption(SqlInstancesVm.SelectedInst),
+                    this, OnRestored);
+            }
+            catch
+            {
+                IsProcessing = false;
+                throw;
+            }
         }
 
         private void OnRestored()
