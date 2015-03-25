@@ -13,15 +13,18 @@ namespace DBRestorer.Domain
         public const string RetrivingInstances = "Retrieving SQL Instances...";
         public const string RetrivingDbNames = "Retrieving Database Names...";
         private readonly IProgressBarProvider _ProgressBarProvider;
+        private readonly IUserPreferencePersist _userPreference;
         private readonly ISqlServerUtil _util;
         private string _SelectedInst;
 
-        public SqlInstancesVM(ISqlServerUtil util, IProgressBarProvider progressBarProvider)
+        public SqlInstancesVM(ISqlServerUtil util, 
+            IProgressBarProvider progressBarProvider, IUserPreferencePersist userPreference)
         {
             Instances = new ObservableCollection<string>();
             DbNames = new ObservableCollection<string>();
             _util = util;
             _ProgressBarProvider = progressBarProvider;
+            _userPreference = userPreference;
         }
 
         public ObservableCollection<string> Instances { get; private set; }
@@ -48,7 +51,16 @@ namespace DBRestorer.Domain
             _ProgressBarProvider.Start(false, RetrivingInstances);
             var insts = await Task.Run(() => _util.GetSqlInstances());
             Instances.Assign(insts);
-            SelectedInst = Instances.FirstOrDefault();
+            var pref = _userPreference.LoadPreference();
+            if (string.IsNullOrWhiteSpace(pref.LastUsedDbInst)
+                || !Instances.Contains(pref.LastUsedDbInst))
+            {
+                SelectedInst = Instances.FirstOrDefault();
+            }
+            else
+            {
+                SelectedInst = pref.LastUsedDbInst;
+            }
             _ProgressBarProvider.OnCompleted(null);
         }
 
@@ -62,6 +74,15 @@ namespace DBRestorer.Domain
             var dbNames = await Task.Run(() => _util.GetDatabaseNames(mssqlserver));
             DbNames.Assign(dbNames.Except(ISqlServerUtil.SystemDatabases, StringComparer.InvariantCultureIgnoreCase));
             _ProgressBarProvider.OnCompleted(null);
+        }
+
+        public void SavePreference()
+        {
+            var pref = new UserPreference
+            {
+                LastUsedDbInst = SelectedInst
+            };
+            _userPreference.SavePreference(pref);
         }
     }
 }

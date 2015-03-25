@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 
@@ -14,10 +16,10 @@ namespace DBRestorer.Domain
         private string _ProgressDesc = "";
         private SqlInstancesVM _SqlInstancesVm;
 
-        public MainWindowVm(ISqlServerUtil sqlserverUtil)
+        public MainWindowVm(ISqlServerUtil sqlserverUtil, IUserPreferencePersist userPreferencePersist)
         {
             _sqlserverUtil = sqlserverUtil;
-            SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this);
+            SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this, userPreferencePersist);
         }
 
         public SqlInstancesVM SqlInstancesVm
@@ -108,6 +110,11 @@ namespace DBRestorer.Domain
         {
             DispatcherHelper.CheckBeginInvokeOnUI(
                 async () => await SqlInstancesVm.RetrieveDbNamesAsync(SqlInstancesVm.SelectedInst));
+        }
+
+        public void SaveInstSelection()
+        {
+            SqlInstancesVm.SavePreference();
         }
     }
 }

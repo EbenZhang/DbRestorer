@@ -139,6 +139,7 @@ namespace DBRestorer
             try
             {
                 await _viewModel.Restore();
+                _viewModel.SaveInstSelection();
             }
             catch (Exception ex)
             {

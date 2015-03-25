@@ -20,6 +20,7 @@ namespace DBRestorer
             // Usually you're only interested in exposing the type
             // via its interface:
             builder.RegisterType<SqlServerUtil>().As<ISqlServerUtil>();
+            builder.RegisterInstance(new UserPreferencePersist()).As<IUserPreferencePersist>();
             builder.RegisterType<MainWindowVm>().AsSelf();
             builder.RegisterType<SqlInstancesVM>().AsSelf();
             _container = builder.Build();

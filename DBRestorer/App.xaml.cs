@@ -22,6 +22,10 @@ namespace DBRestorer
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (!Directory.Exists(PathHelper.ProcessAppDir))
+            {
+                Directory.CreateDirectory(PathHelper.ProcessAppDir);
+            }
             DispatcherHelper.Initialize();
             base.OnStartup(e);
 

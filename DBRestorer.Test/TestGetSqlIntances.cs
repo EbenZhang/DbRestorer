@@ -18,6 +18,8 @@ namespace DBRestorer.Test
 
         private IProgressBarProvider _progressBarProvider;
         private ISqlServerUtil _sqlServerUtil;
+        private IUserPreferencePersist _userPrefPersist;
+        private SqlInstancesVM _vm;
 
         [SetUp]
         public void Setup()
@@ -25,53 +27,54 @@ namespace DBRestorer.Test
             _sqlServerUtil = Substitute.For<ISqlServerUtil>();
             _sqlServerUtil.GetSqlInstances().Returns(Instances);
             _progressBarProvider = Substitute.For<IProgressBarProvider>();
+            _userPrefPersist = Substitute.For<IUserPreferencePersist>();
+            _userPrefPersist.LoadPreference().Returns(new UserPreference());
+
+            _vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider, _userPrefPersist);
         }
 
         [Test]
         public async void CanGetSqlInstance()
         {
-            var vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider);
-            Assert.That(vm.Instances, Is.Empty);
+            Assert.That(_vm.Instances, Is.Empty);
 
-            await vm.RetrieveInstanceAsync();
+            await _vm.RetrieveInstanceAsync();
 
             _progressBarProvider.Received(1).Start(false, SqlInstancesVM.RetrivingInstances);
             _progressBarProvider.Received(1).OnCompleted(Arg.Any<string>());
 
-            CollectionAssert.AreEqual(Instances, vm.Instances);
-            Assert.AreEqual(Instances.First(), vm.SelectedInst);
+            CollectionAssert.AreEqual(Instances, _vm.Instances);
+            Assert.AreEqual(Instances.First(), _vm.SelectedInst);
         }
 
         [Test]
         public async void InstancesAreCached()
         {
-            var vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider);
-            Assert.That(vm.Instances, Is.Empty);
-            await vm.RetrieveInstanceAsync();
+            Assert.That(_vm.Instances, Is.Empty);
+            await _vm.RetrieveInstanceAsync();
 
-            CollectionAssert.AreEqual(Instances, vm.Instances);
+            CollectionAssert.AreEqual(Instances, _vm.Instances);
             _sqlServerUtil.Received(1).GetSqlInstances();
 
             _sqlServerUtil.ClearReceivedCalls();
-            await vm.RetrieveInstanceAsync();
+            await _vm.RetrieveInstanceAsync();
 
-            CollectionAssert.AreEqual(Instances, vm.Instances);
+            CollectionAssert.AreEqual(Instances, _vm.Instances);
             _sqlServerUtil.DidNotReceive().GetSqlInstances();
         }
 
         [Test]
         public async void ForceToIgnoreCache()
         {
-            var vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider);
-            Assert.That(vm.Instances, Is.Empty);
-            await vm.RetrieveInstanceAsync();
+            Assert.That(_vm.Instances, Is.Empty);
+            await _vm.RetrieveInstanceAsync();
 
-            CollectionAssert.AreEqual(Instances, vm.Instances);
+            CollectionAssert.AreEqual(Instances, _vm.Instances);
             _sqlServerUtil.Received(1).GetSqlInstances();
 
-            await vm.RetrieveInstanceAsync(true);
+            await _vm.RetrieveInstanceAsync(true);
 
-            CollectionAssert.AreEqual(Instances, vm.Instances);
+            CollectionAssert.AreEqual(Instances, _vm.Instances);
             _sqlServerUtil.Received(2).GetSqlInstances();
         }
     }

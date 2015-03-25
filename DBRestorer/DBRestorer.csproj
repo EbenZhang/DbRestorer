@@ -208,9 +208,11 @@
     </ApplicationDefinition>
     <Compile Include="Domain\ErrorMsg.cs" />
     <Compile Include="Domain\ISQLServerUtil.cs" />
+    <Compile Include="Domain\UserPreferencePersist.cs" />
     <Compile Include="Domain\MainWindowVm.cs" />
     <Compile Include="Domain\Restorer.cs" />
     <Compile Include="Domain\SqlInstancesVM.cs" />
+    <Compile Include="Domain\UserPreference.cs" />
     <Compile Include="Domain\ViewModelBaseEx.cs" />
     <Compile Include="Model\InstancePathConversion.cs" />
     <Compile Include="Model\SqlServerUtil.cs" />
