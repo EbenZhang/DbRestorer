@@ -32,7 +32,16 @@ namespace DBRestorer.Domain
         public string SelectedInst
         {
             get { return _SelectedInst; }
-            set { RaiseAndSetIfChanged(ref _SelectedInst, value); }
+            set
+            {
+                RaiseAndSetIfChanged(ref _SelectedInst, value, async () =>
+                {
+                    if (!string.IsNullOrWhiteSpace(_SelectedInst))
+                    {
+                        await RetrieveDbNamesAsync(_SelectedInst);
+                    }
+                });
+            }
         }
 
         public ICommand RefreshCmd
