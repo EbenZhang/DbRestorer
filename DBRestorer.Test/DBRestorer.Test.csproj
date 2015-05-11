@@ -81,6 +81,10 @@
     <Compile Include="TestRestorer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBRestorer.Ctrl\DBRestorer.Ctrl.csproj">
+      <Project>{1c78a58a-a63e-407e-832c-86ebaffe8e1a}</Project>
+      <Name>DBRestorer.Ctrl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DBRestorer\DBRestorer.csproj">
       <Project>{40cbf670-1f79-4b8f-a794-e74fd2f52b8f}</Project>
       <Name>DBRestorer</Name>
