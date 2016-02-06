@@ -115,6 +115,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceProcess" />
@@ -186,6 +190,7 @@
     </Compile>
     <Compile Include="Model\InstancePathConversion.cs" />
     <Compile Include="Model\SqlServerUtil.cs" />
+    <Compile Include="Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -211,6 +216,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj">
+      <Project>{05512917-cb75-4717-aee1-b56612c31ab1}</Project>
+      <Name>DBRestorer.Plugin.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
       <Name>ExtendedCL</Name>

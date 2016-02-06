@@ -7,6 +7,7 @@ using System.Windows;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Win32;
+using DBRestorer.Ctrl;
 
 namespace DBRestorer
 {
@@ -26,10 +27,30 @@ namespace DBRestorer
             {
                 Directory.CreateDirectory(PathHelper.ProcessAppDir);
             }
+            if (!Directory.Exists(Plugins.PluginFolderPath))
+            {
+                Directory.CreateDirectory(Plugins.PluginFolderPath);
+            }
+            AppDomain.CurrentDomain.AssemblyResolve += LoadFromPluginFolder;
             DispatcherHelper.Initialize();
             base.OnStartup(e);
-
             Task.Run(() => SetAddRemoveProgramsIcon());
+        }
+
+        private Assembly LoadFromPluginFolder(object sender, ResolveEventArgs args)
+        {
+            string assemblyPath = Path.Combine(Plugins.PluginFolderPath,
+                string.Format("{0}.dll", new AssemblyName(args.Name).Name));
+            if (!File.Exists(assemblyPath))
+            {
+                assemblyPath = Path.Combine(Plugins.PluginFolderPath,
+                string.Format("{0}.exe", new AssemblyName(args.Name).Name));
+                if (!File.Exists(assemblyPath))
+                {
+                    return null;
+                }
+            }
+            return Assembly.LoadFrom(assemblyPath);
         }
 
         private static void SetAddRemoveProgramsIcon()

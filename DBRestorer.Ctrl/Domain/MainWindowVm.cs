@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
+using DBRestorer.Ctrl;
+using DBRestorer.Plugin.Interface;
 
 namespace DBRestorer.Domain
 {
@@ -62,6 +64,11 @@ namespace DBRestorer.Domain
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() =>
             {
+                var plugins = Plugins.GetPlugins<IPostDbRestore>();
+                foreach(var plugin in plugins)
+                {
+                    plugin.Value.OnDBRestored(SqlInstancesVm.SelectedInst, DbRestorOptVm.TargetDbName);
+                }
                 IsProcessing = false;
                 if (!string.IsNullOrWhiteSpace(msg))
                 {
