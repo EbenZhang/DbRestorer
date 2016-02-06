@@ -5,3 +5,6 @@
 [submodule "WpfCommon"]
 	path = WpfCommon
 	url = https://github.com/EbenZhang/WpfCommon.git
+[submodule "DBRestorer.Plugin.Interface"]
+	path = DBRestorer.Plugin.Interface
+	url = git@github.com:EbenZhang/DBRestorer.Plugin.Interface.git
