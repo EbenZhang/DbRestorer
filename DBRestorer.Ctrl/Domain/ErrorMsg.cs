@@ -29,4 +29,12 @@
         {
         }
     }
+
+    public class CallPostRestorePlugins : Message
+    {
+        public CallPostRestorePlugins(string msg) : base(msg)
+        {
+
+        }
+    }
 }

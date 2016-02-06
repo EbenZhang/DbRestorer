@@ -67,11 +67,7 @@ namespace DBRestorer.Domain
             {
                 if (msg == SqlServerUtil.FinishedRestore)
                 {
-                    var plugins = Plugins.GetPlugins<IPostDbRestore>();
-                    foreach (var plugin in plugins)
-                    {
-                        plugin.Value.OnDBRestored(SqlInstancesVm.SelectedInst, DbRestorOptVm.TargetDbName);
-                    }
+                    MessengerInstance.Send(new CallPostRestorePlugins("Call PostRestore Plugins"));
                 }
                 IsProcessing = false;
                 if (!string.IsNullOrWhiteSpace(msg))

@@ -15,6 +15,8 @@ using Microsoft.Win32;
 using WpfCommon;
 using WpfCommon.Controls;
 using WpfCommon.Utils;
+using DBRestorer.Plugin.Interface;
+using DBRestorer.Ctrl;
 
 namespace DBRestorer
 {
@@ -35,7 +37,17 @@ namespace DBRestorer
             _viewModel = DataContext as MainWindowVm;
             Messenger.Default.Register<ErrorMsg>(this, true, OnError);
             Messenger.Default.Register<SucceedMsg>(this, true, OnSucceed);
+            Messenger.Default.Register<CallPostRestorePlugins>(this, true, OnCallPostRestorePlugins);
             Loaded += OnLoaded;
+        }
+
+        private void OnCallPostRestorePlugins(CallPostRestorePlugins obj)
+        {
+            var plugins = Plugins.GetPlugins<IPostDbRestore>();
+            foreach (var plugin in plugins)
+            {
+                plugin.Value.OnDBRestored(this, _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            }
         }
 
         public ICommand RestoreCmd
