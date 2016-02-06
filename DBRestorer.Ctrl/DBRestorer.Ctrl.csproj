@@ -180,6 +180,7 @@
     <Compile Include="Domain\UserPreference.cs" />
     <Compile Include="Domain\UserPreferencePersist.cs" />
     <Compile Include="Domain\ViewModelBaseEx.cs" />
+    <Compile Include="Domain\ViewModelLocator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
