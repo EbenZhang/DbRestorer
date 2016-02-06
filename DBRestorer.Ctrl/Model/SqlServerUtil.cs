@@ -12,6 +12,8 @@ namespace DBRestorer.Model
 {
     public class SqlServerUtil : ISqlServerUtil
     {
+        public static readonly string FinishedRestore = "Finished Restoring.";
+
         public override List<string> GetSqlInstances()
         {
             try
@@ -86,7 +88,7 @@ namespace DBRestorer.Model
                     progressBarProvider.ReportProgress(args.Percent);
                     if (args.Percent == 100)
                     {
-                        progressBarProvider.OnCompleted("Finished Restoring.");
+                        progressBarProvider.OnCompleted(FinishedRestore);
                         if (additionalCallbackOnCompleted != null)
                         {
                             additionalCallbackOnCompleted();
