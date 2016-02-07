@@ -72,6 +72,10 @@ namespace DBRestorer.Model
             await Task.Run(() =>
             {
                 var srv = new Server(opt.SqlServerInstName);
+                if (srv.Databases.Contains(opt.TargetDbName))
+                {
+                    srv.KillDatabase(opt.TargetDbName);
+                }
                 var res = new Restore();
                 res.Devices.AddDevice(opt.SrcPath, DeviceType.File);
                 
