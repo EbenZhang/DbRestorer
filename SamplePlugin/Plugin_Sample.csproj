@@ -54,8 +54,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF not exist %25AppData%25\DbRestorer\Plugins (mkdir %25AppData%25\DbRestorer\Plugins)
-copy $(TargetPath) %25AppData%25\DbRestorer\Plugins</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
