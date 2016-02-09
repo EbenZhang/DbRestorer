@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DBRestorer.exe" version="1.0.0.33" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="DBRestorer.exe" version="1.0.0.34" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="dbrestorer.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DBRestorer" version="1.0.5881.14783" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DBRestorer" version="1.0.5883.39807" language="neutral" processorArchitecture="msil" />
     <commandLine file="DBRestorer.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -56,25 +56,25 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.exe" size="691200">
-      <assemblyIdentity name="DBRestorer" version="1.0.5881.14783" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="DBRestorer" version="1.0.5883.39807" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GTEEk2jsi+kSnZsb5iY6vtZrv+az2sXe5rraRVrN970=</dsig:DigestValue>
+        <dsig:DigestValue>whQbNDcziIERHGLMlHsVK5uCImIkO7oMZFizplStfQM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.Ctrl.dll" size="36864">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.Ctrl.dll" size="37376">
       <assemblyIdentity name="DBRestorer.Ctrl" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2Bl3qg+XMIR1hm20hBJkFrvew74NPKi2PSAurzuz44o=</dsig:DigestValue>
+        <dsig:DigestValue>78hf6HvV6dQAERts7vQGQY7jaXNBVNTkO8xBBEYE6XM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,19 +86,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>nTm/LGBLLAZyA1uHEdv8857UzAi6Ltnrnsfwnn7zIRs=</dsig:DigestValue>
+        <dsig:DigestValue>DVTFOMXJWueDaEZYMoADTgeZuPmBeP/4xXbUFo9avN8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExtendedCL.dll" size="6144">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExtendedCL.dll" size="6656">
       <assemblyIdentity name="ExtendedCL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NYfZFqexoYgxgZ9RrbatNf50DHM6BSZ9S0pOJIF8PbM=</dsig:DigestValue>
+        <dsig:DigestValue>tu6wQXvyCjkIpuZxOnvF283aaU38UlSdi1OtKPh8BHg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -338,7 +338,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Vga+xSVA0A4mQIq8yfjn/64Ad9qz3YHRV3by4uwVG/U=</dsig:DigestValue>
+        <dsig:DigestValue>I2MH78ibiHlpOb6PV9BXtOGHv/CWpOgRJiDochn470o=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
