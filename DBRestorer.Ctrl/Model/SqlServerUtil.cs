@@ -84,6 +84,16 @@ namespace DBRestorer.Model
                 res.Action = RestoreActionType.Database;
                 res.PercentCompleteNotification = 1;
                 res.ReplaceDatabase = true;
+                res.Complete += (sender, args) =>
+                {
+                    if(res.AsyncStatus.ExecutionStatus == ExecutionStatus.Failed)
+                    {
+                        progressBarProvider.OnError(args.Error.ToString());
+                        return;
+                    }
+                    progressBarProvider.OnCompleted(FinishedRestore);
+                    additionalCallbackOnCompleted?.Invoke();
+                };
                 res.PercentComplete += (sender, args) =>
                 {
                     if (res.AsyncStatus.ExecutionStatus == ExecutionStatus.Failed)
@@ -91,14 +101,6 @@ namespace DBRestorer.Model
                         progressBarProvider.OnError(res.AsyncStatus.LastException.ToString());
                     }
                     progressBarProvider.ReportProgress(args.Percent);
-                    if (args.Percent == 100)
-                    {
-                        progressBarProvider.OnCompleted(FinishedRestore);
-                        if (additionalCallbackOnCompleted != null)
-                        {
-                            additionalCallbackOnCompleted();
-                        }
-                    }
                 };
 
                 var fileList = res.ReadFileList(srv);
