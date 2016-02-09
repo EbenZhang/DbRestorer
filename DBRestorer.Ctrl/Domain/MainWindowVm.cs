@@ -79,6 +79,7 @@ namespace DBRestorer.Domain
 
         public void Start(bool willReportProgress, string taskDesc)
         {
+            Percent = 0;
             PercentageDisabled = !willReportProgress;
             IsProcessing = true;
             ProgressDesc = taskDesc;
