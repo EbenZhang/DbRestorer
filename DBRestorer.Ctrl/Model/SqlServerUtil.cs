@@ -77,6 +77,7 @@ namespace DBRestorer.Model
                     srv.KillDatabase(opt.TargetDbName);
                 }
                 var res = new Restore();
+                srv.ConnectionContext.StatementTimeout = 0;
                 res.Devices.AddDevice(opt.SrcPath, DeviceType.File);
                 
                 res.Database = opt.TargetDbName;
