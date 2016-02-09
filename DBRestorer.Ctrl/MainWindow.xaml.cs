@@ -37,11 +37,11 @@ namespace DBRestorer
             _viewModel = DataContext as MainWindowVm;
             Messenger.Default.Register<ErrorMsg>(this, true, OnError);
             Messenger.Default.Register<SucceedMsg>(this, true, OnSucceed);
-            Messenger.Default.Register<CallPostRestorePlugins>(this, true, OnCallPostRestorePlugins);
+            Messenger.Default.Register<CallPostRestorePlugins>(this, true, InvokePostRestorePlugins);
             Loaded += OnLoaded;
         }
 
-        private void OnCallPostRestorePlugins(CallPostRestorePlugins obj)
+        private void InvokePostRestorePlugins(CallPostRestorePlugins obj)
         {
             var plugins = Plugins.GetPlugins<IPostDbRestore>();
             foreach (var plugin in plugins)
