@@ -6,6 +6,9 @@ using GalaSoft.MvvmLight.Threading;
 using DBRestorer.Ctrl;
 using DBRestorer.Plugin.Interface;
 using DBRestorer.Model;
+using System.Linq;
+using System.Collections.ObjectModel;
+using WpfCommon.Utils;
 
 namespace DBRestorer.Domain
 {
@@ -23,6 +26,8 @@ namespace DBRestorer.Domain
         {
             _sqlserverUtil = sqlserverUtil;
             SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this, userPreferencePersist);
+            var plugins = Plugins.GetPlugins<IPostDbRestore>();
+            PluginNames.AddRange(plugins.Select(r => r.Value.PluginName));
         }
 
         public SqlInstancesVM SqlInstancesVm
@@ -60,6 +65,12 @@ namespace DBRestorer.Domain
             get { return _IsProcessing; }
             set { RaiseAndSetIfChanged(ref _IsProcessing, value); }
         }
+
+        public ObservableCollection<string> PluginNames
+        {
+            get; set;
+        } = new ObservableCollection<string>();
+
 
         public void OnCompleted(string msg)
         {

@@ -17,6 +17,7 @@ using WpfCommon.Controls;
 using WpfCommon.Utils;
 using DBRestorer.Plugin.Interface;
 using DBRestorer.Ctrl;
+using System.Windows.Controls;
 
 namespace DBRestorer
 {
@@ -179,6 +180,22 @@ namespace DBRestorer
             {
                 _viewModel.DbRestorOptVm.SrcPath = dlg.FileName;
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this.ValidateComboBoxes())
+            {
+                return;
+            }
+            if (!txtDbName.Valid())
+            {
+                return;
+            }
+            var pluginName = ((MenuItem)e.OriginalSource).Header;
+            var plugin = Plugins.GetPlugins<IPostDbRestore>().First(r => r.Value.PluginName == pluginName);
+            plugin.Value.OnDBRestored(this, 
+                _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
         }
     }
 }

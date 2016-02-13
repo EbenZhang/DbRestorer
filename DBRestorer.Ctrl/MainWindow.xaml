@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
         Width="640"
-        Height="220"
+        Height="230"
         WindowStartupLocation="Manual"
         Title="DbRestorer">
     <Window.DataContext>
@@ -24,121 +24,159 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" DataContext="{Binding SqlInstancesVm}">
-            <DockPanel LastChildFill="True">
-                <TextBlock>SQL Instance:</TextBlock>
-                <Button Margin="2,0,0,0" DockPanel.Dock="Right" Command="{Binding RefreshCmd}">Refresh</Button>
-                <ComboBox 
-                    Margin="4,0,0,0"
-                    VerticalAlignment="Center"
-                    ItemsSource="{Binding Instances}"
-                    SelectedItem="{Binding SelectedInst}"></ComboBox>
-            </DockPanel>
-        </Grid>
+        <Border Grid.Row="0" Margin="0,0,0,4" BorderThickness="1" BorderBrush="LightBlue">
+            <Border.Visibility>
+                <Binding Path="PluginNames.Count">
+                    <Binding.Converter>
+                        <converter:CompositeConverter>
+                            <converter:ZeroToFalseConverter></converter:ZeroToFalseConverter>
+                            <BooleanToVisibilityConverter/>
+                        </converter:CompositeConverter>
+                    </Binding.Converter>
+                </Binding>
+            </Border.Visibility>
 
-        <Grid Grid.Row="1" Margin="0,2,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <ListBox 
-                DataContext="{Binding SqlInstancesVm}"
-                Grid.Column="0"
-                ItemsSource="{Binding DbNames}">
-            </ListBox>
-            <Grid Grid.Column="1" DataContext="{Binding DbRestorOptVm}">
+            <Menu Grid.Row="0" IsMainMenu="True">
+                <Menu.Resources>
+                    <ItemsPanelTemplate x:Key="IconlessMenuItem">
+                        <StackPanel Margin="-20,0,0,0" Background="White"/>
+                    </ItemsPanelTemplate>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="ItemsPanel" Value="{StaticResource IconlessMenuItem}"/>
+                    </Style>
+                </Menu.Resources>
+                <MenuItem Header="_Plugins" ItemsSource="{Binding PluginNames}" Click="MenuItem_Click"></MenuItem>
+            </Menu>
+        </Border>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" DataContext="{Binding SqlInstancesVm}">
+                <DockPanel LastChildFill="True">
+                    <TextBlock>SQL Instance:</TextBlock>
+                    <Button Margin="2,0,0,0" DockPanel.Dock="Right" Command="{Binding RefreshCmd}">Refresh</Button>
+                    <ComboBox 
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Instances}">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="SelectedInst">
+                                <Binding.ValidationRules>
+                                    <validations:HasSelectionValidator/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    
+                    </ComboBox>
+                </DockPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0,2,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="4"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="4"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="4"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="4"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0">BackupFile:</TextBlock>
-                <Grid Grid.Column="2" Grid.Row="0">
+                <ListBox 
+                    DataContext="{Binding SqlInstancesVm}"
+                    Grid.Column="0"
+                    ItemsSource="{Binding DbNames}">
+                </ListBox>
+                <Grid Grid.Column="1" DataContext="{Binding DbRestorOptVm}">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="4"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0">BackupFile:</TextBlock>
+                    <Grid Grid.Column="2" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0">
+                            <TextBox.Text>
+                                <Binding Path="SrcPath">
+                                    <Binding.ValidationRules>
+                                        <validations:MinLengthValidator MinLength="1"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Button 
+                            Grid.Column="1"
+                            Click="OnBtnBrowserClicked"
+                            MinWidth="30">...</Button>
+                    </Grid>
+                
+                    <TextBlock Grid.Column="0" Grid.Row="2">DB Name: </TextBlock>
+
+                    <controls:AutoCompleteBoxEx
+                        x:Name="txtDbName"
+                        Grid.Row="2" Grid.Column="2"
+                        FilterMode="Contains"
+                        ItemsSource="{Binding DataContext.SqlInstancesVm.DbNames, ElementName=ThisWnd}">
+                        <controls:AutoCompleteBoxEx.Text>
+                            <Binding Path="TargetDbName" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validations:MinLengthValidator MinLength="1"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </controls:AutoCompleteBoxEx.Text>
+                    </controls:AutoCompleteBoxEx>
+
+                    <TextBlock Grid.Column="0" Grid.Row="4">Restore MDF To:</TextBlock>
+                    <TextBox Grid.Column="2" Grid.Row="4">
                         <TextBox.Text>
-                            <Binding Path="SrcPath">
+                            <Binding Path="RelocateMdfTo">
                                 <Binding.ValidationRules>
                                     <validations:MinLengthValidator MinLength="1"/>
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <Button 
-                        Grid.Column="1"
-                        Click="OnBtnBrowserClicked"
-                        MinWidth="30">...</Button>
+
+                    <TextBlock Grid.Column="0" Grid.Row="6">Restore LDF To:</TextBlock>
+                    <TextBox Grid.Column="2" Grid.Row="6">
+                        <TextBox.Text>
+                            <Binding Path="RelocateLdfTo">
+                                <Binding.ValidationRules>
+                                    <validations:MinLengthValidator MinLength="1"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" 
+                            MinWidth="80" HorizontalAlignment="Center" 
+                            Grid.Column ="0" 
+                            Grid.ColumnSpan="3" Grid.Row="8">OK</Button>
                 </Grid>
-                
-                <TextBlock Grid.Column="0" Grid.Row="2">DB Name: </TextBlock>
-
-                <controls:AutoCompleteBoxEx
-                    x:Name="txtDbName"
-                    Grid.Row="2" Grid.Column="2"
-                    FilterMode="Contains"
-                    ItemsSource="{Binding DataContext.SqlInstancesVm.DbNames, ElementName=ThisWnd}">
-                    <controls:AutoCompleteBoxEx.Text>
-                        <Binding Path="TargetDbName" Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validations:MinLengthValidator MinLength="1"/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </controls:AutoCompleteBoxEx.Text>
-                </controls:AutoCompleteBoxEx>
-
-                <TextBlock Grid.Column="0" Grid.Row="4">Restore MDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="4">
-                    <TextBox.Text>
-                        <Binding Path="RelocateMdfTo">
-                            <Binding.ValidationRules>
-                                <validations:MinLengthValidator MinLength="1"/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-                <TextBlock Grid.Column="0" Grid.Row="6">Restore LDF To:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="6">
-                    <TextBox.Text>
-                        <Binding Path="RelocateLdfTo">
-                            <Binding.ValidationRules>
-                                <validations:MinLengthValidator MinLength="1"/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-
-                <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" 
-                        MinWidth="80" HorizontalAlignment="Center" 
-                        Grid.Column ="0" 
-                        Grid.ColumnSpan="3" Grid.Row="8">OK</Button>
             </Grid>
-        </Grid>
 
-        <xctk:BusyIndicator Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
-                    <xctk:BusyIndicator.ProgressBarStyle>
-                        <Style TargetType="ProgressBar">
-                            <Setter Property="IsIndeterminate" Value="{Binding PercentageDisabled}"/>
-                            <Setter Property="Height" Value="15"/>
-                            <Setter Property="Margin" Value="8,0,8,8"/>
-                            <Setter Property="Value" Value="{Binding Percent}"/>
-                        </Style>
-                    </xctk:BusyIndicator.ProgressBarStyle>
-                </xctk:BusyIndicator>
+            <xctk:BusyIndicator Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsBusy="{Binding IsProcessing}" BusyContent="{Binding ProgressDesc}">
+                <xctk:BusyIndicator.ProgressBarStyle>
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="IsIndeterminate" Value="{Binding PercentageDisabled}"/>
+                        <Setter Property="Height" Value="15"/>
+                        <Setter Property="Margin" Value="8,0,8,8"/>
+                        <Setter Property="Value" Value="{Binding Percent}"/>
+                    </Style>
+                </xctk:BusyIndicator.ProgressBarStyle>
+            </xctk:BusyIndicator>
+        </Grid>
     </Grid>
     <Window.IsEnabled>
         <Binding Path="IsProcessing">
