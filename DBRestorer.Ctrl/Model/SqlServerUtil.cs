@@ -100,7 +100,9 @@ namespace DBRestorer.Model
                     {
                         progressBarProvider.OnError(res.AsyncStatus.LastException.ToString());
                     }
-                    progressBarProvider.ReportProgress(args.Percent);
+                    // give 10% for the recovering which happens after restoring.
+                    const double WeightOfRestoring = 90.0 / 100.0;
+                    progressBarProvider.ReportProgress((int)(args.Percent * WeightOfRestoring));
                 };
 
                 var fileList = res.ReadFileList(srv);
