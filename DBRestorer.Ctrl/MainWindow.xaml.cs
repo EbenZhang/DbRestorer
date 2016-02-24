@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -108,6 +109,28 @@ namespace DBRestorer
             var desktopWorkingArea = SystemParameters.WorkArea;
             Left = desktopWorkingArea.Right - Width - 20;
             Top = desktopWorkingArea.Bottom - Height - 20;
+
+            try
+            {
+                _viewModel.ProgressDesc = "Updating Plugins";
+                _viewModel.IsProcessing = true;
+                await Plugins.Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.ShowError(this,  
+                $"Unable to update plugins from {Plugins.UpdatesFolder}{Environment.NewLine}"
+                + $"If the problem persists, please delete the above folder{Environment.NewLine}"
+                +$"{ex.ToString()}");
+            }
+            finally
+            {
+                _viewModel.ProgressDesc = "";
+                _viewModel.IsProcessing = false;
+            }
+
+            DownloadPluginUpdatesInBackground();
+
             try
             {
                 await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
@@ -121,6 +144,11 @@ namespace DBRestorer
             {
                 MessageBoxHelper.ShowError(this, ex.ToString());
             }
+        }
+
+        private static void DownloadPluginUpdatesInBackground()
+        {
+            Task.Factory.StartNew(Plugins.DownloadAllPlugins);
         }
 
         private bool OnMenuClicked(int menuId)

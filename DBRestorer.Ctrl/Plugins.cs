@@ -1,11 +1,14 @@
-﻿using DBRestorer.Plugin.Interface;
-using ExtendedCL;
+﻿using ExtendedCL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using Microsoft.VisualBasic.FileIO;
+using System.Threading.Tasks;
+using DBRestorer.Plugin.Interface;
 
 namespace DBRestorer.Ctrl
 {
@@ -13,6 +16,9 @@ namespace DBRestorer.Ctrl
     {
         private static List<CompositionContainer> _pluginContainers;
         public static readonly string PluginFolderPath = Path.Combine(PathHelper.ProcessAppDir, "Plugins");
+        public static readonly string UpdatesFolder = Path.Combine(PathHelper.ProcessAppDir, "updates");
+        private static readonly string DownloadFolder = Path.Combine(PathHelper.ProcessAppDir, "download_temp");
+
         private static void LoadPlugins()
         {
             if (_pluginContainers == null)
@@ -36,10 +42,10 @@ namespace DBRestorer.Ctrl
                     var exps = container.GetExports<T>();
                     ret.AddRange(exps);
                 }
-                catch (System.Reflection.ReflectionTypeLoadException ex)
+                catch (ReflectionTypeLoadException ex)
                 {
                     Trace.TraceError("GetExports() failed {0}",
-                        string.Join(Environment.NewLine, ex.LoaderExceptions.Select(r => r.ToString())));
+                        String.Join(Environment.NewLine, ex.LoaderExceptions.Select(r => r.ToString())));
                 }
                 catch (Exception ex)
                 {
@@ -47,6 +53,79 @@ namespace DBRestorer.Ctrl
                 }
             }
             return ret;
+        }
+
+        public static Task Update()
+        {
+            return Task.Run(() =>
+            {
+                if (!Directory.Exists(UpdatesFolder))
+                {
+                    return;
+                }
+
+                if (!Directory.Exists(Plugins.PluginFolderPath))
+                {
+                    return;
+                }
+                FileSystem.CopyDirectory(UpdatesFolder, Plugins.PluginFolderPath, overwrite: true);
+                Directory.Delete(UpdatesFolder);
+                Directory.CreateDirectory(UpdatesFolder);
+            });
+        }
+
+        private static string GetCurFingerPrint(string pluginIdentity)
+        {
+            var filePath = Path.Combine(PluginFolderPath, GetFingerprintFileName(pluginIdentity));
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            return "";
+        }
+
+        private static string GetFingerprintFileName(string pluginIdentity)
+        {
+            return $"{pluginIdentity}.fingerprint";
+        }
+
+        private static void SetFingerprint(string pluginIdentity, string fingerprint,
+            string folderToStoreTheFingerprint)
+        {
+            var filePath = Path.Combine(folderToStoreTheFingerprint, GetFingerprintFileName(pluginIdentity));
+            File.WriteAllText(filePath, fingerprint);
+        }
+
+        public static void DownloadAllPlugins()
+        {
+            var downloaders = Plugins.GetPlugins<IPluginUpdatesDownloader>();
+            foreach (var downloader in downloaders)
+            {
+                DownloadOnePlugin(downloader);
+            }
+        }
+
+        private static void DownloadOnePlugin(Lazy<IPluginUpdatesDownloader> downloader)
+        {
+            RecreateTempDownloadFolder();
+            var fingerPrint = GetCurFingerPrint(downloader.Value.GetType().FullName);
+            var newFingerprint = downloader.Value.Download(DownloadFolder, fingerPrint);
+            if (!string.IsNullOrWhiteSpace(newFingerprint))
+            {
+                SetFingerprint(downloader.Value.GetType().FullName,
+                    newFingerprint, DownloadFolder);
+
+                FileSystem.CopyDirectory(DownloadFolder, UpdatesFolder, overwrite: true);
+            }
+        }
+
+        private static void RecreateTempDownloadFolder()
+        {
+            if (Directory.Exists(Plugins.DownloadFolder))
+            {
+                Directory.Delete(Plugins.DownloadFolder);
+            }
+            Directory.CreateDirectory(Plugins.DownloadFolder);
         }
     }
 }
