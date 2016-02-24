@@ -101,7 +101,14 @@ namespace DBRestorer.Ctrl
             var downloaders = Plugins.GetPlugins<IPluginUpdatesDownloader>();
             foreach (var downloader in downloaders)
             {
-                DownloadOnePlugin(downloader);
+                try
+                {
+                    DownloadOnePlugin(downloader);
+                }
+                catch
+                {
+                    // ignore
+                }
             }
         }
 
