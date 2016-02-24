@@ -69,7 +69,7 @@ namespace DBRestorer.Ctrl
                     return;
                 }
                 FileSystem.CopyDirectory(UpdatesFolder, Plugins.PluginFolderPath, overwrite: true);
-                Directory.Delete(UpdatesFolder);
+                Directory.Delete(UpdatesFolder, recursive: true);
                 Directory.CreateDirectory(UpdatesFolder);
             });
         }
@@ -130,7 +130,7 @@ namespace DBRestorer.Ctrl
         {
             if (Directory.Exists(Plugins.DownloadFolder))
             {
-                Directory.Delete(Plugins.DownloadFolder);
+                Directory.Delete(Plugins.DownloadFolder, recursive: true);
             }
             Directory.CreateDirectory(Plugins.DownloadFolder);
         }
