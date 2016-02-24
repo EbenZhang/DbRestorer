@@ -129,6 +129,8 @@ namespace DBRestorer
                 _viewModel.IsProcessing = false;
             }
 
+            _viewModel.LoadPluginNames();
+
             DownloadPluginUpdatesInBackground();
 
             try

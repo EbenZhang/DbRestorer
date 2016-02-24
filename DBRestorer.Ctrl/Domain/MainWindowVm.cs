@@ -26,6 +26,10 @@ namespace DBRestorer.Domain
         {
             _sqlserverUtil = sqlserverUtil;
             SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this, userPreferencePersist);
+        }
+
+        public void LoadPluginNames()
+        {
             var plugins = Plugins.GetPlugins<IPostDbRestore>();
             PluginNames.AddRange(plugins.Select(r => r.Value.PluginName));
         }
