@@ -8,6 +8,7 @@ using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Win32;
 using DBRestorer.Ctrl;
+using PluginManager;
 
 namespace DBRestorer
 {

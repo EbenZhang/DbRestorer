@@ -28,6 +28,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Plugin.Interface
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin_Sample", "SamplePlugin\Plugin_Sample.csproj", "{2DFAA45D-2AFC-482A-B21B-4144FE700C68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivilegedPluginRunner", "PrivilegedPluginRunner\PrivilegedPluginRunner.csproj", "{192BADA0-A962-4ED9-AB65-38D088FF3651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginManager", "PluginManager\PluginManager.csproj", "{43A01A7C-04F2-44B6-8D6D-2D213CFFDD5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbRestorerPluginRunner", "DbRestorerPluginRunner\DbRestorerPluginRunner.csproj", "{C662E037-BC17-4B7E-B32A-3EABAF7D790B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +68,18 @@ Global
 		{2DFAA45D-2AFC-482A-B21B-4144FE700C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DFAA45D-2AFC-482A-B21B-4144FE700C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DFAA45D-2AFC-482A-B21B-4144FE700C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{192BADA0-A962-4ED9-AB65-38D088FF3651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{192BADA0-A962-4ED9-AB65-38D088FF3651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{192BADA0-A962-4ED9-AB65-38D088FF3651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{192BADA0-A962-4ED9-AB65-38D088FF3651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43A01A7C-04F2-44B6-8D6D-2D213CFFDD5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43A01A7C-04F2-44B6-8D6D-2D213CFFDD5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43A01A7C-04F2-44B6-8D6D-2D213CFFDD5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43A01A7C-04F2-44B6-8D6D-2D213CFFDD5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C662E037-BC17-4B7E-B32A-3EABAF7D790B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C662E037-BC17-4B7E-B32A-3EABAF7D790B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C662E037-BC17-4B7E-B32A-3EABAF7D790B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C662E037-BC17-4B7E-B32A-3EABAF7D790B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

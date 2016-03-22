@@ -201,9 +201,17 @@
       <Project>{1c78a58a-a63e-407e-832c-86ebaffe8e1a}</Project>
       <Name>DBRestorer.Ctrl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DbRestorerPluginRunner\DbRestorerPluginRunner.csproj">
+      <Project>{c662e037-bc17-4b7e-b32a-3eabaf7d790b}</Project>
+      <Name>DbRestorerPluginRunner</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
       <Name>ExtendedCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginManager\PluginManager.csproj">
+      <Project>{43a01a7c-04f2-44b6-8d6d-2d213cffdd5c}</Project>
+      <Name>PluginManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfCommon\WpfCommon.csproj">
       <Project>{c66b81d7-c73e-41bf-8494-5cec64b21efe}</Project>

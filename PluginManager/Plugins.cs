@@ -1,23 +1,25 @@
-﻿using ExtendedCL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.VisualBasic.FileIO;
 using System.Threading.Tasks;
 using DBRestorer.Plugin.Interface;
+using ExtendedCL;
+using Microsoft.VisualBasic.FileIO;
 
-namespace DBRestorer.Ctrl
+namespace PluginManager
 {
     public static class Plugins
     {
         private static List<CompositionContainer> _pluginContainers;
-        public static readonly string PluginFolderPath = Path.Combine(PathHelper.ProcessAppDir, "Plugins");
+        private static readonly string _pluginFolderPath = Path.Combine(PathHelper.ProcessAppDir, "Plugins");
         public static readonly string UpdatesFolder = Path.Combine(PathHelper.ProcessAppDir, "updates");
         private static readonly string DownloadFolder = Path.Combine(PathHelper.ProcessAppDir, "download_temp");
+
+        public static string PluginFolderPath { get; set; } = _pluginFolderPath;
 
         private static void LoadPlugins()
         {

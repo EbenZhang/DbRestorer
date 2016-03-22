@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ using Microsoft.Win32;
 using WpfCommon.Controls;
 using WpfCommon.Utils;
 using DBRestorer.Plugin.Interface;
-using DBRestorer.Ctrl;
 using System.Windows.Controls;
+using PluginManager;
 
 namespace DBRestorer
 {
@@ -41,17 +42,61 @@ namespace DBRestorer
 
         private void InvokePostRestorePlugins(CallPostRestorePlugins obj)
         {
-            var plugins = Plugins.GetPlugins<IPostDbRestore>();
-            foreach (var plugin in plugins)
+            this.Topmost = false;
+            this.IsEnabled = false;
+            try
             {
-                try
+                var plugins = Plugins.GetPlugins<IPostDbRestore>();
+                foreach (var plugin in plugins.Where(p => !p.Value.AdminPrivilegeRequired))
                 {
-                    plugin.Value.OnDBRestored(this, _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+                    try
+                    {
+                        plugin.Value.OnDBRestored(this, _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxHelper.ShowError(this, ex.ToString());
+                    }
                 }
-                catch(Exception ex)
+                if (plugins.Any(p => p.Value.AdminPrivilegeRequired))
                 {
-                    MessageBoxHelper.ShowError(this, ex.ToString());
+                    StartPluginUsingAdminPrivilege();
                 }
+            }
+            finally
+            {
+                this.Topmost = true;
+                this.IsEnabled = true;
+            }
+        }
+
+        private void StartPluginUsingAdminPrivilege(string pluginName = null)
+        {
+            this.Topmost = false;
+            this.IsEnabled = false;
+            try
+            {
+                var pluginRunner = Path.Combine(PathHelper.GetCallingAssemblyDir(), "DbRestorerPluginRunner.exe");
+                IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+                var args = $"-s \"{_viewModel.SqlInstancesVm.SelectedInst}\""
+                    + $" -d {_viewModel.DbRestorOptVm.TargetDbName} -f \"{Plugins.PluginFolderPath}\" -h {hwnd}";
+                if (!string.IsNullOrWhiteSpace(pluginName))
+                {
+                    args += $" -p \"{pluginName}\"";
+                }
+                var info = new ProcessStartInfo(pluginRunner)
+                {
+                    Arguments = args,
+                    UseShellExecute = true,
+                    Verb = "runas"
+                };
+                var process = Process.Start(info);
+                process.WaitForExit();
+            }
+            finally
+            {
+                this.Topmost = true;
+                this.IsEnabled = true;
             }
         }
 
@@ -218,10 +263,17 @@ namespace DBRestorer
             {
                 return;
             }
-            var pluginName = ((MenuItem)e.OriginalSource).Header;
+            var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
             var plugin = Plugins.GetPlugins<IPostDbRestore>().First(r => r.Value.PluginName == pluginName);
-            plugin.Value.OnDBRestored(this, 
-                _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            if (!plugin.Value.AdminPrivilegeRequired)
+            {
+                plugin.Value.OnDBRestored(this,
+                    _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            }
+            else
+            {
+                StartPluginUsingAdminPrivilege(plugin.Value.PluginName);
+            }
         }
     }
 }

@@ -1,14 +1,12 @@
-﻿using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
-using DBRestorer.Ctrl;
 using DBRestorer.Plugin.Interface;
 using DBRestorer.Model;
 using System.Linq;
 using System.Collections.ObjectModel;
 using WpfCommon.Utils;
+using PluginManager;
 
 namespace DBRestorer.Domain
 {
