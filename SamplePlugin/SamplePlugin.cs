@@ -1,7 +1,6 @@
 ﻿using DBRestorer.Plugin.Interface;
 using System.ComponentModel.Composition;
 using System.Windows;
-using System;
 
 namespace SamplePlugin
 {
@@ -9,13 +8,9 @@ namespace SamplePlugin
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SamplePlugin : IPostDbRestore
     {
-        public string PluginName
-        {
-            get
-            {
-                return "Sample Plugin";
-            }
-        }
+        public string PluginName => "Sample Plugin";
+
+        public bool AdminPrivilegeRequired => false;
 
         public void OnDBRestored(Window parentWnd, string sqlInstName, string dbName)
         {
