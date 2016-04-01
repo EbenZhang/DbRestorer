@@ -77,7 +77,7 @@ namespace DBRestorer
             try
             {
                 var pluginRunner = Path.Combine(PathHelper.GetCallingAssemblyDir(), "DbRestorerPluginRunner.exe");
-                IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+                var hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
                 var args = $"-s \"{_viewModel.SqlInstancesVm.SelectedInst}\""
                     + $" -d {_viewModel.DbRestorOptVm.TargetDbName} -f \"{Plugins.PluginFolderPath}\" -h {hwnd}";
                 if (!string.IsNullOrWhiteSpace(pluginName))
@@ -87,8 +87,6 @@ namespace DBRestorer
                 var info = new ProcessStartInfo(pluginRunner)
                 {
                     Arguments = args,
-                    UseShellExecute = true,
-                    Verb = "runas"
                 };
                 var process = Process.Start(info);
                 process.WaitForExit();
