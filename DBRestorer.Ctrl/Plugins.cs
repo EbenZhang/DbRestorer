@@ -24,10 +24,16 @@ namespace DBRestorer.Ctrl
             if (_pluginContainers == null)
             {
                 _pluginContainers = new List<CompositionContainer>();
-                foreach (var dll in new DirectoryInfo(PluginFolderPath).EnumerateFiles("Plugin_*.dll"))
-                {
-                    _pluginContainers.Add(new CompositionContainer(new DirectoryCatalog(dll.DirectoryName, dll.Name)));
-                }
+                LoadPluginsFromFolder(PluginFolderPath);
+                LoadPluginsFromFolder(PathHelper.ProcessDir);
+            }
+        }
+
+        private static void LoadPluginsFromFolder(string pluginFolderPath)
+        {
+            foreach (var dll in new DirectoryInfo(pluginFolderPath).EnumerateFiles("Plugin_*.dll"))
+            {
+                _pluginContainers.Add(new CompositionContainer(new DirectoryCatalog(dll.DirectoryName, dll.Name)));
             }
         }
 

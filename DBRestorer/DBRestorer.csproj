@@ -205,6 +205,10 @@
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
       <Name>ExtendedCL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugin_OpenInSSMS\Plugin_OpenInSSMS.csproj">
+      <Project>{2dfaa45d-2afc-482a-b21b-4144fe700c68}</Project>
+      <Name>Plugin_OpenInSSMS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfCommon\WpfCommon.csproj">
       <Project>{c66b81d7-c73e-41bf-8494-5cec64b21efe}</Project>
       <Name>WpfCommon</Name>

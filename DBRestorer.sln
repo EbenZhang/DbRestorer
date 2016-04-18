@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer", "DBRestorer\DBRestorer.csproj", "{40CBF670-1F79-4B8F-A794-E74FD2F52B8F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -26,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Ctrl", "DBRestor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Plugin.Interface", "DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj", "{05512917-CB75-4717-AEE1-B56612C31AB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin_Sample", "SamplePlugin\Plugin_Sample.csproj", "{2DFAA45D-2AFC-482A-B21B-4144FE700C68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin_OpenInSSMS", "Plugin_OpenInSSMS\Plugin_OpenInSSMS.csproj", "{2DFAA45D-2AFC-482A-B21B-4144FE700C68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
