@@ -6,13 +6,12 @@ using DBRestorer.Plugin.Interface;
 
 namespace Plugin_OpenInSSMS
 {
-    [Export(typeof(IPostDbRestore))]
+    [Export(typeof(IDbUtility))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class OpenDbInSSMS : IPostDbRestore
+    public class OpenDbInSSMS : IDbUtility 
     {
         public string PluginName => "Open In SSMS";
-
-        public void OnDBRestored(Window parentWnd, string sqlInstName, string dbName)
+        public void Invoke(Window parentWnd, string sqlInstName, string dbName)
         {
             try
             {

@@ -45,7 +45,8 @@
                         <Setter Property="ItemsPanel" Value="{StaticResource IconlessMenuItem}"/>
                     </Style>
                 </Menu.Resources>
-                <MenuItem Header="_Plugins" ItemsSource="{Binding PluginNames}" Click="MenuItem_Click"></MenuItem>
+                <MenuItem Header="_PostRestorePlugins" ItemsSource="{Binding PostRestorePlugins}" Click="PostRestorePluginMenuClicked"></MenuItem>
+                <MenuItem Header="_Utilties" ItemsSource="{Binding Utilities}" Click="UtilityMenuClicked"></MenuItem>
             </Menu>
         </Border>
         <Grid Grid.Row="2">

@@ -136,7 +136,7 @@ namespace DBRestorer
                 _viewModel.IsProcessing = false;
             }
 
-            _viewModel.LoadPluginNames();
+            _viewModel.LoadPlugins();
 
             DownloadPluginUpdatesInBackground();
 
@@ -219,19 +219,34 @@ namespace DBRestorer
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void PostRestorePluginMenuClicked(object sender, RoutedEventArgs e)
+        {
+            if (ValidBeforeInvokePlugin()) return;
+            var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
+            var plugin = Plugins.GetPlugins<IPostDbRestore>().FirstOrDefault(r => r.Value.PluginName == pluginName);
+            plugin?.Value.OnDBRestored(this, 
+                _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+        }
+
+        private bool ValidBeforeInvokePlugin()
         {
             if (!this.ValidateComboBoxes())
             {
-                return;
+                return true;
             }
             if (!txtDbName.Valid())
             {
-                return;
+                return true;
             }
-            var pluginName = ((MenuItem)e.OriginalSource).Header;
-            var plugin = Plugins.GetPlugins<IPostDbRestore>().First(r => r.Value.PluginName == pluginName);
-            plugin.Value.OnDBRestored(this, 
+            return false;
+        }
+
+        private void UtilityMenuClicked(object sender, RoutedEventArgs e)
+        {
+            if (ValidBeforeInvokePlugin()) return;
+            var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
+            var plugin = Plugins.GetPlugins<IDbUtility>().FirstOrDefault(r => r.Value.PluginName == pluginName);
+            plugin?.Value.Invoke(this,
                 _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
         }
     }

@@ -28,10 +28,13 @@ namespace DBRestorer.Domain
             SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this, userPreferencePersist);
         }
 
-        public void LoadPluginNames()
+        public void LoadPlugins()
         {
             var plugins = Plugins.GetPlugins<IPostDbRestore>();
-            PluginNames.AddRange(plugins.Select(r => r.Value.PluginName));
+            PostRestorePlugins.AddRange(plugins.Select(r => r.Value.PluginName));
+
+            var utilities = Plugins.GetPlugins<IDbUtility>();
+            Utilities.AddRange(utilities.Select(r => r.Value.PluginName));
         }
 
         public SqlInstancesVM SqlInstancesVm
@@ -70,11 +73,12 @@ namespace DBRestorer.Domain
             set { RaiseAndSetIfChanged(ref _IsProcessing, value); }
         }
 
-        public ObservableCollection<string> PluginNames
+        public ObservableCollection<string> PostRestorePlugins
         {
             get; set;
         } = new ObservableCollection<string>();
 
+        public ObservableCollection<string> Utilities { get; set; } = new ObservableCollection<string>(); 
 
         public void OnCompleted(string msg)
         {
