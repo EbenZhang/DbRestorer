@@ -47,6 +47,7 @@
                 </Menu.Resources>
                 <MenuItem Header="_PostRestorePlugins" ItemsSource="{Binding PostRestorePlugins}" Click="PostRestorePluginMenuClicked"></MenuItem>
                 <MenuItem Header="_Utilties" ItemsSource="{Binding Utilities}" Click="UtilityMenuClicked"></MenuItem>
+                <MenuItem Header="_Settings" ItemsSource="{Binding PluginSettings}" Click="SettingsMenuClicked"></MenuItem>
             </Menu>
         </Border>
         <Grid Grid.Row="2">

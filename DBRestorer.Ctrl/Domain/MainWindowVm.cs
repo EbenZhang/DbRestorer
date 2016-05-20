@@ -35,6 +35,9 @@ namespace DBRestorer.Domain
 
             var utilities = Plugins.GetPlugins<IDbUtility>();
             Utilities.AddRange(utilities.Select(r => r.Value.PluginName));
+
+            var settings = Plugins.GetPlugins<IDbRestorerSettings>();
+            PluginSettings.AddRange(settings.Select(r => r.Value.Name));
         }
 
         public SqlInstancesVM SqlInstancesVm
@@ -79,6 +82,7 @@ namespace DBRestorer.Domain
         } = new ObservableCollection<string>();
 
         public ObservableCollection<string> Utilities { get; set; } = new ObservableCollection<string>(); 
+        public ObservableCollection<string> PluginSettings { get; set; } = new ObservableCollection<string>(); 
 
         public void OnCompleted(string msg)
         {

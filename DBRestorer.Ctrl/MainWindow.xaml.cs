@@ -249,5 +249,12 @@ namespace DBRestorer
             plugin?.Value.Invoke(this,
                 _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
         }
+
+        private void SettingsMenuClicked(object sender, RoutedEventArgs e)
+        {
+            var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
+            var plugin = Plugins.GetPlugins<IDbRestorerSettings>().FirstOrDefault(r => r.Value.Name == pluginName);
+            plugin?.Value.ShowSettings(this);
+        }
     }
 }
