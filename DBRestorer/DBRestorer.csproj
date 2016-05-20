@@ -209,6 +209,10 @@
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>
       <Name>ExtendedCL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugin_DbRestorerConfig\Plugin_DbRestorerConfig.csproj">
+      <Project>{4b696091-dc1f-47e5-aa14-527a5058d499}</Project>
+      <Name>Plugin_DbRestorerConfig</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugin_OpenInSSMS\Plugin_OpenInSSMS.csproj">
       <Project>{2dfaa45d-2afc-482a-b21b-4144fe700c68}</Project>
       <Name>Plugin_OpenInSSMS</Name>
