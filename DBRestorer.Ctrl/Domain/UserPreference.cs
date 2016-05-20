@@ -6,5 +6,6 @@ namespace DBRestorer.Domain
     public class UserPreference
     {
         public string LastUsedDbInst { get; set; }
+        public string PluginDownloadPath { get; set; }
     }
 }

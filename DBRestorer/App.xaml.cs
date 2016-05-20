@@ -8,6 +8,7 @@ using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Win32;
 using DBRestorer.Ctrl;
+using DBRestorer.Domain;
 
 namespace DBRestorer
 {
@@ -31,6 +32,26 @@ namespace DBRestorer
             {
                 Directory.CreateDirectory(Plugins.PluginFolderPath);
             }
+
+            var userPrefPersister = new UserPreferencePersist();
+            var pref = userPrefPersister.LoadPreference();
+            if (string.IsNullOrWhiteSpace(pref.PluginDownloadPath)
+                && Environment.UserDomainName.ToUpperInvariant() == "EMBINT")
+            {
+                pref.PluginDownloadPath = @"\\was29\Shared\ECSDBToolsExtensions\";
+                userPrefPersister.SavePreference(pref);
+            }
+            if (!string.IsNullOrWhiteSpace(pref.PluginDownloadPath))
+            {
+                try
+                {
+                    PluginDownloaderHelper.Download(pref.PluginDownloadPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
             AppDomain.CurrentDomain.AssemblyResolve += LoadFromPluginFolder;
             DispatcherHelper.Initialize();
             base.OnStartup(e);
@@ -40,11 +61,11 @@ namespace DBRestorer
         private Assembly LoadFromPluginFolder(object sender, ResolveEventArgs args)
         {
             string assemblyPath = Path.Combine(Plugins.PluginFolderPath,
-                string.Format("{0}.dll", new AssemblyName(args.Name).Name));
+                $"{new AssemblyName(args.Name).Name}.dll");
             if (!File.Exists(assemblyPath))
             {
                 assemblyPath = Path.Combine(Plugins.PluginFolderPath,
-                string.Format("{0}.exe", new AssemblyName(args.Name).Name));
+                    $"{new AssemblyName(args.Name).Name}.exe");
                 if (!File.Exists(assemblyPath))
                 {
                     return null;

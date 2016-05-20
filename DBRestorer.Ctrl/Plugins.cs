@@ -80,7 +80,7 @@ namespace DBRestorer.Ctrl
             });
         }
 
-        private static string GetCurFingerPrint(string pluginIdentity)
+        public static string GetCurFingerPrint(string pluginIdentity)
         {
             var filePath = Path.Combine(PluginFolderPath, GetFingerprintFileName(pluginIdentity));
             if (File.Exists(filePath))
@@ -95,7 +95,7 @@ namespace DBRestorer.Ctrl
             return $"{pluginIdentity}.fingerprint";
         }
 
-        private static void SetFingerprint(string pluginIdentity, string fingerprint,
+        public static void SetFingerprint(string pluginIdentity, string fingerprint,
             string folderToStoreTheFingerprint)
         {
             var filePath = Path.Combine(folderToStoreTheFingerprint, GetFingerprintFileName(pluginIdentity));
