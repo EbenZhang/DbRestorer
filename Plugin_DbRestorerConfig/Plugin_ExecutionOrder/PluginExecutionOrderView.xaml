@@ -1,0 +1,79 @@
+﻿<Window x:Class="Plugin_DbRestorerConfig.Plugin_ExecutionOrder.PluginExecutionOrderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:Plugin_DbRestorerConfig"
+        xmlns:pluginExecutionOrder="clr-namespace:Plugin_DbRestorerConfig.Plugin_ExecutionOrder"
+        mc:Ignorable="d" 
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        x:Name="ThisWnd"
+        d:DesignHeight="480" d:DesignWidth="640">
+    <Window.DataContext>
+        <pluginExecutionOrder:PluginExecutionOrderVm />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListView
+                Grid.Row="0"
+                ItemsSource="{Binding ExecutionPlans.Plans}" SelectedItem="{Binding ExecutionPlans.CurrentPlan}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Stretch" Text="{Binding PlanName}"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Margin="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="MinWidth" Value="60"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Command="{Binding AddCmd}" CommandParameter="{Binding ElementName=ThisWnd}">_Add</Button>
+                <Button Margin="8,0,0,0" Command="{Binding DeleteCmd}">_Delete</Button>
+                <Button Margin="8,0,0,0" Command="{Binding RenameCmd}" CommandParameter="{Binding ElementName=ThisWnd}">_Rename</Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Margin="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListView ItemsSource="{Binding ExecutionPlans.CurrentPlan.ExecutionOrder}" SelectedItem="{Binding SelectedPlugin}">
+            </ListView>
+            <Grid Grid.Column="1" Margin="4,20, 4, 20" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Height" Value="40"></Setter>
+                        <Setter Property="Width" Value="40"></Setter>
+                        <Setter Property="FontSize" Value="20"></Setter>
+                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                        <Setter Property="Margin" Value="5,10,5,10"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Button Grid.Row="0" Command="{Binding AddNewPluginCmd}" CommandParameter="{Binding ElementName=ThisWnd}">+</Button>
+                <Button Grid.Row="1" Command="{Binding RemovePluginCmd}">-</Button>
+                <Button Grid.Row="2" Command="{Binding MoveUpPluginCmd}">&#x25B2;</Button>
+                <Button Grid.Row="3" Command="{Binding MoveDownPluginCmd}">&#x25BC;</Button>
+            </Grid>
+        </Grid>
+        <GridSplitter 
+            Grid.Column="1" HorizontalAlignment="Left"
+            Width="2" ShowsPreview="True" Background="Gray" VerticalAlignment="Stretch"></GridSplitter>
+    </Grid>
+</Window>

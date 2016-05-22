@@ -15,15 +15,17 @@ using WpfCommon.Utils;
 using DBRestorer.Plugin.Interface;
 using DBRestorer.Ctrl;
 using System.Windows.Controls;
+using DBRestorer.Ctrl.Domain;
 
 namespace DBRestorer
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly MainWindowVm _viewModel;
+        public ExecutionOrderProvider ExecutionOrderProvider { get; private set; } = ExecutionOrderProvider.Instance.Value;
 
         private const int _aboutMenuID = int.MaxValue;
 
@@ -41,21 +43,24 @@ namespace DBRestorer
 
         private void InvokePostRestorePlugins(CallPostRestorePlugins obj)
         {
-            var plugins = Plugins.GetPlugins<IPostDbRestore>();
+            var plugins = Plugins.GetPlugins<IPostDbRestore>().ToList();
+            var utilities = Plugins.GetPlugins<IDbUtility>().ToList();
             try
             {
                 IsEnabled = false;
                 Topmost = false;
-
-                foreach (var plugin in plugins)
+                foreach (var pluginName in ExecutionOrderProvider.CurrentPlan.ExecutionOrder)
                 {
-                    try
+                    var plugin = plugins.FirstOrDefault(r => r.Value.PluginName == pluginName);
+                    if (plugin != null)
                     {
-                        plugin.Value.OnDBRestored(this, _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+                        InvokePlugin(plugin);
                     }
-                    catch (Exception ex)
+
+                    var utility = utilities.FirstOrDefault(r => r.Value.PluginName == pluginName);
+                    if (utility != null)
                     {
-                        MessageBoxHelper.ShowError(this, ex.ToString());
+                        InvokeUtilty(utility);
                     }
                 }
             }
@@ -63,6 +68,30 @@ namespace DBRestorer
             {
                 IsEnabled = true;
                 Topmost = true;
+            }
+        }
+
+        private void InvokeUtilty(Lazy<IDbUtility> utility)
+        {
+            try
+            {
+                utility.Value.Invoke(this, _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.ShowError(this, ex.ToString());
+            }
+        }
+
+        private void InvokePlugin(Lazy<IPostDbRestore> plugin)
+        {
+            try
+            {
+                plugin.Value.OnDBRestored(this, _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.ShowError(this, ex.ToString());
             }
         }
 

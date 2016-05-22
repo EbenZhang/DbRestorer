@@ -7,6 +7,7 @@
         xmlns:validations="clr-namespace:WpfCommon.Validations;assembly=WpfCommon"
         xmlns:converter="clr-namespace:WpfCommon.Converter;assembly=WpfCommon"
         xmlns:controls="clr-namespace:WpfCommon.Controls;assembly=WpfCommon"
+        xmlns:domain="clr-namespace:DBRestorer.Ctrl.Domain"
         x:Name="ThisWnd"
         Topmost="True"
         AllowDrop="True"
@@ -50,7 +51,7 @@
                 <MenuItem Header="_Settings" ItemsSource="{Binding PluginSettings}" Click="SettingsMenuClicked"></MenuItem>
             </Menu>
         </Border>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -161,10 +162,21 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <Button Margin="0,4,0,0" Command="{Binding RestoreCmd, ElementName=ThisWnd}" 
-                            MinWidth="80" HorizontalAlignment="Center" 
-                            Grid.Column ="0" 
-                            Grid.ColumnSpan="3" Grid.Row="8">OK</Button>
+                    <StackPanel Margin="0,4,0,0" Orientation="Horizontal" HorizontalAlignment="Center"
+                                Grid.Column ="0" 
+                                Grid.ColumnSpan="3" Grid.Row="8">
+                        <Button Command="{Binding RestoreCmd, ElementName=ThisWnd}" 
+                                MinWidth="80" HorizontalAlignment="Center" Content="_Restore"></Button>
+                        <TextBlock Margin="4,0,4,0">with</TextBlock>
+                        <ComboBox ItemsSource="{Binding ElementName=ThisWnd, Path=ExecutionOrderProvider.Plans}"
+                                  SelectedItem="{Binding ElementName=ThisWnd, Path=ExecutionOrderProvider.CurrentPlan}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding PlanName}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
                 </Grid>
             </Grid>
 
