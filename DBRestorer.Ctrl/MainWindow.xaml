@@ -14,8 +14,8 @@
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
         Width="640"
-        Height="230"
         WindowStartupLocation="Manual"
+        SizeToContent="Height"
         Title="DbRestorer">
     <Window.DataContext>
         <Binding Path="MainWindowVm" Source="{StaticResource ViewModelLocator}"/>
@@ -77,16 +77,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Margin="0,2,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <ListBox 
-                    DataContext="{Binding SqlInstancesVm}"
-                    Grid.Column="0"
-                    ItemsSource="{Binding DbNames}">
-                </ListBox>
-                <Grid Grid.Column="1" DataContext="{Binding DbRestorOptVm}">
+                <Grid DataContext="{Binding DbRestorOptVm}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="10"/>
