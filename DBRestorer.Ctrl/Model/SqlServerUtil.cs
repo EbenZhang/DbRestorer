@@ -18,13 +18,13 @@ namespace DBRestorer.Model
         {
             try
             {
-                var ret = GetInstancesFor(ProviderArchitecture.Use32bit);
+                var ret = GetInstancesFor(ProviderArchitecture.Use32bit).ToList();
                 ret.AddRange(GetInstancesFor(ProviderArchitecture.Use64bit));
                 return ret.Distinct().ToList();
             }
             catch
             {
-                var services = ServiceController.GetServices();
+                var services = ServiceController.GetServices().Where(x => x.Status == ServiceControllerStatus.Running);
                 return services.Where(r => IsMsSqlService(r)
                     || IsDefaultInstServiceName(r))
                     .Select(NormalizeInstName)
@@ -49,15 +49,18 @@ namespace DBRestorer.Model
             return r.ServiceName.ToUpperInvariant() == "MSSQLSERVER";
         }
 
-        private static List<string> GetInstancesFor(ProviderArchitecture architecture)
+        private static IEnumerable<string> GetInstancesFor(ProviderArchitecture architecture)
         {
             var m = new ManagedComputer("LOCALHOST");
             m.ConnectionSettings.ProviderArchitecture = architecture;
-            var ret = (from ServerInstance inst
-                in m.ServerInstances
-                select InstancePathConversion.GetInstsPath(inst.Parent.ConnectionSettings.MachineName, inst.Name))
+            var services = m.Services.OfType<Service>()
+                .Where(x => x.Type == ManagedServiceType.SqlServer && x.ServiceState == ServiceState.Running)
                 .ToList();
-            return ret;
+
+            return from ServerInstance inst in m.ServerInstances
+                   where services.Any(x => x.Name.Replace("MSSQL$", "") == inst.Name)
+                   select InstancePathConversion.GetInstsPath(inst.Parent.ConnectionSettings.MachineName, inst.Name);
+                   
         }
 
         public override List<string> GetDatabaseNames(string instanceName)
