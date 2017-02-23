@@ -4,11 +4,11 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 using DBRestorer.Domain;
+using DBRestorer.Model;
 using ExtendedCL;
 using Microsoft.SqlServer.Management.Smo;
-using Microsoft.SqlServer.Management.Smo.Wmi;
 
-namespace DBRestorer.Model
+namespace DBRestorer.Ctrl.Model
 {
     public class SqlServerUtil : ISqlServerUtil
     {
@@ -16,21 +16,12 @@ namespace DBRestorer.Model
 
         public override List<string> GetSqlInstances()
         {
-            try
-            {
-                var ret = GetInstancesFor(ProviderArchitecture.Use32bit).ToList();
-                ret.AddRange(GetInstancesFor(ProviderArchitecture.Use64bit));
-                return ret.Distinct().ToList();
-            }
-            catch
-            {
-                var services = ServiceController.GetServices().Where(x => x.Status == ServiceControllerStatus.Running);
-                return services.Where(r => IsMsSqlService(r)
-                    || IsDefaultInstServiceName(r))
-                    .Select(NormalizeInstName)
-                    .Distinct()
-                    .ToList();
-            }
+            var services = ServiceController.GetServices().Where(x => x.Status == ServiceControllerStatus.Running);
+            return services.Where(r => IsMsSqlService(r)
+                || IsDefaultInstServiceName(r))
+                .Select(NormalizeInstName)
+                .Distinct()
+                .ToList();
         }
 
         private static string NormalizeInstName(ServiceController r)
@@ -47,20 +38,6 @@ namespace DBRestorer.Model
         private static bool IsDefaultInstServiceName(ServiceController r)
         {
             return r.ServiceName.ToUpperInvariant() == "MSSQLSERVER";
-        }
-
-        private static IEnumerable<string> GetInstancesFor(ProviderArchitecture architecture)
-        {
-            var m = new ManagedComputer("LOCALHOST");
-            m.ConnectionSettings.ProviderArchitecture = architecture;
-            var services = m.Services.OfType<Service>()
-                .Where(x => x.Type == ManagedServiceType.SqlServer && x.ServiceState == ServiceState.Running)
-                .ToList();
-
-            return from ServerInstance inst in m.ServerInstances
-                   where services.Any(x => x.Name.Replace("MSSQL$", "") == inst.Name)
-                   select InstancePathConversion.GetInstsPath(inst.Parent.ConnectionSettings.MachineName, inst.Name);
-                   
         }
 
         public override List<string> GetDatabaseNames(string instanceName)

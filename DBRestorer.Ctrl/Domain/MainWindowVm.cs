@@ -8,6 +8,7 @@ using DBRestorer.Plugin.Interface;
 using DBRestorer.Model;
 using System.Linq;
 using System.Collections.ObjectModel;
+using DBRestorer.Ctrl.Model;
 using WpfCommon.Utils;
 
 namespace DBRestorer.Domain
