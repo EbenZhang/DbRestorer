@@ -259,6 +259,9 @@ namespace DBRestorer
                 plugin?.Value.OnDBRestored(this,
                     _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
             }
+            catch(Exception ex){
+                MessageBoxHelper.ShowError(this, ex.ToString());
+            }
             finally
             {
                 this.Topmost = true;
