@@ -251,10 +251,18 @@ namespace DBRestorer
         private void PostRestorePluginMenuClicked(object sender, RoutedEventArgs e)
         {
             if (ValidBeforeInvokePlugin()) return;
-            var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
-            var plugin = Plugins.GetPlugins<IPostDbRestore>().FirstOrDefault(r => r.Value.PluginName == pluginName);
-            plugin?.Value.OnDBRestored(this, 
-                _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            try
+            {
+                this.Topmost = false;
+                var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
+                var plugin = Plugins.GetPlugins<IPostDbRestore>().FirstOrDefault(r => r.Value.PluginName == pluginName);
+                plugin?.Value.OnDBRestored(this,
+                    _viewModel.SqlInstancesVm.SelectedInst, _viewModel.DbRestorOptVm.TargetDbName);
+            }
+            finally
+            {
+                this.Topmost = true;
+            }
         }
 
         private bool ValidBeforeInvokePlugin()
