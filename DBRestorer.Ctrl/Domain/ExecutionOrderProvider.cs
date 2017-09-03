@@ -12,7 +12,7 @@ using WpfCommon.Utils;
 
 namespace DBRestorer.Ctrl.Domain
 {
-    [ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
     public class Plan
     {
         public string PlanName { get; set; }
@@ -20,7 +20,7 @@ namespace DBRestorer.Ctrl.Domain
         public ObservableCollection<string> ExecutionOrder { get; set; } = new ObservableCollection<string>();
     }
 
-    [ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
     public class ExecutionOrderProvider
     {
         public static Lazy<ExecutionOrderProvider> Instance = new Lazy<ExecutionOrderProvider>(() => new ExecutionOrderProvider());

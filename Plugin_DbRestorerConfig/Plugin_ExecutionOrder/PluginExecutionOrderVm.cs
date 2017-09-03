@@ -11,7 +11,7 @@ using WpfCommon.Utils;
 
 namespace Plugin_DbRestorerConfig.Plugin_ExecutionOrder
 {
-    [ImplementPropertyChanged]
+    [AddINotifyPropertyChangedInterface]
     public class PluginExecutionOrderVm : ViewModelBaseEx
     {
         public ExecutionOrderProvider ExecutionPlans { get; set; } = ExecutionOrderProvider.Instance.Value;
