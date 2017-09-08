@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer", "DBRestorer\DBRestorer.csproj", "{40CBF670-1F79-4B8F-A794-E74FD2F52B8F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -14,13 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCommon", "WpfCommon\WpfCommon.csproj", "{C66B81D7-C73E-41BF-8494-5CEC64B21EFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedCL", "ExtendedCL\ExtendedCL\ExtendedCL.csproj", "{E4142C9C-2AFD-4579-97E2-767F3196AC4E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{029DEFAA-8A19-4500-8B8F-C1E6F1CCC3A6}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Ctrl", "DBRestorer.Ctrl\DBRestorer.Ctrl.csproj", "{1C78A58A-A63E-407E-832C-86EBAFFE8E1A}"
 EndProject
