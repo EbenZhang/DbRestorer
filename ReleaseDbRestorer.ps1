@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$projectPath = Resolve-Path "./DBRestorer/DBRestorer.csproj"
+$projectPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("./DBRestorer/DBRestorer.csproj")
 $csproj = [xml](Get-Content $projectPath)
 $propertyGroup = $csproj.Project.PropertyGroup[0]
 
