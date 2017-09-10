@@ -156,7 +156,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj">
+    <ProjectReference Include="..\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj">
       <Project>{05512917-cb75-4717-aee1-b56612c31ab1}</Project>
       <Name>DBRestorer.Plugin.Interface</Name>
     </ProjectReference>

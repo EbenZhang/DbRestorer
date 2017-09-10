@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedCL", "ExtendedCL\Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Ctrl", "DBRestorer.Ctrl\DBRestorer.Ctrl.csproj", "{1C78A58A-A63E-407E-832C-86EBAFFE8E1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Plugin.Interface", "DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj", "{05512917-CB75-4717-AEE1-B56612C31AB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Plugin.Interface", "DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj", "{05512917-CB75-4717-AEE1-B56612C31AB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin_OpenInSSMS", "Plugin_OpenInSSMS\Plugin_OpenInSSMS.csproj", "{2DFAA45D-2AFC-482A-B21B-4144FE700C68}"
 EndProject

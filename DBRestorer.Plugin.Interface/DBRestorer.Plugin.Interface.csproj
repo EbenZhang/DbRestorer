@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2DFAA45D-2AFC-482A-B21B-4144FE700C68}</ProjectGuid>
+    <ProjectGuid>{05512917-CB75-4717-AEE1-B56612C31AB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plugin_OpenInSSMS</RootNamespace>
-    <AssemblyName>Plugin_OpenInSSMS</AssemblyName>
+    <RootNamespace>DBRestorer.Plugin.Interface</RootNamespace>
+    <AssemblyName>DBRestorer.Plugin.Interface</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -29,12 +29,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\DBRestorer.Plugin.Interface.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -46,20 +46,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpenDbInSSMS.cs" />
+    <Compile Include="IDbRestorerSettings.cs" />
+    <Compile Include="IDbUtility.cs" />
+    <Compile Include="IPostDbRestore.cs" />
+    <Compile Include="IPluginUpdatesDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj">
-      <Project>{05512917-cb75-4717-aee1-b56612c31ab1}</Project>
-      <Name>DBRestorer.Plugin.Interface</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

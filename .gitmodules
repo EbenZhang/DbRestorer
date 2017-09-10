@@ -2,6 +2,3 @@
 	path = ExtendedCL
 	url = https://github.com/EbenZhang/ExtendedCL.git
 	branch = master
-[submodule "DBRestorer.Plugin.Interface"]
-	path = DBRestorer.Plugin.Interface
-	url = git@github.com:EbenZhang/DBRestorer.Plugin.Interface.git
