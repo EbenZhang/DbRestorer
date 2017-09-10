@@ -17,3 +17,5 @@ $propertyGroup.ApplicationRevision = ($thisRevision + 1).ToString()
 write-host $propertyGroup.ApplicationRevision
 $csproj.Save($projectPath)
 
+git commit -am 'publish'
+git push origin master
