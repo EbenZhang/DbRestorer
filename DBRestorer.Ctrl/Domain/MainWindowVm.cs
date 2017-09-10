@@ -9,7 +9,7 @@ using DBRestorer.Model;
 using System.Linq;
 using System.Collections.ObjectModel;
 using DBRestorer.Ctrl.Model;
-using WpfCommon.Utils;
+using Nicologies.WpfCommon.Utils;
 
 namespace DBRestorer.Domain
 {

@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DBRestorer.Ctrl;
 using DBRestorer.Plugin.Interface;
-using WpfCommon.Utils;
+using Nicologies.WpfCommon.Utils;
 
 namespace Plugin_DbRestorerConfig.Plugin_ExecutionOrder
 {

@@ -76,10 +76,6 @@
       <Project>{05512917-CB75-4717-AEE1-B56612C31AB1}</Project>
       <Name>DBRestorer.Plugin.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WpfCommon\WpfCommon.csproj">
-      <Project>{c66b81d7-c73e-41bf-8494-5cec64b21efe}</Project>
-      <Name>WpfCommon</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="PluginDownloadFolderSettingsView.xaml">

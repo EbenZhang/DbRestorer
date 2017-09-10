@@ -7,7 +7,7 @@ using DBRestorer.Domain;
 using DBRestorer.Plugin.Interface;
 using GalaSoft.MvvmLight.Command;
 using PropertyChanged;
-using WpfCommon.Utils;
+using Nicologies.WpfCommon.Utils;
 
 namespace Plugin_DbRestorerConfig.Plugin_ExecutionOrder
 {

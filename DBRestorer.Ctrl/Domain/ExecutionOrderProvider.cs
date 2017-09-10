@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using DBRestorer.Plugin.Interface;
 using ExtendedCL;
 using PropertyChanged;
-using WpfCommon.Utils;
+using Nicologies.WpfCommon.Utils;
 
 namespace DBRestorer.Ctrl.Domain
 {
