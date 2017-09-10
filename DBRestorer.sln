@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer", "DBRestorer\DBRestorer.csproj", "{40CBF670-1F79-4B8F-A794-E74FD2F52B8F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedCL", "ExtendedCL\Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Ctrl", "DBRestorer.Ctrl\DBRestorer.Ctrl.csproj", "{1C78A58A-A63E-407E-832C-86EBAFFE8E1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBRestorer.Plugin.Interface", "DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj", "{05512917-CB75-4717-AEE1-B56612C31AB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nicologies.DBRestorer.Plugin.Interface", "DBRestorer.Plugin.Interface\Nicologies.DBRestorer.Plugin.Interface.csproj", "{05512917-CB75-4717-AEE1-B56612C31AB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin_OpenInSSMS", "Plugin_OpenInSSMS\Plugin_OpenInSSMS.csproj", "{2DFAA45D-2AFC-482A-B21B-4144FE700C68}"
 EndProject
@@ -58,5 +58,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE250D5C-0568-4B0E-A037-98A632A9E1E4}
 	EndGlobalSection
 EndGlobal

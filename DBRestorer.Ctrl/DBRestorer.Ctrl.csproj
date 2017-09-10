@@ -156,9 +156,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj">
+    <ProjectReference Include="..\DBRestorer.Plugin.Interface\Nicologies.DBRestorer.Plugin.Interface.csproj">
       <Project>{05512917-cb75-4717-aee1-b56612c31ab1}</Project>
-      <Name>DBRestorer.Plugin.Interface</Name>
+      <Name>Nicologies.DBRestorer.Plugin.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExtendedCL\ExtendedCL\ExtendedCL.csproj">
       <Project>{e4142c9c-2afd-4579-97e2-767f3196ac4e}</Project>

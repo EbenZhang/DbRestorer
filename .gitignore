@@ -183,3 +183,4 @@ T4MVC\.cs
 Sharpcuz/attachments/*
 .nuget
 .vs/
+*.nupkg

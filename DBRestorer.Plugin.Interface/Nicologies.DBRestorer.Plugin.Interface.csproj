@@ -7,8 +7,8 @@
     <ProjectGuid>{05512917-CB75-4717-AEE1-B56612C31AB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DBRestorer.Plugin.Interface</RootNamespace>
-    <AssemblyName>DBRestorer.Plugin.Interface</AssemblyName>
+    <RootNamespace>Nicologies.DBRestorer.Plugin.Interface</RootNamespace>
+    <AssemblyName>Nicologies.DBRestorer.Plugin.Interface</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\DBRestorer.Plugin.Interface.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Nicologies.DBRestorer.Plugin.Interface.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

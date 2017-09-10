@@ -72,9 +72,9 @@
       <Project>{1c78a58a-a63e-407e-832c-86ebaffe8e1a}</Project>
       <Name>DBRestorer.Ctrl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DBRestorer.Plugin.Interface\DBRestorer.Plugin.Interface.csproj">
+    <ProjectReference Include="..\DBRestorer.Plugin.Interface\Nicologies.DBRestorer.Plugin.Interface.csproj">
       <Project>{05512917-CB75-4717-AEE1-B56612C31AB1}</Project>
-      <Name>DBRestorer.Plugin.Interface</Name>
+      <Name>Nicologies.DBRestorer.Plugin.Interface</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
