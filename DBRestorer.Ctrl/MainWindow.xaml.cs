@@ -97,7 +97,7 @@ namespace DBRestorer
 
         public ICommand RestoreCmd
         {
-            get { return new RelayCommand(Restore); }
+            get { return new RelayCommand(async () => await Restore()); }
         }
 
         private void MainWindow_Drop(object sender, DragEventArgs e)
@@ -207,7 +207,7 @@ namespace DBRestorer
             return false;
         }
 
-        private async void Restore()
+        private async Task Restore()
         {
             if (!this.ValidateTextBoxes())
             {

@@ -4,6 +4,7 @@ using DBRestorer.Domain;
 using ExtendedCL;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace DBRestorer.Test
 {
@@ -28,7 +29,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void CanGetDatabaseNames()
+        public async Task CanGetDatabaseNames()
         {
             var util = Substitute.For<ISqlServerUtil>();
             util.GetDatabaseNames(Arg.Any<string>()).Returns(DbNames);
@@ -38,7 +39,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void ShouldUpdateTheProgressProperly()
+        public async Task ShouldUpdateTheProgressProperly()
         {
             var util = Substitute.For<ISqlServerUtil>();
             util.GetDatabaseNames(Arg.Any<string>()).Returns(DbNames);
@@ -52,7 +53,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void GiveAnEmptyInstance_NothingWillHappen()
+        public async Task GiveAnEmptyInstance_NothingWillHappen()
         {
             var util = Substitute.For<ISqlServerUtil>();
             var vm = new SqlInstancesVM(util, _progressBarProvider, _userPrefPersist);
@@ -64,7 +65,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void ShouldExcludeSystemDatabases()
+        public async Task ShouldExcludeSystemDatabases()
         {
             var util = Substitute.For<ISqlServerUtil>();
             var dbsWithSystemTables = new List<string>(DbNames);
@@ -79,7 +80,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void ShouldExcludeSystemDatabases_CaseInsensative()
+        public async Task ShouldExcludeSystemDatabases_CaseInsensative()
         {
             var util = Substitute.For<ISqlServerUtil>();
             var dbsWithSystemTables = new List<string>(DbNames);

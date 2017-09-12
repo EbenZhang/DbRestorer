@@ -4,6 +4,7 @@ using DBRestorer.Domain;
 using ExtendedCL;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace DBRestorer.Test
 {
@@ -34,7 +35,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void CanGetSqlInstance()
+        public async Task CanGetSqlInstance()
         {
             Assert.That(_vm.Instances, Is.Empty);
 
@@ -48,7 +49,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void InstancesAreCached()
+        public async Task InstancesAreCached()
         {
             Assert.That(_vm.Instances, Is.Empty);
             await _vm.RetrieveInstanceAsync();
@@ -64,7 +65,7 @@ namespace DBRestorer.Test
         }
 
         [Test]
-        public async void ForceToIgnoreCache()
+        public async Task ForceToIgnoreCache()
         {
             Assert.That(_vm.Instances, Is.Empty);
             await _vm.RetrieveInstanceAsync();
