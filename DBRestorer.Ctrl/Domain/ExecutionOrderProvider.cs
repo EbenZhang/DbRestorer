@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using DBRestorer.Plugin.Interface;
-using ExtendedCL;
+using Nicologies;
 using PropertyChanged;
 using Nicologies.WpfCommon.Utils;
 

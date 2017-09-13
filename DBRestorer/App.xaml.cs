@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using ExtendedCL;
+using Nicologies;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Win32;
 using DBRestorer.Ctrl;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DBRestorer.Domain;
-using ExtendedCL;
+using Nicologies;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mantin.Controls.Wpf.Notification;
