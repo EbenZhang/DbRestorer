@@ -5,7 +5,6 @@ using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 using DBRestorer.Ctrl;
 using DBRestorer.Plugin.Interface;
-using DBRestorer.Model;
 using System.Linq;
 using System.Collections.ObjectModel;
 using DBRestorer.Ctrl.Model;

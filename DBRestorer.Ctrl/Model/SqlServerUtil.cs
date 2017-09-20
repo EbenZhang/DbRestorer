@@ -1,49 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceProcess;
 using System.Threading.Tasks;
 using DBRestorer.Domain;
-using DBRestorer.Model;
 using ExtendedCL;
 using Microsoft.SqlServer.Management.Smo;
+using Nicologies.SqlServerUtils.Metadata;
 
 namespace DBRestorer.Ctrl.Model
 {
-    public class SqlServerUtil : ISqlServerUtil
+	public class SqlServerUtil : ISqlServerUtil
     {
         public static readonly string FinishedRestore = "Finished Restoring.";
+		private SqlServerInstanceNames _instancesProvider = new SqlServerInstanceNames();
+		private SqlServerDatabases _databasesProvider = new SqlServerDatabases();
 
         public override List<string> GetSqlInstances()
         {
-            var services = ServiceController.GetServices().Where(x => x.Status == ServiceControllerStatus.Running);
-            return services.Where(r => IsMsSqlService(r)
-                || IsDefaultInstServiceName(r))
-                .Select(NormalizeInstName)
-                .Distinct()
-                .ToList();
-        }
-
-        private static string NormalizeInstName(ServiceController r)
-        {
-            return InstancePathConversion.GetInstsPath(
-                "LOCALHOST", r.ServiceName.ToUpperInvariant().Replace("MSSQL$", ""));
-        }
-
-        private static bool IsMsSqlService(ServiceController r)
-        {
-            return r.ServiceName.ToUpperInvariant().StartsWith("MSSQL$");
-        }
-
-        private static bool IsDefaultInstServiceName(ServiceController r)
-        {
-            return r.ServiceName.ToUpperInvariant() == "MSSQLSERVER";
+			return _instancesProvider.GetSqlInstances();
         }
 
         public override List<string> GetDatabaseNames(string instanceName)
         {
-            var server = new Server(instanceName);
-            return (from Database db in server.Databases select db.Name).ToList();
+			return _databasesProvider.GetDatabaseNames(instanceName);
         }
 
         public override async Task Restore(DbRestorOptions opt, IProgressBarProvider progressBarProvider,

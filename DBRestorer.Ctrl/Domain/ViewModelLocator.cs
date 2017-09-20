@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using DBRestorer.Ctrl.Model;
 using DBRestorer.Domain;
-using DBRestorer.Model;
 
 namespace DBRestorer.Ctrl
 {
