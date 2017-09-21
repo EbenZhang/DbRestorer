@@ -35,10 +35,11 @@ namespace DBRestorer
 
             var userPrefPersister = new UserPreferencePersist();
             var pref = userPrefPersister.LoadPreference();
-            if (string.IsNullOrWhiteSpace(pref.PluginDownloadPath)
-                && Environment.UserDomainName.ToUpperInvariant() == "EMBINT")
+            const string HelixLeisureExtensionPath = @"\\was29\Shared\ECSDBToolsExtensions";
+
+            if (string.IsNullOrWhiteSpace(pref.PluginDownloadPath) && Directory.Exists(HelixLeisureExtensionPath))
             {
-                pref.PluginDownloadPath = @"\\was29\Shared\ECSDBToolsExtensions\";
+                pref.PluginDownloadPath = HelixLeisureExtensionPath;
                 userPrefPersister.SavePreference(pref);
             }
             if (!string.IsNullOrWhiteSpace(pref.PluginDownloadPath))
