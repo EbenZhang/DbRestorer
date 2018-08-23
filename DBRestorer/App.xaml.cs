@@ -8,7 +8,7 @@ using Nicologies;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Win32;
 using DBRestorer.Ctrl;
-using DBRestorer.Domain;
+using DBRestorer.Ctrl.Domain;
 
 namespace DBRestorer
 {

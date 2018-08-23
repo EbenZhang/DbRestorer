@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using GalaSoft.MvvmLight;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
     public class ViewModelBaseEx : ViewModelBase
     {

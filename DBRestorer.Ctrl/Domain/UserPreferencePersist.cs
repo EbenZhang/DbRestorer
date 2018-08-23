@@ -2,7 +2,7 @@ using System.IO;
 using System.Xml.Serialization;
 using Nicologies;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
     public interface IUserPreferencePersist
     {

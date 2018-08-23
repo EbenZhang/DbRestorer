@@ -1,7 +1,7 @@
 using System;
 using ExtendedCL;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
     public class Restorer
     {

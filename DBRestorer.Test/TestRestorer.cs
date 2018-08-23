@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using DBRestorer.Domain;
+using DBRestorer.Ctrl.Domain;
 using ExtendedCL;
 using NSubstitute;
 using NUnit.Framework;
@@ -16,8 +16,7 @@ namespace DBRestorer.Test
             var sqlUtil = Substitute.For<ISqlServerUtil>();
             var opt = new ISqlServerUtil.DbRestorOptions();
             sqlUtil.When(x => x.Restore(opt, progressBarProvider, null))
-                .Do(x => { throw new InvalidDataException(""); }
-                );
+                .Do(x => throw new InvalidDataException(""));
 
             var restorer = new Restorer(sqlUtil);
 

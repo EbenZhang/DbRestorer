@@ -1,14 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using DBRestorer.Ctrl.Model;
+using DBRestorer.Plugin.Interface;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
-using DBRestorer.Ctrl;
-using DBRestorer.Plugin.Interface;
-using System.Linq;
-using System.Collections.ObjectModel;
-using DBRestorer.Ctrl.Model;
 using Nicologies.WpfCommon.Utils;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
     public class MainWindowVm : ViewModelBaseEx, IProgressBarProvider
     {
@@ -19,13 +18,13 @@ namespace DBRestorer.Domain
         private int _Percent;
         private bool _PercentageDisabled = true;
         private string _ProgressDesc = "";
-        private SqlInstancesVM _SqlInstancesVm;
+        private SqlInstancesVm _SqlInstancesVm;
 
         public MainWindowVm(ISqlServerUtil sqlserverUtil, IUserPreferencePersist userPreferencePersist)
         {
             _sqlserverUtil = sqlserverUtil;
             _userPreferencePersist = userPreferencePersist;
-            SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this, userPreferencePersist);
+            SqlInstancesVm = new SqlInstancesVm(_sqlserverUtil, this, userPreferencePersist);
             _DbRestoreOption.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == nameof(DbRestorOptVm.TargetDbName))
@@ -49,7 +48,7 @@ namespace DBRestorer.Domain
             PluginSettings.AddRange(settings.Select(r => r.Value.Name));
         }
 
-        public SqlInstancesVM SqlInstancesVm
+        public SqlInstancesVm SqlInstancesVm
         {
             get { return _SqlInstancesVm; }
             private set { RaiseAndSetIfChanged(ref _SqlInstancesVm, value); }

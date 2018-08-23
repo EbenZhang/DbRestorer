@@ -1,17 +1,13 @@
 ﻿using Autofac;
 using DBRestorer.Ctrl.Model;
-using DBRestorer.Domain;
 
-namespace DBRestorer.Ctrl
+namespace DBRestorer.Ctrl.Domain
 {
     public class ViewModelLocator
     {
         private static IContainer _container;
 
-        public MainWindowVm MainWindowVm
-        {
-            get { return _container.Resolve<MainWindowVm>(); }
-        }
+        public MainWindowVm MainWindowVm => _container.Resolve<MainWindowVm>();
 
         public static void BootStrap()
         {
@@ -22,7 +18,7 @@ namespace DBRestorer.Ctrl
             builder.RegisterType<SqlServerUtil>().As<ISqlServerUtil>();
             builder.RegisterInstance(new UserPreferencePersist()).As<IUserPreferencePersist>();
             builder.RegisterType<MainWindowVm>().AsSelf();
-            builder.RegisterType<SqlInstancesVM>().AsSelf();
+            builder.RegisterType<SqlInstancesVm>().AsSelf();
             _container = builder.Build();
         }
     }

@@ -5,7 +5,7 @@ using DBRestorer.Ctrl;
 
 namespace DBRestorer
 {
-    static class PluginDownloaderHelper
+    internal static class PluginDownloaderHelper
     {
         public static void Download(string folderToDownloadPlugins)
         {

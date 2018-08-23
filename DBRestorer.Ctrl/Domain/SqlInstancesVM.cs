@@ -6,9 +6,9 @@ using System.Windows.Input;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Command;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
-    public class SqlInstancesVM : ViewModelBaseEx
+    public class SqlInstancesVm : ViewModelBaseEx
     {
         public const string RetrivingInstances = "Retrieving SQL Instances...";
         public const string RetrivingDbNames = "Retrieving Database Names...";
@@ -17,7 +17,7 @@ namespace DBRestorer.Domain
         private readonly ISqlServerUtil _util;
         private string _SelectedInst;
 
-        public SqlInstancesVM(ISqlServerUtil util, 
+        public SqlInstancesVm(ISqlServerUtil util, 
             IProgressBarProvider progressBarProvider, IUserPreferencePersist userPreference)
         {
             Instances = new ObservableCollection<string>();
@@ -31,7 +31,7 @@ namespace DBRestorer.Domain
 
         public string SelectedInst
         {
-            get { return _SelectedInst; }
+            get => _SelectedInst;
             set
             {
                 RaiseAndSetIfChanged(ref _SelectedInst, value, async () =>

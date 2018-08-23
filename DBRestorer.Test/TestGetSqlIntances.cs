@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DBRestorer.Domain;
 using ExtendedCL;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using DBRestorer.Ctrl.Domain;
 
 namespace DBRestorer.Test
 {
@@ -20,7 +20,7 @@ namespace DBRestorer.Test
         private IProgressBarProvider _progressBarProvider;
         private ISqlServerUtil _sqlServerUtil;
         private IUserPreferencePersist _userPrefPersist;
-        private SqlInstancesVM _vm;
+        private SqlInstancesVm _vm;
 
         [SetUp]
         public void Setup()
@@ -31,7 +31,7 @@ namespace DBRestorer.Test
             _userPrefPersist = Substitute.For<IUserPreferencePersist>();
             _userPrefPersist.LoadPreference().Returns(new UserPreference());
 
-            _vm = new SqlInstancesVM(_sqlServerUtil, _progressBarProvider, _userPrefPersist);
+            _vm = new SqlInstancesVm(_sqlServerUtil, _progressBarProvider, _userPrefPersist);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace DBRestorer.Test
 
             await _vm.RetrieveInstanceAsync();
 
-            _progressBarProvider.Received(1).Start(false, SqlInstancesVM.RetrivingInstances);
+            _progressBarProvider.Received(1).Start(false, SqlInstancesVm.RetrivingInstances);
             _progressBarProvider.Received(1).OnCompleted(Arg.Any<string>());
 
             CollectionAssert.AreEqual(Instances, _vm.Instances);

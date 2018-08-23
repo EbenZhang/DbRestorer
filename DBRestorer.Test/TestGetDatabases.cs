@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DBRestorer.Domain;
 using ExtendedCL;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using DBRestorer.Ctrl.Domain;
 
 namespace DBRestorer.Test
 {
@@ -33,7 +33,7 @@ namespace DBRestorer.Test
         {
             var util = Substitute.For<ISqlServerUtil>();
             util.GetDatabaseNames(Arg.Any<string>()).Returns(DbNames);
-            var vm = new SqlInstancesVM(util, _progressBarProvider, _userPrefPersist);
+            var vm = new SqlInstancesVm(util, _progressBarProvider, _userPrefPersist);
             await vm.RetrieveDbNamesAsync("MSSQLServer");
             CollectionAssert.AreEqual(DbNames, vm.DbNames);
         }
@@ -44,11 +44,11 @@ namespace DBRestorer.Test
             var util = Substitute.For<ISqlServerUtil>();
             util.GetDatabaseNames(Arg.Any<string>()).Returns(DbNames);
 
-            var vm = new SqlInstancesVM(util, _progressBarProvider, _userPrefPersist);
+            var vm = new SqlInstancesVm(util, _progressBarProvider, _userPrefPersist);
 
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 
-            _progressBarProvider.Received(1).Start(false, SqlInstancesVM.RetrivingDbNames);
+            _progressBarProvider.Received(1).Start(false, SqlInstancesVm.RetrivingDbNames);
             _progressBarProvider.Received(1).OnCompleted(Arg.Any<string>());
         }
 
@@ -56,7 +56,7 @@ namespace DBRestorer.Test
         public async Task GiveAnEmptyInstance_NothingWillHappen()
         {
             var util = Substitute.For<ISqlServerUtil>();
-            var vm = new SqlInstancesVM(util, _progressBarProvider, _userPrefPersist);
+            var vm = new SqlInstancesVm(util, _progressBarProvider, _userPrefPersist);
             vm.PropertyChanged += (sender, args) => { Assert.Fail("Should not raise any property change event"); };
 
             await vm.RetrieveDbNamesAsync(null);
@@ -72,7 +72,7 @@ namespace DBRestorer.Test
             dbsWithSystemTables.AddRange(ISqlServerUtil.SystemDatabases);
             util.GetDatabaseNames(Arg.Any<string>()).Returns(dbsWithSystemTables);
 
-            var vm = new SqlInstancesVM(util, _progressBarProvider, _userPrefPersist);
+            var vm = new SqlInstancesVm(util, _progressBarProvider, _userPrefPersist);
 
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 
@@ -87,7 +87,7 @@ namespace DBRestorer.Test
             dbsWithSystemTables.AddRange(ISqlServerUtil.SystemDatabases.Select(r => r.ToUpperInvariant()));
             util.GetDatabaseNames(Arg.Any<string>()).Returns(dbsWithSystemTables);
 
-            var vm = new SqlInstancesVM(util, _progressBarProvider, _userPrefPersist);
+            var vm = new SqlInstancesVm(util, _progressBarProvider, _userPrefPersist);
 
             await vm.RetrieveDbNamesAsync("MSSQLServer");
 

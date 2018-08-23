@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
     public class DbRestorOptVm : ViewModelBaseEx
     {
@@ -11,7 +11,7 @@ namespace DBRestorer.Domain
 
         public string SrcPath
         {
-            get { return _SrcPath; }
+            get => _SrcPath;
             set
             {
                 RaiseAndSetIfChanged(ref _SrcPath, value);
@@ -27,7 +27,7 @@ namespace DBRestorer.Domain
 
         public string TargetDbName
         {
-            get { return _TargetDbName; }
+            get => _TargetDbName;
             set
             {
                 _TargetDbName = value;
@@ -44,7 +44,7 @@ namespace DBRestorer.Domain
 
         public string RelocateMdfTo
         {
-            get { return _RelocateMdfTo; }
+            get => _RelocateMdfTo;
             set
             {
                 _RelocateMdfTo = value;
@@ -54,7 +54,7 @@ namespace DBRestorer.Domain
 
         public string RelocateLdfTo
         {
-            get { return _RelocateLdfTo; }
+            get => _RelocateLdfTo;
             set
             {
                 _RelocateLdfTo = value;

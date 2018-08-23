@@ -3,21 +3,19 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using DBRestorer.Domain;
-using Nicologies;
+using DBRestorer.Ctrl.Domain;
+using DBRestorer.Plugin.Interface;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mantin.Controls.Wpf.Notification;
 using Microsoft.Win32;
+using Nicologies;
 using Nicologies.WpfCommon.Controls;
 using Nicologies.WpfCommon.Utils;
-using DBRestorer.Plugin.Interface;
-using DBRestorer.Ctrl;
-using System.Windows.Controls;
-using DBRestorer.Ctrl.Domain;
 
-namespace DBRestorer
+namespace DBRestorer.Ctrl
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -27,7 +25,7 @@ namespace DBRestorer
         private readonly MainWindowVm _viewModel;
         public ExecutionOrderProvider ExecutionOrderProvider { get; private set; } = ExecutionOrderProvider.Instance.Value;
 
-        private const int _aboutMenuID = int.MaxValue;
+        private const int AboutMenuId = int.MaxValue;
 
         public MainWindow()
         {
@@ -157,7 +155,7 @@ namespace DBRestorer
                 MessageBoxHelper.ShowError(this,  
                 $"Unable to update plugins from {Plugins.UpdatesFolder}{Environment.NewLine}"
                 + $"If the problem persists, please delete the above folder{Environment.NewLine}"
-                +$"{ex.ToString()}");
+                +$"{ex}");
             }
             finally
             {
@@ -175,7 +173,7 @@ namespace DBRestorer
 
                 var menu = SystemMenu.FromWnd(this, OnMenuClicked);
                 menu.AppendSeparator();
-                menu.AppendMenu(_aboutMenuID, "About");
+                menu.AppendMenu(AboutMenuId, "About");
             }
             catch (Exception ex)
             {
@@ -190,7 +188,7 @@ namespace DBRestorer
 
         private bool OnMenuClicked(int menuId)
         {
-            if (menuId == _aboutMenuID)
+            if (menuId == AboutMenuId)
             {
                 var licMarkdown = File.ReadAllText(Path.Combine(PathHelper.ProcessDir, "LICENSE.md"));
                 var markdown = new MarkdownSharp.Markdown();
@@ -252,7 +250,7 @@ namespace DBRestorer
             if (ValidBeforeInvokePlugin()) return;
             try
             {
-                this.Topmost = false;
+                Topmost = false;
                 var pluginName = ((MenuItem)e.OriginalSource).Header.ToString();
                 var plugin = Plugins.GetPlugins<IPostDbRestore>().FirstOrDefault(r => r.Value.PluginName == pluginName);
                 plugin?.Value.OnDBRestored(this,

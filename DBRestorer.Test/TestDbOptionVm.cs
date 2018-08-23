@@ -1,4 +1,4 @@
-﻿using DBRestorer.Domain;
+﻿using DBRestorer.Ctrl.Domain;
 using NUnit.Framework;
 
 namespace DBRestorer.Test

@@ -1,4 +1,4 @@
-﻿namespace DBRestorer.Domain
+﻿namespace DBRestorer.Ctrl.Domain
 {
     public class Message
     {

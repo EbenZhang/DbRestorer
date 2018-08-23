@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using DBRestorer.Domain;
+using DBRestorer.Ctrl.Domain;
 
 namespace Plugin_DbRestorerConfig
 {
@@ -8,7 +8,7 @@ namespace Plugin_DbRestorerConfig
     /// </summary>
     public partial class PluginDownloadFolderSettingsView 
     {
-        readonly UserPreferencePersist _persist = new UserPreferencePersist();
+        private readonly UserPreferencePersist _persist = new UserPreferencePersist();
         public PluginDownloadFolderSettingsView()
         {
             InitializeComponent();

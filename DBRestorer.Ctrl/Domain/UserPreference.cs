@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DBRestorer.Domain
+namespace DBRestorer.Ctrl.Domain
 {
     [Serializable]
     public class UserPreference

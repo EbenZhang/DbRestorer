@@ -6,13 +6,14 @@
     StartupUri="pack://application:,,,/DBRestorer.Ctrl;component/MainWindow.xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     d1p1:Ignorable="d"
-    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:domain="clr-namespace:DBRestorer.Ctrl.Domain;assembly=DBRestorer.Ctrl">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Nicologies.WpfCommon;Component/Xaml/Fixes.xaml" />
       </ResourceDictionary.MergedDictionaries>
-      <ctrl:ViewModelLocator x:Key="ViewModelLocator" />
+      <domain:ViewModelLocator x:Key="ViewModelLocator" />
     </ResourceDictionary>
   </Application.Resources>
 </Application>

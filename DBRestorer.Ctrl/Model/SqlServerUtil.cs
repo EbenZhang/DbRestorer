@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using DBRestorer.Domain;
+using DBRestorer.Ctrl.Domain;
 using ExtendedCL;
 using Microsoft.SqlServer.Management.Smo;
 using Nicologies.SqlServerUtils.Metadata;
@@ -12,8 +11,8 @@ namespace DBRestorer.Ctrl.Model
 	public class SqlServerUtil : ISqlServerUtil
     {
         public static readonly string FinishedRestore = "Finished Restoring.";
-		private SqlServerInstanceNames _instancesProvider = new SqlServerInstanceNames();
-		private SqlServerDatabases _databasesProvider = new SqlServerDatabases();
+		private readonly SqlServerInstanceNames _instancesProvider = new SqlServerInstanceNames();
+		private readonly SqlServerDatabases _databasesProvider = new SqlServerDatabases();
 
         public override List<string> GetSqlInstances()
         {
@@ -60,8 +59,8 @@ namespace DBRestorer.Ctrl.Model
                         progressBarProvider.OnError(res.AsyncStatus.LastException.ToString());
                     }
                     // give 10% for the recovering which happens after restoring.
-                    const double WeightOfRestoring = 90.0 / 100.0;
-                    progressBarProvider.ReportProgress((int)(args.Percent * WeightOfRestoring));
+                    const double weightOfRestoring = 90.0 / 100.0;
+                    progressBarProvider.ReportProgress((int)(args.Percent * weightOfRestoring));
                 };
 
                 var fileList = res.ReadFileList(srv);
