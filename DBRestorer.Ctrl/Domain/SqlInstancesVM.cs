@@ -87,10 +87,8 @@ namespace DBRestorer.Domain
 
         public void SavePreference()
         {
-            var pref = new UserPreference
-            {
-                LastUsedDbInst = SelectedInst
-            };
+            var pref = _userPreference.LoadPreference();
+            pref.LastUsedDbInst = SelectedInst;
             _userPreference.SavePreference(pref);
         }
     }

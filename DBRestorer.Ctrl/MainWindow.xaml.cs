@@ -171,8 +171,7 @@ namespace DBRestorer
 
             try
             {
-                await _viewModel.SqlInstancesVm.RetrieveInstanceAsync();
-                await _viewModel.SqlInstancesVm.RetrieveDbNamesAsync(_viewModel.SqlInstancesVm.SelectedInst);
+                await _viewModel.LoadSqlInstanceAndDbs();
 
                 var menu = SystemMenu.FromWnd(this, OnMenuClicked);
                 menu.AppendSeparator();

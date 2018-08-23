@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ExtendedCL;
 using GalaSoft.MvvmLight.Threading;
 using DBRestorer.Ctrl;
@@ -15,6 +13,7 @@ namespace DBRestorer.Domain
     public class MainWindowVm : ViewModelBaseEx, IProgressBarProvider
     {
         private readonly ISqlServerUtil _sqlserverUtil;
+        private readonly IUserPreferencePersist _userPreferencePersist;
         private DbRestorOptVm _DbRestoreOption = new DbRestorOptVm();
         private bool _IsProcessing;
         private int _Percent;
@@ -25,7 +24,17 @@ namespace DBRestorer.Domain
         public MainWindowVm(ISqlServerUtil sqlserverUtil, IUserPreferencePersist userPreferencePersist)
         {
             _sqlserverUtil = sqlserverUtil;
+            _userPreferencePersist = userPreferencePersist;
             SqlInstancesVm = new SqlInstancesVM(_sqlserverUtil, this, userPreferencePersist);
+            _DbRestoreOption.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(DbRestorOptVm.TargetDbName))
+                {
+                    var pref = _userPreferencePersist.LoadPreference();
+                    pref.LastUsedDbName = _DbRestoreOption.TargetDbName;
+                    _userPreferencePersist.SavePreference(pref);
+                }
+            };
         }
 
         public void LoadPlugins()
@@ -146,6 +155,14 @@ namespace DBRestorer.Domain
         public void SaveInstSelection()
         {
             SqlInstancesVm.SavePreference();
+        }
+
+        public async Task LoadSqlInstanceAndDbs()
+        {
+            await SqlInstancesVm.RetrieveInstanceAsync();
+            await SqlInstancesVm.RetrieveDbNamesAsync(SqlInstancesVm.SelectedInst);
+            var pref = _userPreferencePersist.LoadPreference();
+            DbRestorOptVm.TargetDbName = pref.LastUsedDbName;
         }
     }
 }
