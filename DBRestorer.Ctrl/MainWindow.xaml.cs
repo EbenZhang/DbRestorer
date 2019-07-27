@@ -168,8 +168,9 @@ namespace DBRestorer.Ctrl
         {
             try
             {
-                _viewModel.Start(willReportProgress: false, taskDesc: "Migrating to new version");
-                var url = "https://github.com/Nicologies/DBRestorer/releases/download/1.0.7179/Setup.exe";
+                _viewModel.Start(willReportProgress: false, taskDesc: "Migrating from V1 to V2\r\nPlease uninstall V1 manually after migrated.\r\nA shortcut will be added to your desktop once migrated");
+                await Task.Delay(10000);
+                var url = "https://github.com/Nicologies/DBRestorer/releases/download/2.0.7179/Setup.exe";
                 using (var client = new WebClientSupportRedirect())
                 {
                     var installer = Path.Combine(Path.GetTempPath(), "DbRestorer.Setup.exe");
