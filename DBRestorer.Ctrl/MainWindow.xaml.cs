@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -140,45 +142,47 @@ namespace DBRestorer.Ctrl
 
         private async void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            var desktopWorkingArea = SystemParameters.WorkArea;
-            Left = desktopWorkingArea.Right - Width - 20;
-            Top = desktopWorkingArea.Bottom - Height - 20;
+            await MigrateAwayFromClickOnce();
+        }
 
+        private class WebClientSupportRedirect : WebClient
+        {
+            [System.Security.SecuritySafeCritical]
+            public WebClientSupportRedirect() : base()
+            {
+            }
+
+            private readonly CookieContainer _cookieContainer = new CookieContainer();
+
+            protected override WebRequest GetWebRequest(Uri myAddress)
+            {
+                var request = base.GetWebRequest(myAddress);
+                if (!(request is HttpWebRequest)) return request;
+                (request as HttpWebRequest).CookieContainer = _cookieContainer;
+                (request as HttpWebRequest).AllowAutoRedirect = true;
+                return request;
+            }
+        }
+
+        private async Task MigrateAwayFromClickOnce()
+        {
             try
             {
-                _viewModel.ProgressDesc = "Updating Plugins";
-                _viewModel.IsProcessing = true;
-                await Plugins.Update();
+                _viewModel.Start(willReportProgress: false, taskDesc: "Migrating to new version");
+                var url = "https://github.com/Nicologies/DBRestorer/releases/download/1.0.7179/Setup.exe";
+                using (var client = new WebClientSupportRedirect())
+                {
+                    var installer = Path.Combine(Path.GetTempPath(), "DbRestorer.Setup.exe");
+                    await client.DownloadFileTaskAsync(url, installer);
+                    Process.Start(installer);
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBoxHelper.ShowError(this,  
-                $"Unable to update plugins from {Plugins.UpdatesFolder}{Environment.NewLine}"
-                + $"If the problem persists, please delete the above folder{Environment.NewLine}"
-                +$"{ex}");
+                MessageBoxHelper.ShowError(this, "Failed to migrate to new version. Going to open the download link in your browser, please download the setup.exe and install");
+                Process.Start("https://github.com/Nicologies/DBRestorer/releases/latest");
             }
-            finally
-            {
-                _viewModel.ProgressDesc = "";
-                _viewModel.IsProcessing = false;
-            }
-
-            _viewModel.LoadPlugins();
-
-            DownloadPluginUpdatesInBackground();
-
-            try
-            {
-                await _viewModel.LoadSqlInstanceAndDbs();
-
-                var menu = SystemMenu.FromWnd(this, OnMenuClicked);
-                menu.AppendSeparator();
-                menu.AppendMenu(AboutMenuId, "About");
-            }
-            catch (Exception ex)
-            {
-                MessageBoxHelper.ShowError(this, ex.ToString());
-            }
+            Environment.Exit(0);
         }
 
         private static void DownloadPluginUpdatesInBackground()
