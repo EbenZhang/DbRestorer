@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DBRestorer.exe" version="1.0.0.59" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="DBRestorer.exe" version="1.0.0.60" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="dbrestorer.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DBRestorer" version="1.0.6809.36213" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DBRestorer" version="1.0.7147.42865" language="neutral" processorArchitecture="msil" />
     <commandLine file="DBRestorer.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -16,14 +16,14 @@
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!--
           UAC Manifest Options
-          If you want to change the Windows User Account Control level replace the 
+          If you want to change the Windows User Account Control level replace the
           requestedExecutionLevel node with one of the following.
 
         <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
         <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
         <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-         If you want to utilize File and Registry Virtualization for backward 
+         If you want to utilize File and Registry Virtualization for backward
          compatibility then delete the requestedExecutionLevel node.
     -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
@@ -56,25 +56,25 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.exe" size="694272">
-      <assemblyIdentity name="DBRestorer" version="1.0.6809.36213" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="DBRestorer" version="1.0.7147.42865" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>/zjjeBTaF8gwvCjZO7Kqf/3qv4rmnpEAH/eLhCuQPQc=</dsig:DigestValue>
+        <dsig:DigestValue>LTIbDJMQFypNHQ4UVyzyWPyPfd4Hzg9GOLbx8aCjBzw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.Ctrl.dll" size="49664">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBRestorer.Ctrl.dll" size="50688">
       <assemblyIdentity name="DBRestorer.Ctrl" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Mb+Iao2Hhqhu4jEoO7RaFrabmaAk/M/airv4iH5TF8I=</dsig:DigestValue>
+        <dsig:DigestValue>d4obp/3qgYZo5grqNawiBnm3vVpBsjB/QldrRKXGVB4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>JuKSIoETGn7V8zNGYMFPDgFXzJFngMQ8nE44tHVcfeM=</dsig:DigestValue>
+        <dsig:DigestValue>I0Ip40R6U/vXAY/7TgO0uZpQG0q74eSF1IGPCzCqq6I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -163,122 +163,50 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.ConnectionInfo.dll" size="163528">
-      <assemblyIdentity name="Microsoft.SqlServer.ConnectionInfo" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.ConnectionInfo.dll" size="170232">
+      <assemblyIdentity name="Microsoft.SqlServer.ConnectionInfo" version="14.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sOpB0KTnl3dW8cr5/H8P2RC4QcH6eAeyGsgX/+Kwn9E=</dsig:DigestValue>
+        <dsig:DigestValue>k5nEQnPCjX2HtZV9eCeV4P78GpX6M4IK/uuoHZCvoZ4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.Dmf.Common.dll" size="71368">
-      <assemblyIdentity name="Microsoft.SqlServer.Dmf.Common" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.Dmf.Common.dll" size="71928">
+      <assemblyIdentity name="Microsoft.SqlServer.Dmf.Common" version="14.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Hd1LdeHYD2ZGK6PtJAB5gsQrsQDTaqTZsjpqQtp3YUQ=</dsig:DigestValue>
+        <dsig:DigestValue>jaE5728IO/9GATUKq7j7fP81ltBIva5E6GmHBdaHUVc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.Management.Sdk.Sfc.dll" size="504520">
-      <assemblyIdentity name="Microsoft.SqlServer.Management.Sdk.Sfc" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.SqlClrProvider.dll" size="31992">
+      <assemblyIdentity name="Microsoft.SqlServer.SqlClrProvider" version="14.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vD6NBl7KVfiFC9hscPZLodCZKFXTfbykUPPPCbrzq0w=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.RegSvrEnum.dll" size="71360">
-      <assemblyIdentity name="Microsoft.SqlServer.RegSvrEnum" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8s9B2hXvbpUhPDH4fz+XG6xVG0RH7alU8C4JFDwKszE=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.ServiceBrokerEnum.dll" size="45768">
-      <assemblyIdentity name="Microsoft.SqlServer.ServiceBrokerEnum" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>tpFvutQ2qT7yg7bXlZbQrky3NwaQUCTaIPQnEOCCgGY=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.Smo.dll" size="4037832">
-      <assemblyIdentity name="Microsoft.SqlServer.Smo" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>xIqVYEAhpHuAZzRPBKPYoARY5558/txTbC5PI4YUWGI=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.SmoExtended.dll" size="230592">
-      <assemblyIdentity name="Microsoft.SqlServer.SmoExtended" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8ezobk3NpWHOI+0Zn6m4oopqRy+y+HFimHDuSe0CRrc=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.SqlClrProvider.dll" size="31944">
-      <assemblyIdentity name="Microsoft.SqlServer.SqlClrProvider" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>eUu2bJa/skE+BOnojtz4dd6TmNngcAjLQxsD3zFo2c8=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.SqlServer.SqlEnum.dll" size="1419976">
-      <assemblyIdentity name="Microsoft.SqlServer.SqlEnum" version="13.0.0.0" publicKeyToken="89845DCD8080CC91" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MjHgBVGLqfcI8PBsRqgygceJhtq4KxVRKaFMdn4luqs=</dsig:DigestValue>
+        <dsig:DigestValue>bpVvR4WxdqWjgtoAi/8im/o+QymbJkkEqtV13LD/Yfc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Nicologies.DBRestorer.Plugin.Interface.dll" size="5120">
-      <assemblyIdentity name="Nicologies.DBRestorer.Plugin.Interface" version="1.0.6809.36172" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Nicologies.DBRestorer.Plugin.Interface" version="1.0.7147.42864" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aQGO+9xibaZ2nAR6hbNRc6g1MTd70UTctW5/D/5HaD0=</dsig:DigestValue>
+        <dsig:DigestValue>uuzluvxuyC1qZQ4kFA7ebFQ9/b/NpaHWGaBa+2Z10js=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -326,7 +254,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2fG+Ij91hi8cPT4ug/UOhGAAtdT/sFFNvkTNx3aXIzg=</dsig:DigestValue>
+        <dsig:DigestValue>kVBE9yaXDJ96HyLGtMpE1nIcTwpCowkp0FFcAUQvH8I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -338,7 +266,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wXbhBU/jm6JLmtiveVGts0aL0tMsF1lBrDTSKviwQ14=</dsig:DigestValue>
+        <dsig:DigestValue>GMoSh/s/N7/5Su6EYNGLEB6jW3XzmFCaanmoCjzkRFU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
