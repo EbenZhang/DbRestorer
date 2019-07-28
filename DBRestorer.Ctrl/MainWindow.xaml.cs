@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +15,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Mantin.Controls.Wpf.Notification;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Nicologies;
 using Nicologies.WpfCommon.Controls;
 using Nicologies.WpfCommon.Utils;
@@ -164,13 +167,18 @@ namespace DBRestorer.Ctrl
             }
         }
 
+        private class GitHubReleaseInfo
+        {
+            public string name { get; set; }
+        }
         private async Task MigrateAwayFromClickOnce()
         {
             try
             {
                 _viewModel.Start(willReportProgress: false, taskDesc: "Migrating from V1 to V2\r\nPlease uninstall V1 manually after migrated.\r\nA shortcut will be added to your desktop once migrated");
+                var latestVersionNumber = await GetLatestVersionNumber();
                 await Task.Delay(10000);
-                var url = "https://github.com/Nicologies/DBRestorer/releases/download/2.0.7179/Setup.exe";
+                var url = $"https://github.com/Nicologies/DBRestorer/releases/download/{latestVersionNumber}/Setup.exe";
                 using (var client = new WebClientSupportRedirect())
                 {
                     var installer = Path.Combine(Path.GetTempPath(), "DbRestorer.Setup.exe");
@@ -184,6 +192,20 @@ namespace DBRestorer.Ctrl
                 Process.Start("https://github.com/Nicologies/DBRestorer/releases/latest");
             }
             Environment.Exit(0);
+        }
+
+        private static async Task<string> GetLatestVersionNumber()
+        {
+            const string latest = "https://api.github.com/repos/Nicologies/DBRestorer/releases/latest";
+            var c = new HttpClient();
+            c.DefaultRequestHeaders.Accept.Clear();
+            c.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
+            c.DefaultRequestHeaders.Add("User-Agent", "Nicologies C# code");
+            var page = await c.GetStringAsync(new Uri(latest));
+            var obj = JsonConvert.DeserializeObject<GitHubReleaseInfo>(page);
+            var name = obj.name;
+            return name;
         }
 
         private static void DownloadPluginUpdatesInBackground()
